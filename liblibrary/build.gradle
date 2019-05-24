@@ -53,8 +53,6 @@ dependencies {
     api depend.materialDesign
     //    butterknife
     api depend.butterknife
-    api 'com.android.support.constraint:constraint-layout:1.1.3'
-    annotationProcessor depend.butterKnifeCompiler
 //    implementation depend.annotations
     //    recycelerview
     api depend.recycelerview
@@ -64,5 +62,6 @@ dependencies {
     api depend.kottlin
 //logger
     api depend.loggers
+    api depend.supportv4
 
 }

@@ -1,21 +1,6 @@
 <resources>
-    <string name="app_name">BattleDore</string>
-
-    <!--矢量图标库-->
-    <string name="put_in_storage">&#xe88a;</string>
-    <string name="out_storage">&#xe89c;</string>
-    <string name="in_storage">&#xe894;</string>
-    <string name="mine">&#xe625;</string>
-    <string name="main">&#xe8be;</string>
-    <string name="mine_icon">&#xe620;</string>
-    <string name="arrow_down">&#xe668;</string>
-    <string name="arrow_right">&#xe8f1;</string>
-    <string name="main_menu">&#xe8bd;</string>
-    <string name="search">&#xe8bb;</string>
+    <string name="app_name">打板</string>
 
 
-    <string name="indicatorname">LineSpinFadeLoaderIndicator</string>
-
-    <string name="login_title">海程邦达</string>
 
 </resources>

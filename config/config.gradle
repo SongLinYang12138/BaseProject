@@ -18,6 +18,7 @@ ext {
 
     appdependecies = [
             appcompat          : 'com.android.support:appcompat-v7:28.0.0',
+            supportv4          : 'com.android.support:support-v4:28.0.0',
             constraint         : 'com.android.support.constraint:constraint-layout:1.1.3',
             //   retrofit
             scalars            : 'com.squareup.retrofit2:converter-scalars:2.0.0',
@@ -46,10 +47,10 @@ ext {
             kottlin            : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
 
             // Room
-            room : 'android.arch.persistence.room:runtime:1.0.0',
-            room_compiler : "android.arch.persistence.room:compiler:1.0.0",
+            room               : 'android.arch.persistence.room:runtime:1.0.0',
+            room_compiler      : "android.arch.persistence.room:compiler:1.0.0",
             //    logger
-            loggers : 'com.orhanobut:logger:2.2.0',
+            loggers            : 'com.orhanobut:logger:2.2.0',
 
 
     ]
