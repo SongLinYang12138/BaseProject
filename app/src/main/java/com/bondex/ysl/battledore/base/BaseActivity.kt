@@ -1,13 +1,13 @@
 package com.bondex.ysl.battledore.base
 
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.ActionBar
 import android.text.TextUtils
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.ui.IconText
@@ -15,67 +15,88 @@ import com.bondex.ysl.battledore.util.NoDoubleClickListener
 import kotlinx.android.synthetic.main.activity_base.*
 
 abstract class BaseActivity : AppCompatActivity() {
+
     protected val listener = MyClickListener()
 
-    var left: ImageView? = null
-    var titles: TextView? = null
-    var right: IconText? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setCustomActionBar()
+        super.setContentView(R.layout.activity_base)
+
+        setToolBar()
 
         initData()
     }
 
-    private fun setCustomActionBar() {
-        val lp: ActionBar.LayoutParams = ActionBar.LayoutParams(
-            ActionBar.LayoutParams.MATCH_PARENT,
-            ActionBar.LayoutParams.MATCH_PARENT,
-            Gravity.CENTER
+
+    protected fun titleHide(isShow: Boolean){
+        base_rl_title?.visibility = if(isShow)View.GONE else View.VISIBLE
+
+    }
+
+    override fun setContentView(layoutResID: Int) {
+        super.setContentView(layoutResID)
+
+        val view = layoutInflater.inflate(layoutResID, null)
+        val lp: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.MATCH_PARENT
         )
-        val mActionBarView = LayoutInflater.from(this).inflate(R.layout.base_title, null)
-        val actionBar = supportActionBar
-        actionBar?.setCustomView(mActionBarView, lp)
-        actionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-        actionBar?.setDisplayShowCustomEnabled(true)
-        actionBar?.setDisplayShowHomeEnabled(false)
-        actionBar?.setDisplayShowTitleEnabled(false)
+        lp.addRule(RelativeLayout.BELOW, R.id.ll_basetitle_root)
 
-        left = actionBar?.customView?.findViewById(R.id.base_back)
-        titles = actionBar?.customView?.findViewById(R.id.base_title)
-        right = actionBar?.customView?.findViewById(R.id.base_right)
+        ll_basetitle_root?.addView(view, lp)
+    }
 
-        left?.visibility = View.INVISIBLE
-        titles?.visibility = View.INVISIBLE
-        right?.visibility = View.INVISIBLE
+    protected fun setToolBar() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+            val flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window = window
+                val attributes = window.attributes
+                attributes.flags = attributes.flags or flagTranslucentNavigation
+
+                window.attributes = attributes
+
+                getWindow().statusBarColor = resources.getColor(R.color.rect_red)
+            } else {
+                val window = window
+                val attributes = window.attributes
+                attributes.flags = attributes.flags or (flagTranslucentStatus or flagTranslucentNavigation)
+                window.attributes = attributes
+            }
+        }
 
     }
 
 
-    open fun showLeft(isShow: Boolean, listener: View.OnClickListener) {
 
-        left?.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
+    open fun showLeft(isShow: Boolean, listener: View.OnClickListener?) {
 
-        if (listener != null) left?.setOnClickListener(listener)
-    }
+        base_back?.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
 
-    open fun showTitle(isShow: Boolean, title: String) {
-
-        titles?.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
-
-        if (!TextUtils.isEmpty(title)) titles?.setText(title)
+        if (listener != null) base_back.setOnClickListener(listener)
 
     }
 
+    open fun showTitle(isShow: Boolean, titl: String?) {
 
-    open fun showRight(isShow: Boolean, listener: View.OnClickListener, resourceId: Int) {
+        base_title?.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
 
-        right?.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
+        if (!TextUtils.isEmpty(titl)) base_title?.setText(titl)
+
+    }
+
+
+    open fun showRight(isShow: Boolean, listener: View.OnClickListener?, resourceId: Int) {
+
+        base_right?.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
 
         if (listener != null)
-            right?.setOnClickListener(listener)
-        if (resourceId != 0) right?.setText(resourceId)
+            base_right?.setOnClickListener(listener)
+        if (resourceId != 0) base_right?.setText(resourceId)
     }
 
     open abstract fun onCLick(v: View)

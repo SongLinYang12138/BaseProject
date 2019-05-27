@@ -8,6 +8,10 @@
         tools:context=".MainActivity">
 
 
+
+    <include layout="@layout/main_title"></include>
+
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

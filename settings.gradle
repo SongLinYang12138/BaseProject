@@ -1,1 +1,1 @@
-include ':app', ':databaselibrary', ':liblibrary'
+include ':app', ':databaselibrary', ':liblibrary', ':styleibrary'
