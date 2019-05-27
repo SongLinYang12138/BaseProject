@@ -7,18 +7,8 @@
               android:fitsSystemWindows="true"
               android:orientation="vertical">
 
-
-    <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:paddingTop="@dimen/tool_bar_padding_top"
-            android:minHeight="40dp"
-            android:clipToPadding="true"
-            android:background="@color/colorPrimary"
-    ></android.support.v7.widget.Toolbar>
-
     <RelativeLayout
+            android:id="@+id/base_rl_title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimary"
@@ -31,7 +21,7 @@
                 android:src="@mipmap/ic_back"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:textColor="@color/white_back"/>
+                android:textColor="@color/white_back" />
 
         <TextView
                 android:id="@+id/base_title"
@@ -41,7 +31,7 @@
                 android:layout_centerVertical="true"
                 android:text="标题"
                 android:textColor="@color/white_back"
-                android:textSize="@dimen/text_large"/>
+                android:textSize="@dimen/text_large" />
 
 
         <com.bondex.ysl.battledore.ui.IconText
@@ -53,7 +43,7 @@
                 android:text="&#xe8f1;"
                 android:textColor="@color/white_back"
                 android:textSize="@dimen/icon_large"
-                android:visibility="gone"/>
+                android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
