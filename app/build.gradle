@@ -31,9 +31,11 @@ android {
 }
 
 dependencies {
+
     def  depend = config.appdependecies
     implementation project(':databaselibrary')
     implementation project(':liblibrary')
+
     implementation project(":stylelibrary")
 
 //    butterknife
