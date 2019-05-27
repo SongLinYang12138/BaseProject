@@ -36,7 +36,7 @@ dependencies {
     implementation project(':databaselibrary')
     implementation project(':liblibrary')
 
-    implementation project(":stylelibrary")
+    implementation project(":styleibrary")
 
 //    butterknife
     annotationProcessor depend.butterKnifeCompiler
