@@ -12,7 +12,14 @@
     <string name="arrow_right">&#xe8f1;</string>
     <string name="main_menu">&#xe8bd;</string>
     <string name="search">&#xe8bb;</string>
-
+    <!--计划-->
+    <string name="plan">&#xe643;</string>
+    <!--任务-->
+    <string name="mission">&#xe610;</string>
+    <!--列表-->
+    <string name="list">&#xe739;</string>
+    <!--历史-->
+    <string name="history">&#xe6d9;</string>
 
     <string name="indicatorname">LineSpinFadeLoaderIndicator</string>
 

@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/icon"
-            android:text="@string/arrow_down"
+            android:text="@string/plan"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
 
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             style="@style/icon"
             app:layout_constraintLeft_toRightOf="@id/plan"
-            android:text="@string/arrow_down"
+            android:text="@string/mission"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             style="@style/icon"
             app:layout_constraintLeft_toRightOf="@id/mission"
-            android:text="@string/arrow_down"
+            android:text="@string/list"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             app:layout_constraintRight_toLeftOf="@id/history"
@@ -65,7 +65,7 @@
             style="@style/icon"
             app:layout_constraintLeft_toRightOf="@id/list"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="@string/arrow_down"
+            android:text="@string/history"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
     />

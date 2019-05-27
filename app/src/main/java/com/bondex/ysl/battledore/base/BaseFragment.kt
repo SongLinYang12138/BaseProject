@@ -1,4 +1,4 @@
-package com.bondex.ysl.battledore
+package com.bondex.ysl.battledore.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

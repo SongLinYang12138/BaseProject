@@ -1,5 +1,6 @@
 package com.bondex.ysl.battledore.base
 
+import android.databinding.ViewDataBinding
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +15,7 @@ import com.bondex.ysl.battledore.ui.IconText
 import com.bondex.ysl.battledore.util.NoDoubleClickListener
 import kotlinx.android.synthetic.main.activity_base.*
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<A:AppCompatActivity,B:ViewDataBinding> : AppCompatActivity() {
 
     protected val listener = MyClickListener()
 

@@ -1,12 +1,13 @@
-package com.bondex.ysl.battledore
+package com.bondex.ysl.battledore.main
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.view.Window
+import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseActivity
+import com.bondex.ysl.battledore.databinding.ActivityMainBinding
 import com.orhanobut.logger.Logger
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity() {
@@ -19,6 +20,8 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+       val data = DataBindingUtil.setContentView<ActivityMainBinding>(this,R.layout.activity_main)
 
         setContentView(R.layout.activity_main)
 
