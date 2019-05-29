@@ -37,11 +37,14 @@ dependencies {
     api depend.constraint
     //   retrofit
     api depend.scalars
-    api depend.retrofitrxjava
+    api depend.adapterrxjava2
+    api depend.okhttp
+    api depend.retrofit
+    api depend.convertergson
     //   rxAndroid
     api depend.rxAndroid
     api depend.rxjava
-    //   gosn
+//    //   gosn
     api depend.gson
     //   等待框
     api depend.avi
