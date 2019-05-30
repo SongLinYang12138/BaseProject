@@ -8,7 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import com.bondex.ysl.battledore.main.MainViewModle;
+import com.bondex.ysl.battledore.util.NoDoubleClickListener;
+import com.bondex.ysl.liblibrary.utils.StatusBarUtil;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -22,6 +25,11 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
 
     protected M viewModel;
     protected B binding;
+
+
+
+    protected MyclickListener listener = new MyclickListener();
+
 
     private Observer<Boolean> refreshObserver = new Observer<Boolean>() {
         @Override
@@ -61,13 +69,20 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
         Log.i("aaa","vieModle "+viewModel.toString());
 
         getLifecycle().addObserver(viewModel);
+
+        setStatusBar();
+
+        initView();
     }
 
-//    private <T extends ViewModel> T createViewModel(AppCompatActivity activity, Class<T> cls) {
-//
-//        return ViewModelProviders.of(activity).get(cls);
-//
-//    }
+    protected abstract void initView();
+
+    private void setStatusBar(){
+        StatusBarUtil.setColor(this, getResources().getColor(com.bondex.ysl.styleibrary.R.color.rect_red));
+
+    }
+
+
     /**
      * 创建ViewModel
      *
@@ -87,7 +102,7 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
 
 
     }
-
+    protected abstract void onMyClick(View view);
 
     protected abstract void startLoading();
 
@@ -106,5 +121,12 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
 
         if (viewModel != null) getLifecycle().removeObserver(viewModel);
         viewModel.getRefresh().removeObserver(refreshObserver);
+    }
+
+    private class MyclickListener extends NoDoubleClickListener {
+        @Override
+        public void click(View v) {
+            onMyClick(v);
+        }
     }
 }

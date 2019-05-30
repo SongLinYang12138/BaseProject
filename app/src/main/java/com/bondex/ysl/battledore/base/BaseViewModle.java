@@ -17,7 +17,7 @@ import com.bondex.ysl.battledore.util.interf.LifecycleaWacher;
 public abstract class BaseViewModle extends ViewModel implements LifecycleaWacher {
 
     private MutableLiveData<Boolean> refresh = new MutableLiveData<>();
-    protected MyclickListener listener = new MyclickListener();
+
 
 
     public LiveData<Boolean> getRefresh() {
@@ -31,12 +31,4 @@ public abstract class BaseViewModle extends ViewModel implements LifecycleaWache
     }
 
 
-    protected abstract void onClick(View view);
-
-    private class MyclickListener extends NoDoubleClickListener {
-        @Override
-        public void click(View v) {
-            onClick(v);
-        }
-    }
 }
