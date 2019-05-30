@@ -5,16 +5,16 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.view.MotionEvent
 import android.view.View
-import androidx.viewpager2.widget.ViewPager2
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseActivity
 import com.bondex.ysl.battledore.databinding.ActivityMainBinding
-import com.orhanobut.logger.Logger
+import com.bondex.ysl.battledore.plan.PlanFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_title.*
 
 
 class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
+
 
     var selected: ColorStateList? = null
     var normal: ColorStateList? = null
@@ -22,7 +22,16 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
     var pagerAdapter:MainPagerAdapter ? = null
 
 
+
+    override fun getReourceId(): Int {
+
+        return R.layout.activity_main
+    }
+
     override fun initView() {
+
+
+        binding.maniViewModle = viewModel
 
         selected = resources.getColorStateList(R.color.white_back)
         normal = resources.getColorStateList(R.color.text_gray)
@@ -38,7 +47,11 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
         tv_history.setOnClickListener(listener)
 
 
+
         val  list:MutableList<Fragment> = mutableListOf()
+
+        val planFragment = PlanFragment()
+        list.add(planFragment)
 
         pagerAdapter = MainPagerAdapter(supportFragmentManager,list)
 
@@ -88,9 +101,6 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
     }
 
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return super.onTouchEvent(event)
-    }
 
     private fun changeBack(position: Int) {
 
@@ -180,18 +190,6 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
 
     }
 
-    override fun startLoading() {
-
-    }
-
-    override fun stopLoading() {
-    }
-
-
-    override fun getReourceId(): Int {
-
-        return R.layout.activity_main
-    }
 
 
 }

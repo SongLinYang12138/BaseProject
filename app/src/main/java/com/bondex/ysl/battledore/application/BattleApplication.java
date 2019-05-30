@@ -1,6 +1,7 @@
 package com.bondex.ysl.battledore.application;
 
 import android.app.Application;
+import android.content.Context;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -12,9 +13,12 @@ import com.orhanobut.logger.Logger;
  */
 public class BattleApplication  extends Application {
 
+    public static Context CONTEXT;
     @Override
     public void onCreate() {
         super.onCreate();
+
+        CONTEXT = getApplicationContext();
 
         initLogger();
     }

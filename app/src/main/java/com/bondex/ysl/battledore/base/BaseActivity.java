@@ -26,8 +26,6 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
     protected M viewModel;
     protected B binding;
 
-
-
     protected MyclickListener listener = new MyclickListener();
 
 
@@ -66,6 +64,7 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
             Log.i("aaaa","true");
         }
 
+
         Log.i("aaa","vieModle "+viewModel.toString());
 
         getLifecycle().addObserver(viewModel);
@@ -74,6 +73,7 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
 
         initView();
     }
+
 
     protected abstract void initView();
 
@@ -104,9 +104,9 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
     }
     protected abstract void onMyClick(View view);
 
-    protected abstract void startLoading();
+    protected  void startLoading(){}
 
-    protected abstract void stopLoading();
+    protected  void stopLoading(){}
 
      protected <T extends ViewModel> T initViewModle() {
         return null;
@@ -123,7 +123,7 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
         viewModel.getRefresh().removeObserver(refreshObserver);
     }
 
-    private class MyclickListener extends NoDoubleClickListener {
+    protected class MyclickListener extends NoDoubleClickListener {
         @Override
         public void click(View v) {
             onMyClick(v);

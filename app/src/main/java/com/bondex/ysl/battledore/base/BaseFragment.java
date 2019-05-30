@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.bondex.ysl.battledore.util.NoDoubleClickListener;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -25,6 +26,8 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
 
     protected VM viewModel;
     protected V binding;
+
+    protected MyClickListener listener = new MyClickListener();
 
     private Observer<Boolean> refershObserver = new Observer<Boolean>() {
         @Override
@@ -55,15 +58,24 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
         }
 
         getLifecycle().addObserver(viewModel);
+
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-    public <V extends ViewModel> V createViewModel(Fragment fragment,Class<V> cls){
+        initView();
+    }
+
+    protected abstract void initView();
+
+
+    public <V extends ViewModel> V createViewModel(Fragment fragment, Class<V> cls) {
 
         return ViewModelProviders.of(fragment).get(cls);
     }
-
 
 
     @Override
@@ -89,6 +101,15 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
 
         getLifecycle().removeObserver(viewModel);
         viewModel.getRefresh().removeObserver(refershObserver);
+    }
 
+    protected abstract void myClick(View view);
+
+    protected class MyClickListener extends NoDoubleClickListener{
+        @Override
+        public void click(View v) {
+
+            myClick(v);
+        }
     }
 }

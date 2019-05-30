@@ -2,14 +2,22 @@ package com.bondex.ysl.battledore.util;
 
 import android.content.Context;
 import android.widget.Toast;
+import com.bondex.ysl.battledore.application.BattleApplication;
 
 public class ToastUtils {
 
-    public static void showToast(Context context,String msg) {
+    public static void showToast(String msg) {
 
-        if(context == null)return;
         if (CommonUtil.isNotEmpty(msg))
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(BattleApplication.CONTEXT, msg, Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    public static void showShort(String msg) {
+
+        if (CommonUtil.isNotEmpty(msg))
+            Toast.makeText(BattleApplication.CONTEXT, msg, Toast.LENGTH_SHORT).show();
 
     }
 

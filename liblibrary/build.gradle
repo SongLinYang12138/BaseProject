@@ -68,7 +68,7 @@ dependencies {
     api depend.supportv4
 
 //    viewpager2
-    api depend.viewpager2
+//    api depend.viewpager2
 
 
 
