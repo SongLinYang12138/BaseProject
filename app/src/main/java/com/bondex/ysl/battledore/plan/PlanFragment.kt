@@ -1,14 +1,13 @@
 package com.bondex.ysl.battledore.plan
 
-import android.content.Context
-import android.databinding.ViewDataBinding
 import android.view.View
-
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseFragment
 import com.bondex.ysl.battledore.databinding.FragmentPlanBinding
 import com.bondex.ysl.battledore.util.ToastUtils
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_plan.*
+import java.util.ArrayList
 
 
 /**
@@ -21,12 +20,6 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
 
         when (view?.id) {
 
-            R.id.button -> {
-
-                ToastUtils.showShort("点击")
-                viewModel.user = User("asassssd","change ", 12)
-            }
-
 
         }
 
@@ -36,8 +29,23 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
 
         binding.planViewModel = viewModel
 
+        initList()
+    }
 
-//        button?.setOnClickListener(listener)
+    private fun initList() {
+
+        val rankList = listOf<String>("航班日期", "航班号", "版型", "数量", "分单号", "板总重排序")
+
+
+        plan_sp_sort.setList(rankList)
+
+        plan_sp_sort.setSelectListener { item, position ->
+            {
+
+                Logger.i("list " + rankList.get(position))
+            }
+        }
+
     }
 
 

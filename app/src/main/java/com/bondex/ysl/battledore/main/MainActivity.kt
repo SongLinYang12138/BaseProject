@@ -8,6 +8,9 @@ import android.view.View
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseActivity
 import com.bondex.ysl.battledore.databinding.ActivityMainBinding
+import com.bondex.ysl.battledore.history.HistoryFragment
+import com.bondex.ysl.battledore.list.ListFragment
+import com.bondex.ysl.battledore.misssion.MissionFragment
 import com.bondex.ysl.battledore.plan.PlanFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_title.*
@@ -19,8 +22,7 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
     var selected: ColorStateList? = null
     var normal: ColorStateList? = null
 
-    var pagerAdapter:MainPagerAdapter ? = null
-
+    var pagerAdapter: MainPagerAdapter? = null
 
 
     override fun getReourceId(): Int {
@@ -33,7 +35,7 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
 
         binding.maniViewModle = viewModel
 
-        selected = resources.getColorStateList(R.color.white_back)
+        selected = resources.getColorStateList(R.color.rect_red)
         normal = resources.getColorStateList(R.color.text_gray)
 
         plan.setOnClickListener(listener)
@@ -47,29 +49,36 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
         tv_history.setOnClickListener(listener)
 
 
-
-        val  list:MutableList<Fragment> = mutableListOf()
+        val list: MutableList<Fragment> = mutableListOf()
 
         val planFragment = PlanFragment()
-        list.add(planFragment)
+        val missionFragment = MissionFragment()
+        val listFragment = ListFragment()
+        val historyFragment = HistoryFragment()
 
-        pagerAdapter = MainPagerAdapter(supportFragmentManager,list)
+        list.add(planFragment)
+        list.add(missionFragment)
+        list.add(listFragment)
+        list.add(historyFragment)
+
+        pagerAdapter = MainPagerAdapter(supportFragmentManager, list)
 
         viewpager.adapter = pagerAdapter
 
-       viewpager.setOnPageChangeListener(object : ViewPager.OnPageChangeListener{
-           override fun onPageScrollStateChanged(p0: Int) {
+        viewpager.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(p0: Int) {
 
-           }
+            }
 
-           override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
+            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
 
-           }
+            }
 
-           override fun onPageSelected(p0: Int) {
+            override fun onPageSelected(p0: Int) {
 
-           }
-       })
+                changeBack(p0 + 1)
+            }
+        })
 
         changeBack(0)
     }
@@ -82,24 +91,30 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
             R.id.plan,
             R.id.tv_plane -> {
                 changeBack(1)
+                viewpager.setCurrentItem(0)
             }
 
             R.id.mission,
             R.id.tv_mission -> {
                 changeBack(2)
+                viewpager.setCurrentItem(1)
+
             }
             R.id.list,
             R.id.tv_list -> {
                 changeBack(3)
+                viewpager.setCurrentItem(2)
+
             }
 
             R.id.history,
             R.id.tv_history -> {
                 changeBack(4)
+                viewpager.setCurrentItem(3)
+
             }
         }
     }
-
 
 
     private fun changeBack(position: Int) {
@@ -189,7 +204,6 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
 
 
     }
-
 
 
 }

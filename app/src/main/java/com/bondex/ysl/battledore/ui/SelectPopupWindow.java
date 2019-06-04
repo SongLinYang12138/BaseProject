@@ -8,6 +8,8 @@ import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.bondex.ysl.battledore.R;
 import com.bondex.ysl.battledore.util.NoDoubleClickListener;
@@ -16,6 +18,7 @@ import com.bondex.ysl.battledore.util.interf.PopSelectListener;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SelectPopupWindow extends ConstraintLayout {
@@ -23,7 +26,7 @@ public class SelectPopupWindow extends ConstraintLayout {
     EditText popSelectEt;
     IconText popSelectIcon;
     private Context context;
-    private ArrayList<String> list;
+    private List<String> list;
 
     private MyclickListener clik = new MyclickListener();
 
@@ -47,7 +50,6 @@ public class SelectPopupWindow extends ConstraintLayout {
         popSelectEt = findViewById(R.id.pop_select_et);
         popSelectIcon = findViewById(R.id.pop_select_icon);
 
-
         popSelectEt.setOnClickListener(clik);
         popSelectIcon.setOnClickListener(clik);
     }
@@ -56,18 +58,18 @@ public class SelectPopupWindow extends ConstraintLayout {
         this.listener = listener;
     }
 
-    public void setList(ArrayList<String> list) {
+    public void setList(List<String> list) {
         this.list = list;
-      if(list != null && list.size() > 0)  popSelectEt.setText(list.get(0));
+        if (list != null && list.size() > 0) popSelectEt.setText(list.get(0));
     }
 
     private void showPopWindow() {
 
-        if(list == null){
+        if (list == null) {
             ToastUtils.showToast("请设置list");
             return;
         }
-        if(listener == null){
+        if (listener == null) {
             ToastUtils.showToast("请设置listener");
             return;
         }
@@ -86,7 +88,8 @@ public class SelectPopupWindow extends ConstraintLayout {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     listener.onItemClick(list.get((int) id), (int) id);
-                    popSelectEt.setText(list.get(0));
+                    popSelectEt.setText(list.get(position));
+                    popSelectEt.setSelection(popSelectEt.getText().length());
                     popupWindow.dismiss();
                 }
             });
@@ -107,7 +110,15 @@ public class SelectPopupWindow extends ConstraintLayout {
     private void changeStyle() {
 
         if (popupWindow != null) {
-            popSelectIcon.setText(popupWindow.isShowing() ? R.string.arrow_down : R.string.arrow_right);
+
+
+            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.scale_retotate);
+
+            animation.setAnimationListener(animationListener);
+            popSelectIcon.startAnimation(animation);
+
+
+            popSelectIcon.setText(popupWindow.isShowing() ? R.string.arrow_down : R.string.arrow_left);
         }
     }
 
@@ -119,5 +130,22 @@ public class SelectPopupWindow extends ConstraintLayout {
             showPopWindow();
         }
     }
+
+    private Animation.AnimationListener animationListener = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+    };
 
 }
