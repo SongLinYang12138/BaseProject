@@ -1,13 +1,13 @@
 package com.bondex.ysl.battledore.plan
 
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseFragment
 import com.bondex.ysl.battledore.databinding.FragmentPlanBinding
-import com.bondex.ysl.battledore.util.ToastUtils
+import com.bondex.ysl.battledore.ui.TextItemDecoration
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_plan.*
-import java.util.ArrayList
 
 
 /**
@@ -16,6 +16,9 @@ import java.util.ArrayList
 class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
 
 
+    private val list = mutableListOf<String>()
+
+    private val adapter = PlanAdapter(list)
     override fun myClick(view: View?) {
 
         when (view?.id) {
@@ -28,6 +31,21 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
     override fun initView() {
 
         binding.planViewModel = viewModel
+
+
+        val manager = LinearLayoutManager(context)
+
+        plan_recycler_view.layoutManager = manager
+        plan_recycler_view.adapter = adapter
+        plan_recycler_view.addItemDecoration(TextItemDecoration())
+
+        list.add("1")
+        list.add("1")
+        list.add("1")
+        list.add("1")
+        list.add("1")
+
+        adapter.updataList(list)
 
         initList()
     }
@@ -45,6 +63,7 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
                 Logger.i("list " + rankList.get(position))
             }
         }
+
 
     }
 

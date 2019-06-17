@@ -28,17 +28,24 @@ android {
     dataBinding {
         enabled = true
     }
+
+    androidExtensions {
+        experimental = true
+    }
+
+
 }
 
 dependencies {
 
-    def  depend = config.appdependecies
+    def depend = config.appdependecies
     implementation project(':databaselibrary')
     implementation project(':liblibrary')
 
     implementation project(":styleibrary")
 
 //    butterknife
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     annotationProcessor depend.butterKnifeCompiler
 
 

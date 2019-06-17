@@ -15,6 +15,7 @@
     <dimen name="text_nromal">18sp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="min_width">120dp</dimen>
     <dimen name="line_margin">32dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="receive_margin">16dp</dimen>

@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".workbench.WorkBetchActivity">
+
+    <data>
+        <variable name="workBetchViewModel" type="com.bondex.ysl.battledore.workbench.WorkBetchViewModle"/>
+
+    </data>
+
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <include android:id="@+id/title" layout="@layout/base_title"></include>
+
+
+        <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/work_bt_last"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:layout_width="wrap_content"
+                android:background="@color/colorPrimary"
+                android:layout_height="50dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/work_bt_save"
+        >
+            <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="上一页"
+                    style="@style/small_tv_white"
+            />
+
+        </com.gc.materialdesign.views.ButtonRectangle>
+
+        <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/work_bt_save"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:layout_width="wrap_content"
+                android:background="@color/metal_gray"
+                android:layout_height="50dp"
+                app:layout_constraintLeft_toRightOf="@id/work_bt_last"
+                app:layout_constraintRight_toLeftOf="@id/work_bt_next"
+        >
+            <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="保存"
+                    style="@style/small_tv_gray"
+            />
+
+        </com.gc.materialdesign.views.ButtonRectangle>
+
+        <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/work_bt_next"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:layout_width="wrap_content"
+                android:background="@color/colorPrimary"
+                android:layout_height="50dp"
+                app:layout_constraintLeft_toRightOf="@id/work_bt_save"
+                app:layout_constraintRight_toRightOf="parent"
+        >
+            <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="下一页"
+                    style="@style/small_tv_white"
+            />
+
+        </com.gc.materialdesign.views.ButtonRectangle>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/work_plate_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:minWidth="@dimen/min_width"
+                app:met_floatingLabel="normal"
+                style="@style/normal_tv_red"
+                app:met_underlineColor="@color/rect_red"
+                android:hint="板号"
+                app:layout_constraintTop_toBottomOf="@id/work_bt_save"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        />
+
+
+        <TextView
+                android:id="@+id/work_plate_unit"
+                style="@style/normal_tv_gray"
+                android:text="板型"
+                app:layout_constraintLeft_toRightOf="@id/work_plate_num"
+                app:layout_constraintTop_toTopOf="@id/work_plate_num"
+                android:layout_width="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/work_plate_num"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+
+                app:layout_constraintHorizontal_bias="0.3"
+        />
+
+        <Spinner android:layout_width="130dp"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/work_plate_type"
+                 app:layout_constraintTop_toTopOf="@id/work_plate_num"
+                 app:layout_constraintBottom_toBottomOf="@id/work_plate_num"
+                 app:layout_constraintLeft_toRightOf="@id/work_plate_unit"
+                 android:entries="@array/plate_type"
+        ></Spinner>
+
+
+        <TextView
+                android:id="@+id/work_protect_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/work_plate_num"
+                app:layout_constraintTop_toTopOf="@id/work_protect_num"
+                style="@style/small_tv_gray"
+                android:text="保护类型"
+        />
+        <Spinner
+                android:id="@+id/work_protect_type"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/work_protect_num"
+                app:layout_constraintBottom_toBottomOf="@id/work_protect_num"
+                app:layout_constraintLeft_toRightOf="@id/work_protect_unit"
+                android:entries="@array/protect_type"
+        ></Spinner>
+
+        <EditText
+                android:id="@+id/work_protect_num"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:maxLength="5"
+                style="@style/normal_tv_red"
+                android:hint="0"
+                android:paddingHorizontal="2dp"
+                android:inputType="number"
+                app:met_underlineColor="@color/rect_red"
+                app:layout_constraintLeft_toRightOf="@id/work_protect_type"
+                app:layout_constraintTop_toBottomOf="@id/work_plate_num"
+                android:background="@drawable/gray_exitext_rect"
+        />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/work_battle_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/work_protect_type"
+                app:layout_constraintLeft_toLeftOf="@id/work_plate_num"
+                style="@style/normal_tv_gray"
+                android:hint="   打板日期    "
+                app:met_floatingLabel="normal"
+                android:background="@drawable/editext_empty_gary"
+                android:padding="@dimen/main_small"
+                android:focusable="false"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/work_pickup_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/work_protect_type"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                style="@style/normal_tv_gray"
+                android:hint="   提货日期    "
+                android:focusable="false"
+                app:met_floatingLabel="normal"
+                android:background="@drawable/editext_empty_gary"
+                android:padding="@dimen/main_small"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        />
+
+        <TextView
+                android:id="@+id/work_subplate_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/normal_tv_gray"
+                android:text="垫板类型"
+                app:layout_constraintTop_toBottomOf="@id/work_battle_date"
+                app:layout_constraintLeft_toLeftOf="@id/work_plate_num"
+        />
+
+        <TextView
+                android:id="@+id/work_subplate_old"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/normal_tv_gray"
+                android:text="老垫"
+                app:layout_constraintTop_toBottomOf="@id/work_subplate_unit"
+                app:layout_constraintLeft_toLeftOf="@id/work_plate_num"
+
+        />
+        <EditText
+                android:id="@+id/work_subplate_old_num"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:hint="0"
+                app:layout_constraintRight_toRightOf="parent"
+                android:inputType="number"
+                style="@style/normal_tv_black"
+                app:layout_constraintLeft_toRightOf="@id/work_subplate_old"
+                app:layout_constraintTop_toTopOf="@id/work_subplate_old"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="@id/work_subplate_old"
+                android:background="@drawable/gray_exitext_rect"
+                android:layout_marginLeft="@dimen/main_small"
+                app:layout_constraintRight_toLeftOf="@id/work_subplate_new"
+        />
+
+
+        <TextView
+                android:id="@+id/work_subplate_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/normal_tv_gray"
+                android:text="新垫"
+                app:layout_constraintTop_toBottomOf="@id/work_subplate_unit"
+                app:layout_constraintRight_toLeftOf="@id/work_subplate_new_num"
+                app:layout_constraintLeft_toRightOf="@id/work_subplate_old_num"
+        />
+        <EditText
+                android:id="@+id/work_subplate_new_num"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:hint="0"
+                app:layout_constraintRight_toRightOf="parent"
+                android:inputType="number"
+                style="@style/normal_tv_black"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toRightOf="@id/work_subplate_new"
+                app:layout_constraintTop_toTopOf="@id/work_subplate_new"
+                app:layout_constraintBottom_toBottomOf="@id/work_subplate_new"
+                android:background="@drawable/gray_exitext_rect"
+                android:layout_marginLeft="@dimen/main_small"
+        />
+
+        <TextView
+                android:id="@+id/work_subplate_old_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/normal_tv_gray"
+                android:text="老大垫"
+                app:layout_constraintTop_toBottomOf="@id/work_subplate_new_num"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_old"
+        />
+        <EditText
+                android:id="@+id/work_sublate_old_large_num"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:hint="0"
+                android:inputType="number"
+                style="@style/normal_tv_black"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_old_num"
+                app:layout_constraintTop_toTopOf="@id/work_subplate_old_large"
+                app:layout_constraintBottom_toBottomOf="@id/work_subplate_old_large"
+                android:background="@drawable/gray_exitext_rect"
+        />
+        <TextView
+                android:id="@+id/work_subplate_new_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/normal_tv_gray"
+                android:text="新大垫"
+                app:layout_constraintTop_toBottomOf="@id/work_subplate_new_num"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_new"
+        />
+        <EditText
+                android:id="@+id/work_sublate_large_num"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:hint="0"
+                android:inputType="number"
+                style="@style/normal_tv_black"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_new_num"
+                app:layout_constraintTop_toTopOf="@id/work_subplate_new_large"
+                app:layout_constraintBottom_toBottomOf="@id/work_subplate_new_large"
+                android:background="@drawable/gray_exitext_rect"
+        />
+
+        <TextView
+                android:id="@+id/work_subplate_entirety"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/normal_tv_gray"
+                android:text="整体"
+                app:layout_constraintTop_toBottomOf="@id/work_subplate_old_large"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_old"
+        />
+        <EditText
+                android:id="@+id/work_subplate_entirety_num"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:hint="0"
+                android:inputType="number"
+                style="@style/normal_tv_black"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_old_num"
+                app:layout_constraintTop_toTopOf="@id/work_subplate_entirety"
+                app:layout_constraintBottom_toBottomOf="@id/work_subplate_entirety"
+                android:background="@drawable/gray_exitext_rect"
+        />
+        <TextView
+                android:id="@+id/work_subplate_singleton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/normal_tv_gray"
+                android:text="单件"
+                app:layout_constraintTop_toBottomOf="@id/work_sublate_large_num"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_new"
+        />
+        <EditText
+                android:id="@+id/work_subplate_singleton_num"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:hint="0"
+                android:inputType="number"
+                style="@style/normal_tv_black"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_new_num"
+                app:layout_constraintTop_toTopOf="@id/work_subplate_singleton"
+                app:layout_constraintBottom_toBottomOf="@id/work_subplate_singleton"
+                android:background="@drawable/gray_exitext_rect"
+        />
+
+        <TextView
+                android:id="@+id/work_subplate_entirety_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/normal_tv_gray"
+                android:text="新品整体"
+                app:layout_constraintTop_toBottomOf="@id/work_subplate_entirety_num"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_old"
+        />
+        <EditText
+                android:id="@+id/work_subplate_entirety_new_num"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:hint="0"
+                android:inputType="number"
+                style="@style/normal_tv_black"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_old_num"
+                app:layout_constraintTop_toTopOf="@id/work_subplate_entirety_new"
+                app:layout_constraintBottom_toBottomOf="@id/work_subplate_entirety_new"
+                android:background="@drawable/gray_exitext_rect"
+        />
+        <TextView
+                android:id="@+id/work_subplate_singleton_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/normal_tv_gray"
+                android:text="新品单件"
+                app:layout_constraintTop_toBottomOf="@id/work_subplate_singleton_num"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_new"
+        />
+        <EditText
+                android:id="@+id/work_subplate_singleton_new_num"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:hint="0"
+                android:inputType="number"
+                style="@style/normal_tv_black"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="@id/work_subplate_new_num"
+                app:layout_constraintTop_toTopOf="@id/work_subplate_singleton_new"
+                app:layout_constraintBottom_toBottomOf="@id/work_subplate_singleton_new"
+                android:background="@drawable/gray_exitext_rect"
+        />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/work_main_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintTop_toBottomOf="@id/work_subplate_singleton_new_num"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:hint="主单号"
+                app:met_floatingLabel="normal"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        />
+        <com.bondex.ysl.battledore.ui.IconText
+                android:id="@+id/work_it_main_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/work_main_code"
+                app:layout_constraintBottom_toBottomOf="@id/work_main_code"
+                app:layout_constraintLeft_toRightOf="@id/work_main_code"
+                style="@style/icon_gray"
+                android:text="@string/scan"
+        />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/work_hawb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintTop_toBottomOf="@id/work_main_code"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:hint="分单号"
+                app:met_floatingLabel="normal"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        />
+        <com.bondex.ysl.battledore.ui.IconText
+                android:id="@+id/work_it_hawb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/work_hawb"
+                app:layout_constraintBottom_toBottomOf="@id/work_hawb"
+                app:layout_constraintLeft_toRightOf="@id/work_main_code"
+                style="@style/icon_gray"
+                android:text="@string/scan"
+        />
+        <TextView
+                android:id="@+id/work_unit_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/work_hawb"
+                app:layout_constraintLeft_toLeftOf="@id/work_plate_num"
+                style="@style/normal_tv_red"
+                android:text="主单号"
+        />
+
+
+        <TextView
+                android:id="@+id/work_unit_hawb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/work_hawb"
+                style="@style/normal_tv_red"
+                android:text="分单号"
+                app:layout_constraintLeft_toRightOf="@id/work_unit_main"
+                app:layout_constraintRight_toLeftOf="@id/work_unit_qty"
+        />
+
+
+        <TextView
+                android:id="@+id/work_unit_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/work_hawb"
+                style="@style/normal_tv_red"
+                android:text="件数"
+                app:layout_constraintLeft_toRightOf="@id/work_unit_hawb"
+                app:layout_constraintRight_toRightOf="@id/work_unit_all_qty"
+        />
+
+
+        <TextView
+                android:id="@+id/work_unit_all_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/work_hawb"
+                style="@style/normal_tv_red"
+                android:text="总件数"
+                app:layout_constraintLeft_toRightOf="@id/work_unit_qty"
+                app:layout_constraintRight_toLeftOf="@id/work_unit_all_flight"
+        />
+
+
+        <TextView
+                android:id="@+id/work_unit_all_flight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/work_hawb"
+                style="@style/normal_tv_red"
+                android:text="航班号"
+                app:layout_constraintLeft_toRightOf="@id/work_unit_all_qty"
+                app:layout_constraintRight_toRightOf="parent"
+
+        />
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/work_recycleview"
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/work_unit_main"
+                android:layout_height="0dp"
+                app:layout_constraintVertical_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+        ></android.support.v7.widget.RecyclerView>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

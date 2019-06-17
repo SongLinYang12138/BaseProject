@@ -65,7 +65,7 @@
 
     </style>
 
-    <style name="button_blue_theme" parent="Base.TextAppearance.AppCompat.Button">
+    <style name="button_primary_theme" parent="Base.TextAppearance.AppCompat.Button">
         <item name="android:background">@drawable/bt_blue_selector</item>
         <item name="android:textSize">@dimen/text_nromal</item>
         <item name="android:textColor">@color/white_back</item>
@@ -78,6 +78,7 @@
         <item name="android:textColor">@color/text_gray</item>
     </style>
 
+
     <style name="normal_tv_gray">
 
         <item name="android:textColor">@color/text_gray</item>
@@ -85,8 +86,19 @@
         <item name="android:textAlignment">textStart</item>
     </style>
 
+
+    <style name="small_tv_white">
+        <item name="android:textColor">@color/white_back</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
     <style name="small_tv_gray">
         <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+    <style name="small_tv_black">
+        <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textAlignment">textStart</item>
     </style>
@@ -111,6 +123,12 @@
     <style name="icon">
         <item name="android:textSize">@dimen/icon_large</item>
         <item name="android:textColor">@color/white_back</item>
+
+    </style>
+
+    <style name="icon_gray">
+        <item name="android:textSize">@dimen/icon_large</item>
+        <item name="android:textColor">@color/text_gray</item>
 
     </style>
 

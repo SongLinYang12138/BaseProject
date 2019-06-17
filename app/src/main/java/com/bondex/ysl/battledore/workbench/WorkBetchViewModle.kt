@@ -1,18 +1,16 @@
-package com.bondex.ysl.battledore.list
+package com.bondex.ysl.battledore.workbench
 
 import com.bondex.ysl.battledore.base.BaseViewModle
 
 /**
- * date: 2019/5/30
+ * date: 2019/6/12
  * Author: ysl
  * description:
  */
-
-class ListViewModel :BaseViewModle(){
-
-
+class WorkBetchViewModle : BaseViewModle() {
 
     override fun onCreate() {
+
     }
 
     override fun onResume() {
@@ -32,4 +30,5 @@ class ListViewModel :BaseViewModle(){
 
     override fun removeRxBus() {
     }
+
 }

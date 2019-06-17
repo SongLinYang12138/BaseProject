@@ -1,18 +1,16 @@
-package com.bondex.ysl.battledore.list
+package com.bondex.ysl.battledore.battledoredetail
 
 import com.bondex.ysl.battledore.base.BaseViewModle
 
 /**
- * date: 2019/5/30
+ * date: 2019/6/14
  * Author: ysl
- * description:
+ * description: 打板详情展示，数据共用一个bean
  */
 
-class ListViewModel :BaseViewModle(){
-
-
-
+class BattleDoreDetailViewModel : BaseViewModle() {
     override fun onCreate() {
+
     }
 
     override fun onResume() {
@@ -32,4 +30,5 @@ class ListViewModel :BaseViewModle(){
 
     override fun removeRxBus() {
     }
+
 }

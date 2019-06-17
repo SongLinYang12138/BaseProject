@@ -31,5 +31,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation depend.appcompat
+    implementation depend.recycelerview
+
 
 }
