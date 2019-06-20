@@ -76,6 +76,16 @@
         ></android.support.v7.widget.RecyclerView>
 
 
+        <CheckBox
+                android:id="@+id/goodsl_ck_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/goodsl_bt_cancel"
+                app:layout_constraintBottom_toBottomOf="@id/goodsl_bt_cancel"
+                app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+
         <com.gc.materialdesign.views.ButtonRectangle
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"

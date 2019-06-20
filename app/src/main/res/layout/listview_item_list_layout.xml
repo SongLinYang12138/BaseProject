@@ -101,6 +101,8 @@
     <CheckBox android:layout_width="wrap_content"
               android:layout_height="wrap_content"
     android:id="@+id/item_list_ck"
+              android:theme="@style/primary_checkbox"
+
               app:layout_constraintLeft_toLeftOf="parent"
               app:layout_constraintTop_toBottomOf="@id/item_list_board_date"
     />

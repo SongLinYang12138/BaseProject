@@ -378,24 +378,42 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/work_main_code"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintTop_toBottomOf="@id/work_subplate_singleton_new_num"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:hint="主单号"
+                android:maxLength="12"
+                android:minWidth="@dimen/min_width"
+                style="@style/normal_tv_black"
+                android:inputType="number"
                 app:met_floatingLabel="normal"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
         />
-        <com.bondex.ysl.battledore.ui.IconText
+        <TextView
+                android:id="@+id/work_main_verify"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/work_main_code"
+                app:layout_constraintBottom_toBottomOf="@id/work_main_code"
+                app:layout_constraintLeft_toRightOf="@id/work_main_code"
+                app:layout_constraintRight_toLeftOf="@id/work_it_main_code"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                style="@style/normal_tv_black"
+        />
+
+
+        <com.bondex.ysl.liblibrary.ui.IconText
                 android:id="@+id/work_it_main_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/work_main_code"
                 app:layout_constraintBottom_toBottomOf="@id/work_main_code"
-                app:layout_constraintLeft_toRightOf="@id/work_main_code"
+                app:layout_constraintLeft_toRightOf="@id/work_main_verify"
                 style="@style/icon_gray"
                 android:text="@string/scan"
+                android:inputType="textEmailAddress"
         />
 
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -409,7 +427,7 @@
                 app:met_floatingLabel="normal"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
         />
-        <com.bondex.ysl.battledore.ui.IconText
+        <com.bondex.ysl.liblibrary.ui.IconText
                 android:id="@+id/work_it_hawb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

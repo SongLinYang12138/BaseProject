@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import com.bondex.ysl.battledore.R
 
 /**
@@ -12,17 +13,26 @@ import com.bondex.ysl.battledore.R
  * Author: ysl
  * description:
  */
-class GoodslistAdapter(list: MutableList<String>) : RecyclerView.Adapter<GoodslistAdapter.ViewHolder>() {
+class GoodslistAdapter(list: MutableList<GoodsListBean>) : RecyclerView.Adapter<GoodslistAdapter.ViewHolder>() {
 
     var context: Context? = null
     var list = list
 
-    fun updateList(list: MutableList<String>) {
+    fun updateList(list: MutableList<GoodsListBean>) {
 
         this.list = list
         notifyDataSetChanged()
     }
 
+    fun checkAll(isSelect: Boolean) {
+
+        for (i in list.indices) {
+
+            list[i].isSelect = isSelect
+        }
+
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
 
@@ -38,13 +48,18 @@ class GoodslistAdapter(list: MutableList<String>) : RecyclerView.Adapter<Goodsli
         return list.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+
+
+        viewHolder.cb.isChecked = list[position].isSelect
 
 
     }
 
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        val cb: CheckBox = view.findViewById(R.id.item_goodslist_ck)
 
 
     }

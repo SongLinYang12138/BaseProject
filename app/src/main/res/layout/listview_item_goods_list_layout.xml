@@ -5,48 +5,56 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:paddingVertical="@dimen/main_small"
 >
-    <TextView
-            android:id="@+id/item_workbetch_main"
+
+    <CheckBox
+            android:id="@+id/item_goodslist_ck"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item_goodslist_main"
+            app:layout_constraintBottom_toBottomOf="@id/item_goodslist_main"
             app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/normal_tv_gray"
-            android:text="454—54554547"
-            app:layout_constraintRight_toLeftOf="@id/item_workbetch_hawb"
+            android:layout_height="wrap_content"
+            android:theme="@style/primary_checkbox"
     />
     <TextView
-            android:id="@+id/item_workbetch_hawb"
+            android:id="@+id/item_goodslist_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/item_workbetch_main"
+            style="@style/normal_tv_gray"
+            app:layout_constraintLeft_toRightOf="@id/item_goodslist_ck"
+            android:text="454—54554547"
+            app:layout_constraintRight_toLeftOf="@id/item_goodslist_hawb"
+    />
+    <TextView
+            android:id="@+id/item_goodslist_hawb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/item_goodslist_main"
             style="@style/normal_tv_gray"
             android:text="453asdjkw"
-            app:layout_constraintRight_toLeftOf="@id/item_workbetch_all_qty"
+            app:layout_constraintRight_toLeftOf="@id/item_goodslist_all_qty"
     />
 
 
-
-
     <TextView
-            android:id="@+id/item_workbetch_all_qty"
+            android:id="@+id/item_goodslist_all_qty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/item_workbetch_hawb"
+            app:layout_constraintLeft_toRightOf="@id/item_goodslist_hawb"
             style="@style/normal_tv_gray"
             android:text="50"
-            app:layout_constraintRight_toLeftOf="@id/item_workbetch_flight"
+            app:layout_constraintRight_toLeftOf="@id/item_goodslist_flight"
     />
 
 
     <TextView
-            android:id="@+id/item_workbetch_flight"
+            android:id="@+id/item_goodslist_flight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/item_workbetch_all_qty"
+            app:layout_constraintLeft_toRightOf="@id/item_goodslist_all_qty"
             style="@style/normal_tv_gray"
             android:text="CH4575"
             app:layout_constraintRight_toRightOf="parent"

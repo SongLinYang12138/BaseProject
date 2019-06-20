@@ -1,12 +1,8 @@
 package com.bondex.ysl.battledore.base;
 
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.databinding.ViewDataBinding;
-import android.view.View;
-import com.bondex.ysl.battledore.util.NoDoubleClickListener;
 import com.bondex.ysl.battledore.util.interf.LifecycleaWacher;
 
 /**

@@ -13,10 +13,11 @@ public class Constant {
     public static final String POWER_STATE = "power_state";//扫描器开关状态
     public static final String DATE_KEY = "date_key";//存储dateKey
 
+    public static final int SCAN_MAIN_REQUEST_CODE = 1212;
+    public static final int SCAN_HAWB_REQUEST_CODE = 1111;
+
     public static final Boolean SOFT_INPUTMOd = true; //是否弹出软键盘
     public static String LOGIN_DATE_KEY;
-
-
 
 
 }

@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bondex.ysl.battledore.main.MainViewModle;
-import com.bondex.ysl.battledore.ui.IconText;
-import com.bondex.ysl.battledore.util.NoDoubleClickListener;
+import com.bondex.ysl.liblibrary.ui.IconText;
+import com.bondex.ysl.liblibrary.utils.NoDoubleClickListener;
 import com.bondex.ysl.liblibrary.utils.StatusBarUtil;
 
 import java.lang.reflect.ParameterizedType;

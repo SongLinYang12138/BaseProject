@@ -2,6 +2,7 @@ package com.bondex.ysl.battledore.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.bondex.ysl.liblibrary.utils.CommonUtils;
 
 public class SharedPreferecneUtils {
 
@@ -11,7 +12,7 @@ public class SharedPreferecneUtils {
         if (context == null) {
             return;
         }
-        if (CommonUtil.isEmpty(key) || value == null) {
+        if (CommonUtils.isEmpty(key) || value == null) {
             return;
         }
         SharedPreferences preferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
@@ -36,7 +37,7 @@ public class SharedPreferecneUtils {
         if (context == null) {
             return;
         }
-        if (CommonUtil.isEmpty(key)) {
+        if (CommonUtils.isEmpty(key)) {
             return;
         }
         SharedPreferences preferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);

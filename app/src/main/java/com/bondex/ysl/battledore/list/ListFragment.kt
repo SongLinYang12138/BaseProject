@@ -2,13 +2,9 @@ package com.bondex.ysl.battledore.list
 
 
 import android.content.Intent
-import android.databinding.ViewDataBinding
-import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseFragment
@@ -26,7 +22,16 @@ import kotlinx.android.synthetic.main.fragment_list.*
 class ListFragment : BaseFragment<ListViewModel, FragmentListBinding>() {
 
 
-    private val list = mutableListOf<String>()
+    private val list = mutableListOf<ListBean>(
+        ListBean(),
+        ListBean(),
+        ListBean(),
+        ListBean(),
+        ListBean(),
+        ListBean(),
+        ListBean(),
+        ListBean()
+    )
 
     private val adapter = ListAdapter(list)
 
@@ -36,6 +41,10 @@ class ListFragment : BaseFragment<ListViewModel, FragmentListBinding>() {
         binding.listViewModel = viewModel
 
         list_edit.setOnClickListener(listener)
+        list_chck_all.setOnCheckedChangeListener { buttonView, isChecked ->
+            adapter.checkAll(isChecked)
+
+        }
 
 
         val manager = LinearLayoutManager(context)
@@ -43,12 +52,6 @@ class ListFragment : BaseFragment<ListViewModel, FragmentListBinding>() {
         list_recycler_view.layoutManager = manager
         list_recycler_view.adapter = adapter
         list_recycler_view.addItemDecoration(TextItemDecoration())
-
-        list.add("1")
-        list.add("1")
-        list.add("1")
-        list.add("1")
-        list.add("1")
 
         adapter.updataList(list)
 
@@ -87,6 +90,7 @@ class ListFragment : BaseFragment<ListViewModel, FragmentListBinding>() {
 
                 val intent = Intent(activity, WorkBetchActivity::class.java)
                 startActivity(intent)
+                activity?.overridePendingTransition(R.anim.window_in, R.anim.window_out)
             }
 
 

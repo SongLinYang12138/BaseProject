@@ -18,7 +18,7 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
 
     private val list = mutableListOf<String>()
 
-    private val adapter = PlanAdapter(list)
+    private var adapter : PlanAdapter?  = null
     override fun myClick(view: View?) {
 
         when (view?.id) {
@@ -36,7 +36,14 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
         val manager = LinearLayoutManager(context)
 
         plan_recycler_view.layoutManager = manager
-        plan_recycler_view.adapter = adapter
+
+        activity?.let {
+        adapter = PlanAdapter(list, it)
+
+        }
+        adapter?.let {
+            plan_recycler_view.adapter = adapter }
+
         plan_recycler_view.addItemDecoration(TextItemDecoration())
 
         list.add("1")
@@ -44,8 +51,9 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
         list.add("1")
         list.add("1")
         list.add("1")
-
-        adapter.updataList(list)
+        adapter?.let {
+            adapter?.updataList(list)
+        }
 
         initList()
     }

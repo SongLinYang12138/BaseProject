@@ -69,6 +69,7 @@ dependencies {
 
 //    viewpager2
 //    api depend.viewpager2
+    implementation project(':styleibrary')
 
 
 

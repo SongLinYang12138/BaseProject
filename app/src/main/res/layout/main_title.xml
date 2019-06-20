@@ -17,7 +17,7 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <com.bondex.ysl.battledore.ui.IconText
+    <com.bondex.ysl.liblibrary.ui.IconText
             android:id="@+id/plan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
     />
 
 
-    <com.bondex.ysl.battledore.ui.IconText
+    <com.bondex.ysl.liblibrary.ui.IconText
             android:id="@+id/mission"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
     />
 
 
-    <com.bondex.ysl.battledore.ui.IconText
+    <com.bondex.ysl.liblibrary.ui.IconText
             android:id="@+id/list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             app:layout_constraintRight_toLeftOf="@id/history"
     />
 
-    <com.bondex.ysl.battledore.ui.IconText
+    <com.bondex.ysl.liblibrary.ui.IconText
             android:id="@+id/history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

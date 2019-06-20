@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_mission.*
 
 class MissionFragment : BaseFragment<MissionViewModel, FragmentMissionBinding>() {
 
-    var  adapter:MissionAdapterJ? = null
+    var adapter: MissionAdapterJ? = null
 
     override fun initView() {
 
@@ -71,13 +71,12 @@ class MissionFragment : BaseFragment<MissionViewModel, FragmentMissionBinding>()
 
         mission_workbetch.setOnClickListener(listener)
 
-        item_mission_ck_all.setOncheckListener { view, check ->
+        item_mission_ck_all.setOnCheckedChangeListener { buttonView, isChecked ->
 
-            adapter?.setSelectAll(check)
 
+            adapter?.setSelectAll(isChecked)
         }
-
-         adapter = MissionAdapterJ(list)
+        adapter = MissionAdapterJ(list)
 //        mission_expand_view.layoutManager = LinearLayoutManager(context)
         mission_expand_view.setAdapter(adapter)
 
@@ -91,14 +90,15 @@ class MissionFragment : BaseFragment<MissionViewModel, FragmentMissionBinding>()
     override fun myClick(view: View?) {
 
 
-        when(view?.id){
+        when (view?.id) {
 
-            R.id.mission_workbetch ->  {
+            R.id.mission_workbetch -> {
 
-                val intent = Intent(activity,WorkBetchActivity::class.java)
+                val intent = Intent(activity, WorkBetchActivity::class.java)
                 startActivity(intent)
-            }
+                activity?.overridePendingTransition(R.anim.window_in, R.anim.window_out)
 
+            }
 
 
         }

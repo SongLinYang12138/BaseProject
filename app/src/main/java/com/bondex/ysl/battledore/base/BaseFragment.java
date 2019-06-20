@@ -12,7 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.bondex.ysl.battledore.util.NoDoubleClickListener;
+import com.bondex.ysl.liblibrary.utils.NoDoubleClickListener;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

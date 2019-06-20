@@ -13,6 +13,7 @@
             android:id="@+id/item_mission_ck_hawb"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:theme="@style/primary_checkbox"
 
 
     ></CheckBox>

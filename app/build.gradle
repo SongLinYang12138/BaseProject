@@ -43,6 +43,10 @@ dependencies {
     implementation project(':liblibrary')
 
     implementation project(":styleibrary")
+    implementation project(":fileprovider")
+    implementation project(":convenientbanner")
+    implementation project(":zxing-android")
+    implementation project(":refresh-layout")
 
 //    butterknife
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

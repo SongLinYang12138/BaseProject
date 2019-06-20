@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.czy1121:loadinglayout:1.0.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/loadinglayout-1.0.1.aar/13f9b9d8c66bdd8b31ffd8b814458f68/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/loadinglayout-1.0.1.aar/13f9b9d8c66bdd8b31ffd8b814458f68/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.czy1121/loadinglayout/1.0.1/de515eda0a44d6e7bc200412586ed1e738f8005c/loadinglayout-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

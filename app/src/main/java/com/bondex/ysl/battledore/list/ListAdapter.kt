@@ -2,14 +2,12 @@ package com.bondex.ysl.battledore.list
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.CheckBox
 import com.bondex.ysl.battledore.R
-import com.bondex.ysl.battledore.util.NoDoubleClickListener
 
 /**
  * date: 2019/6/4
@@ -17,41 +15,62 @@ import com.bondex.ysl.battledore.util.NoDoubleClickListener
  * description:
  */
 
-class ListAdapter(lis: MutableList<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ListAdapter(lis: MutableList<ListBean>) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+
 
     protected var context: Context? = null
 
-    protected var list: MutableList<String>? = lis
+    protected var list: MutableList<ListBean>? = lis
 
 
-    fun updataList(list: MutableList<String>?){
+    fun updataList(list: MutableList<ListBean>) {
 
         this.list = list
 
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
+    fun checkAll(isSelect: Boolean) {
+
+
+        for (i in list?.indices ?: mutableListOf<ListBean>()) {
+
+            list?.get(i as Int)?.isSelect = isSelect
+        }
+
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
 
         context = p0.context
 
         val view = LayoutInflater.from(context).inflate(R.layout.listview_item_list_layout, p0, false)
-
-        val holder = ViewHodler(view)
+        val holder =ViewHolder(view)
 
         return holder
     }
 
     override fun getItemCount(): Int {
 
-    return list?.size ?: 0
+        return list?.size ?: 0
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, p1: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, p1: Int) {
+
+
+        val flag = list?.get(p1)?.isSelect ?: false
+        holder.checkBox.isChecked = flag
+
+        Log.i("workBetch", "flag  " + flag + "  position  " + p1)
+
+
     }
 
 
-    protected class ViewHodler(view: View) : RecyclerView.ViewHolder(view) {
+   inner  class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        val checkBox: CheckBox = view.findViewById(R.id.item_list_ck)
 
 //        private val tvDate:TextView = view.findViewById(R.id.item_plan_date)
 //        private val tvRemain:TextView = view.findViewById(R.id.item_plan_remain)
@@ -60,12 +79,6 @@ class ListAdapter(lis: MutableList<String>) : RecyclerView.Adapter<RecyclerView.
 //        private  val tvPurpose:TextView = view.findViewById(R.id.item_plan_purpose)
 //        private  val ivRight:ImageView = view.findViewById(R.id.item_plan_arrow_right)
 //        private  val btList:Button = view.findViewById(R.id.item_plan_bt_goodslist)
-
-        init {
-
-
-
-        }
 
 
     }

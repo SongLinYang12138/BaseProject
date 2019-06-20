@@ -26,7 +26,7 @@
             android:textSize="@dimen/text_large"/>
 
 
-    <com.bondex.ysl.battledore.ui.IconText
+    <com.bondex.ysl.liblibrary.ui.IconText
             android:id="@+id/base_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

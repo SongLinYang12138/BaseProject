@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <com.bondex.ysl.battledore.ui.SelectPopupWindow
+        <com.bondex.ysl.liblibrary.ui.SelectPopupWindow
 
                 android:id="@+id/list_sp_sort"
                 app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,17 @@
                 app:layout_constraintRight_toRightOf="parent"
         >
 
-        </com.bondex.ysl.battledore.ui.SelectPopupWindow>
+        </com.bondex.ysl.liblibrary.ui.SelectPopupWindow>
+        <CheckBox
+                android:id="@+id/list_chck_all"
+                android:layout_width="wrap_content"
+                android:theme="@style/primary_checkbox"
+                  app:layout_constraintTop_toTopOf="@id/list_commit"
+                app:layout_constraintBottom_toBottomOf="@id/list_commit"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                  android:layout_height="wrap_content"/>
+
         <com.gc.materialdesign.views.ButtonRectangle
                 android:id="@+id/list_commit"
                 android:layout_width="wrap_content"
@@ -41,7 +51,7 @@
                 android:background="@color/colorPrimary"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:layout_height="50dp"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/list_chck_all"
                 app:layout_constraintRight_toLeftOf="@id/list_cancel"
         >
             <TextView

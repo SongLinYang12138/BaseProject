@@ -7,7 +7,6 @@ import android.view.View
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseFragment
 import com.bondex.ysl.battledore.databinding.FragmentHistoryBinding
-import com.bondex.ysl.battledore.list.ListAdapter
 import com.bondex.ysl.battledore.ui.TextItemDecoration
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_history.*
@@ -20,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_history.*
 class HistoryFragment : BaseFragment<HistoryViewModel,FragmentHistoryBinding>() {
     private val list = mutableListOf<String>()
 
-    private val adapter = HistoryAdapter(list)
+    private var adapter:HistoryAdapter? = null
 
 
     override fun initView() {
@@ -31,7 +30,10 @@ class HistoryFragment : BaseFragment<HistoryViewModel,FragmentHistoryBinding>() 
         val manager = LinearLayoutManager(context)
 
         history_recycler_view.layoutManager = manager
-        history_recycler_view.adapter = adapter
+
+        activity?.let { adapter =  HistoryAdapter(list, it) }
+
+        adapter?.let { history_recycler_view.adapter = adapter }
         history_recycler_view.addItemDecoration(TextItemDecoration())
 
         list.add("1")
@@ -40,7 +42,8 @@ class HistoryFragment : BaseFragment<HistoryViewModel,FragmentHistoryBinding>() 
         list.add("1")
         list.add("1")
 
-        adapter.updataList(list)
+        adapter?.updataList(list)
+
 
         initList()
     }

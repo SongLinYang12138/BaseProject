@@ -3,16 +3,13 @@ package com.bondex.ysl.battledore.history
 import android.content.Context
 import android.content.Intent
 import android.support.constraint.ConstraintLayout
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.battledoredetail.BattleDoreDetailActivity
-import com.bondex.ysl.battledore.util.NoDoubleClickListener
 
 /**
  * date: 2019/6/4
@@ -20,14 +17,16 @@ import com.bondex.ysl.battledore.util.NoDoubleClickListener
  * description:
  */
 
-class HistoryAdapter(lis: MutableList<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HistoryAdapter(lis: MutableList<String>, activity: FragmentActivity) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     protected var context: Context? = null
 
     protected var list: MutableList<String>? = lis
+    private val activity = activity
 
 
-    fun updataList(list: MutableList<String>?){
+    fun updataList(list: MutableList<String>?) {
 
         this.list = list
 
@@ -44,8 +43,9 @@ class HistoryAdapter(lis: MutableList<String>) : RecyclerView.Adapter<RecyclerVi
 
         holder.clContent.setOnClickListener { v ->
 
-            val  intent = Intent(context,BattleDoreDetailActivity::class.java)
+            val intent = Intent(context, BattleDoreDetailActivity::class.java)
             context?.startActivity(intent)
+            activity.overridePendingTransition(R.anim.window_in, R.anim.window_out)
         }
 
         return holder
@@ -53,7 +53,7 @@ class HistoryAdapter(lis: MutableList<String>) : RecyclerView.Adapter<RecyclerVi
 
     override fun getItemCount(): Int {
 
-    return list?.size ?: 0
+        return list?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, p1: Int) {
@@ -62,7 +62,7 @@ class HistoryAdapter(lis: MutableList<String>) : RecyclerView.Adapter<RecyclerVi
 
     protected inner class ViewHodler(view: View) : RecyclerView.ViewHolder(view) {
 
-        val clContent : ConstraintLayout = view.findViewById(R.id.item_list_content)
+        val clContent: ConstraintLayout = view.findViewById(R.id.item_list_content)
 
 
 //        private val tvDate:TextView = view.findViewById(R.id.item_plan_date)
@@ -74,7 +74,6 @@ class HistoryAdapter(lis: MutableList<String>) : RecyclerView.Adapter<RecyclerVi
 //        private  val btList:Button = view.findViewById(R.id.item_plan_bt_goodslist)
 
         init {
-
 
 
         }
