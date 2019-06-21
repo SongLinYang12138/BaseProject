@@ -1,2 +1,2 @@
 
-include ':app', ':databaselibrary', ':liblibrary', ':styleibrary'
+include ':app', ':databaselibrary', ':liblibrary', ':styleibrary', ':convenientbanner', ':fileprovider', ':refresh-layout', ':zxing-android'

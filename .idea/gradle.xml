@@ -9,9 +9,13 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/convenientbanner" />
             <option value="$PROJECT_DIR$/databaselibrary" />
+            <option value="$PROJECT_DIR$/fileprovider" />
             <option value="$PROJECT_DIR$/liblibrary" />
+            <option value="$PROJECT_DIR$/refresh-layout" />
             <option value="$PROJECT_DIR$/styleibrary" />
+            <option value="$PROJECT_DIR$/zxing-android" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
