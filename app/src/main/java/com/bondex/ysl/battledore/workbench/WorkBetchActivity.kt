@@ -56,7 +56,6 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
         })
 
         work_battle_date.setOnClickListener(listener)
-        work_pickup_date.setOnClickListener(listener)
         work_it_main_code.setOnClickListener(listener)
         work_it_hawb.setOnClickListener(listener)
 
@@ -95,15 +94,6 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
 
             }
 
-            R.id.work_pickup_date -> {
-
-
-                DateUtils.showDate(WorkBetchActivity@ this,  {it ->
-
-                    work_pickup_date.setText(it)
-                })
-
-            }
 
         }
 

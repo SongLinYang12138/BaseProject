@@ -50,7 +50,7 @@ class HistoryFragment : BaseFragment<HistoryViewModel,FragmentHistoryBinding>() 
 
     private fun initList() {
 
-        val rankList = listOf<String>("航班日期", "航班号", "版型", "数量", "分单号", "板总重排序")
+        val rankList = listOf<String>("打板日期","航班日期", "航班号", "版型", "数量", "分单号", "板总重排序")
 
 
         history_sp_sort.setList(rankList)
