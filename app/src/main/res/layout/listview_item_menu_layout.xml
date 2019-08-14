@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            style="@style/normal_tv_black"
+            android:textStyle="bold"
+            android:id="@+id/menu_item_tv"
+    />
+    <com.bondex.ysl.liblibrary.ui.IconText
+            android:id="@+id/menu_item_it"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/icon_black"
+            app:layout_constraintTop_toTopOf="@id/menu_item_tv"
+            app:layout_constraintBottom_toBottomOf="@id/menu_item_tv"
+            app:layout_constraintLeft_toRightOf="@id/menu_item_tv"
+            android:layout_marginLeft="@dimen/main_small"
+            android:text="@string/full_left"
+    />
+
+</android.support.constraint.ConstraintLayout>

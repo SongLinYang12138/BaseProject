@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E62F2D</color>
-    <color name="colorPrimaryDark">#606060</color>
-    <color name="colorAccent">#d5d5d5</color>
+    <color name="colorPrimary">#0074AD</color>
+    <color name="colorPrimaryDark">#0084BD</color>
+    <color name="colorAccent">#008AC1</color>
+    <color name="login_et_back">#EBE8E8</color>
 
 
     <!--消息界面-->
     <color name="title">#4F77AA</color>
     <color name="top_search_back">#F5F5F5</color>
     <color name="stay_back">#F1F2F5</color>
-    <color name="white_back">#F5F5F5</color>
+    <color name="white_back">#ffffff</color>
     <color name="bottom_selected">#3879C9</color>
     <color name="bottom_normal">#C7C8CB</color>
     <color name="message_back">#EB5342</color>
@@ -18,14 +19,15 @@
     <color name="text_black">#000000</color>
 
     <!--通讯录界面-->
-    <color name="rect_orange"> #FF8133</color>
-    <color name="text_blue"> #6A95C6</color>
+    <color name="rect_orange">#FF8133</color>
+    <color name="text_blue">#6A95C6</color>
     <!--工作台-->
     <color name="rect_light_blue">#4794E8</color>
     <color name="gray_blue">#47B3E1</color>
     <color name="rect_red">#E62F2D</color>
     <color name="container_back">#F5F5F5</color>
 
+    <color name="bottom_background">#00689F</color>
     <!--我-->
     <color name="rect_green">#8E8E93</color>
     <!--箭头颜色-->
@@ -43,17 +45,18 @@
     <color name="light_gray">#F5F5F5</color>
     <color name="tiny_blue">#d6fbfc</color>
     <color name="bondex_blue_light">#005AAB</color>
-    <color name="metal_gray">#d3d3d3</color>
+    <color name="metal_gray">#CBCBCB</color>
     <color name="load_button">#0198CA</color>
 
     <color name="bondex_blue_dark">#4C7BB3</color>
     <color name="bondex_blue_accent">#01AEF0</color>
     <color name="middle_gray">#D9D9D9</color>
     <color name="holo_light_white">#FEFEFE</color>
-    <color name = "update_progress">#2283F6</color>
+    <color name="update_progress">#2283F6</color>
     <color name="trans_light_white">#22FEFEFE</color>
     <color name="text_gray">#737373</color>
     <color name="divider">#e6e6e6</color>
+    <color name="background_gray">#F3F3F3</color>
     <color name="hint_text_color">#cccccc</color>
     <color name="text_color">#787878</color>
     <color name="violet_blue">#3563ED</color>
@@ -67,7 +70,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorAlpha">#00000000</color>
     <color name="colorAlpha0">#88000000</color>
-    <color name="transparent">#9000</color>
+    <color name="transparent">#00000000</color>
     <color name="flb_color">#EA5505</color>
     <color name="colorPink">#FDE4E0</color>
     <color name="pickerview_timebtn_nor">#FFEC3D21</color>

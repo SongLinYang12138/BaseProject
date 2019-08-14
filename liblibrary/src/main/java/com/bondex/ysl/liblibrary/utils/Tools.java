@@ -19,6 +19,7 @@ import android.text.InputType;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.widget.EditText;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,6 +29,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -82,7 +84,7 @@ public class Tools {
 
     }
 
-    public static String getDate(long time_milles){
+    public static String getDate(long time_milles) {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(time_milles);
@@ -90,13 +92,25 @@ public class Tools {
     }
 
 
-    public static String getDateAndTime(long time_milles){
+    public static String getDateAndTime(long time_milles) {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date(time_milles);
         return format.format(date);
     }
 
+    public static long getTimeMilles(String date) {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date date1 = format.parse(date);
+            return date1.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return (long) 0;
+    }
 
 
     public static int getAccuracy(String s) {
@@ -453,7 +467,6 @@ public class Tools {
     }
 
 
-
     public static void openAlbum(Activity activity) {
         Intent i = new Intent(
                 Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -636,8 +649,6 @@ public class Tools {
          */
         return new int[]{options.outWidth, options.outHeight};
     }
-
-
 
 
     public static void main(String args[]) {

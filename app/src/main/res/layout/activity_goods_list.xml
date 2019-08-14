@@ -18,22 +18,30 @@
 
         <TextView
                 android:id="@+id/goodsl_tv_maincode"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_percent="0.25"
                 android:layout_height="wrap_content"
                 style="@style/normal_tv_red"
                 android:text="主单号"
+                android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
+                app:layout_constraintRight_toLeftOf="@id/goodsl_tv_hawb"
         />
 
         <TextView
                 android:id="@+id/goodsl_tv_hawb"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_percent="0.25"
+
+                android:ellipsize="middle"
+                android:singleLine="true"
                 android:layout_height="wrap_content"
                 style="@style/normal_tv_red"
                 android:text="分单单号"
+                android:textAlignment="center"
                 app:layout_constraintLeft_toRightOf="@id/goodsl_tv_maincode"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintTop_toTopOf="@id/goodsl_tv_maincode"
@@ -43,7 +51,8 @@
 
         <TextView
                 android:id="@+id/goodsl_tv_qty"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_percent="0.15"
                 android:layout_height="wrap_content"
                 style="@style/normal_tv_red"
                 android:text="总件数"
@@ -56,10 +65,13 @@
 
         <TextView
                 android:id="@+id/goodsl_tv_flight"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 style="@style/normal_tv_red"
                 android:text="航班号"
+                android:ellipsize="middle"
+                android:singleLine="true"
+                app:layout_constraintWidth_percent="0.2"
                 app:layout_constraintLeft_toRightOf="@id/goodsl_tv_qty"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintTop_toTopOf="@id/goodsl_tv_maincode"

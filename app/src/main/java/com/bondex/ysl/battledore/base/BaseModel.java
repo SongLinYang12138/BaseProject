@@ -9,6 +9,6 @@ import com.bondex.ysl.battledore.util.interf.ModelCallback;
  */
 public interface BaseModel<T> {
 
-    void iniData(T param, ModelCallback<?> callback);
+    void iniData(T param, ModelCallback callback);
 
 }

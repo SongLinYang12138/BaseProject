@@ -6,6 +6,12 @@ import com.bondex.ysl.battledore.base.BaseActivity
 import com.bondex.ysl.battledore.databinding.ActivityBattleDoreDetailBinding
 
 class BattleDoreDetailActivity : BaseActivity<BattleDoreDetailViewModel, ActivityBattleDoreDetailBinding>() {
+    override fun handleMessage(msg: Int?) {
+
+    }
+
+    override fun initData() {
+    }
 
 
     override fun initView() {

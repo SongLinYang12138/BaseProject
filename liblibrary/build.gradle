@@ -5,7 +5,6 @@ def config = rootProject.ext
 android {
 
 
-
     compileSdkVersion config.targetsdkVersion
 
 
@@ -67,10 +66,15 @@ dependencies {
     api depend.loggers
     api depend.supportv4
 
+//  glide
+    api depend.glide
+    annotationProcessor depend.glide_compiler
+
+    api depend.fresco
 //    viewpager2
 //    api depend.viewpager2
     implementation project(':styleibrary')
-
-
+//照相机
+    api project(":bondexcamera")
 
 }

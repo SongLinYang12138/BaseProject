@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/reduce"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toTopOf="@id/edit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/edit"
+            android:src="@mipmap/jian"
+            app:layout_constraintRight_toLeftOf="@id/edit"
+            android:orientation="horizontal"
+            android:layout_marginVertical="@dimen/main_small"
+            android:layout_marginRight="-5dp"
+            android:scaleType="fitXY"
+    >
+
+
+    </ImageView>
+
+    <EditText android:layout_width="40dp"
+              android:layout_height="30dp"
+              android:hint=" 0"
+              android:singleLine="true"
+              android:inputType="number"
+              android:background="@mipmap/zhongjian"
+              android:id="@+id/edit"
+              android:gravity="center"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintLeft_toRightOf="@id/reduce"
+              app:layout_constraintRight_toLeftOf="@id/add"
+    />
+
+
+    <ImageView
+            android:id="@+id/add"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            app:layout_constraintLeft_toRightOf="@id/edit"
+            app:layout_constraintBottom_toBottomOf="@id/edit"
+            app:layout_constraintTop_toTopOf="@id/edit"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:src="@mipmap/jia"
+            android:scaleType="fitXY"
+    >
+
+
+    </ImageView>
+
+</android.support.constraint.ConstraintLayout>

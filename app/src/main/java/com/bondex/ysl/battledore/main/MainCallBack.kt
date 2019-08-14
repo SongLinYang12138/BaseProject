@@ -8,10 +8,6 @@ import com.bondex.ysl.battledore.util.interf.ModelCallback
  * Author: ysl
  * description:
  */
-class MainCallBack : BaseModel<String> {
-    override fun iniData(param: String?, callback: ModelCallback<*>?) {
-
-    }
-
+class MainCallBack {
 
 }

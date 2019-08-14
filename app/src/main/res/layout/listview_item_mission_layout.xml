@@ -4,8 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/activity_horizontal_margin"
-        android:paddingVertical="@dimen/padding_small"
+        android:background="@color/background_gray"
 >
 
 
@@ -16,6 +15,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:theme="@style/primary_checkbox"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
 
     >
 
@@ -26,24 +26,33 @@
             android:id="@+id/item_mission_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="主单号:4545655656565"
-            style="@style/normal_tv_red"
+            android:text="4545655656565 "
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            style="@style/normal_tv_primary"
             app:layout_constraintTop_toTopOf="@id/item_mission_ck_main"
             app:layout_constraintBottom_toBottomOf="@id/item_mission_ck_main"
             app:layout_constraintLeft_toRightOf="@id/item_mission_ck_main"
+    />
+
+
+    <View android:layout_width="match_parent" android:layout_height="1.5dp"
+          android:background="@color/white_back"
+          app:layout_constraintTop_toBottomOf="@id/item_mission_main"
+
+          android:layout_marginTop="@dimen/margin_small"
     />
 
     <com.bondex.ysl.battledore.ui.FillListView
             android:id="@+id/item_mission_recyclerview"
             android:layout_width="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@color/background_gray"
             app:layout_constraintTop_toBottomOf="@id/item_mission_main"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/main_small"
+            android:paddingHorizontal="@dimen/margin_small"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
     >
 
     </com.bondex.ysl.battledore.ui.FillListView>
-
-
 
 </android.support.constraint.ConstraintLayout>

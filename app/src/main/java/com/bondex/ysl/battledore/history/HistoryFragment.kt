@@ -3,10 +3,12 @@ package com.bondex.ysl.battledore.history
 
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.text.InputType
 import android.view.View
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseFragment
 import com.bondex.ysl.battledore.databinding.FragmentHistoryBinding
+import com.bondex.ysl.battledore.ui.MenuList
 import com.bondex.ysl.battledore.ui.TextItemDecoration
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_history.*
@@ -17,6 +19,16 @@ import kotlinx.android.synthetic.main.fragment_history.*
  *
  */
 class HistoryFragment : BaseFragment<HistoryViewModel,FragmentHistoryBinding>() {
+    override fun showLoading() {
+    }
+
+    override fun stopLoading() {
+    }
+
+    override fun handleMessage(msg: Int?) {
+
+    }
+
     private val list = mutableListOf<String>()
 
     private var adapter:HistoryAdapter? = null
@@ -44,23 +56,24 @@ class HistoryFragment : BaseFragment<HistoryViewModel,FragmentHistoryBinding>() 
 
         adapter?.updataList(list)
 
+        history_search.edit.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
 
         initList()
     }
 
     private fun initList() {
 
-        val rankList = listOf<String>("打板日期","航班日期", "航班号", "版型", "数量", "分单号", "板总重排序")
+        val rankList = mutableListOf<String>("打板日期","航班日期", "航班号", "版型", "数量", "分单号", "板总重排序")
+
+        history_menulist.addData(rankList)
 
 
-        history_sp_sort.setList(rankList)
+        history_menulist.setOnMenuClick(object :MenuList.MenuClick{
+            override fun menuChoice(position: Int, menu: String) {
 
-        history_sp_sort.setSelectListener { item, position ->
-            {
-
-                Logger.i("list " + rankList.get(position))
             }
-        }
+        })
+
 
 
     }

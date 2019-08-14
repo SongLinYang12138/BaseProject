@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yuyh.library.imgsel">
+
+    <application>
+        <activity
+            android:name=".ui.ISListActivity"
+            android:theme="@style/SelTheme" />
+
+        <activity
+            android:name=".ui.ISCameraActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <meta-data
+            android:name="APP_ID"
+            android:value="${applicationId}" />
+
+
+    </application>
+
+</manifest>

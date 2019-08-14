@@ -4,7 +4,7 @@
     <dimen name="tool_bar_padding_top">0dp</dimen>
 
     <dimen name="activity_margin">16dp</dimen>
-     <dimen name="activity_padding">8dp</dimen>
+    <dimen name="activity_padding">8dp</dimen>
     <!--设置字体大小-->
     <dimen name="text_tiny">12sp</dimen>
     <dimen name="text_little">14sp</dimen>
@@ -15,6 +15,7 @@
     <dimen name="text_nromal">18sp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="plan_margin_left">25dp</dimen>
     <dimen name="min_width">120dp</dimen>
     <dimen name="line_margin">32dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -31,6 +32,7 @@
     <dimen name="button_nomal">12sp</dimen>
     <dimen name="button_small">10sp</dimen>
     <dimen name="icon_normal">27sp</dimen>
+    <dimen name="icon_small">14sp</dimen>
     <dimen name="padding_left">16dp</dimen>
     <dimen name="work_rect_margin">22dp</dimen>
     <dimen name="button_padding_top">1.5dp</dimen>

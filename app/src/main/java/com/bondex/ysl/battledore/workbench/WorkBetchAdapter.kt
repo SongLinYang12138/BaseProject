@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bondex.ysl.battledore.R
-import kotlinx.android.synthetic.main.listview_item_work_betch_layout.*
 
 /**
  * date: 2019/6/13
@@ -43,6 +42,26 @@ class WorkBetchAdapter(list: MutableList<String>) : RecyclerView.Adapter<WorkBet
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 
+//        if(position != 0){
+//
+//
+//            holder.unitMain.visibility = View.GONE
+//            holder.unitHawb.visibility = View.GONE
+//            holder.unitQty.visibility = View.GONE
+//            holder.unitAllQty.visibility = View.GONE
+//            holder.unitFlight.visibility = View.GONE
+//
+//        }else{
+//
+//            holder.unitMain.visibility = View.VISIBLE
+//            holder.unitHawb.visibility = View.VISIBLE
+//            holder.unitQty.visibility = View.VISIBLE
+//            holder.unitAllQty.visibility = View.VISIBLE
+//            holder.unitFlight.visibility = View.VISIBLE
+//
+//        }
+
+
 
 
     }
@@ -50,6 +69,12 @@ class WorkBetchAdapter(list: MutableList<String>) : RecyclerView.Adapter<WorkBet
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+
+//        val unitMain:TextView = view.findViewById(R.id.work_unit_main)
+//        val unitHawb:TextView = view.findViewById(R.id.work_unit_hawb)
+//        val unitQty:TextView = view.findViewById(R.id.work_unit_qty)
+//        val unitAllQty:TextView = view.findViewById(R.id.work_unit_all_qty)
+//        val unitFlight:TextView = view.findViewById(R.id.work_unit_flight)
 
     }
 

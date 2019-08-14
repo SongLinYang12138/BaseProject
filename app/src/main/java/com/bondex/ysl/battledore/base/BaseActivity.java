@@ -40,6 +40,12 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
     protected MyclickListener listener = new MyclickListener();
 
 
+    private Observer<Integer> msgObserver = new Observer<Integer>() {
+        @Override
+        public void onChanged(@Nullable Integer msg) {
+            handleMessage(msg);
+        }
+    };
     private Observer<Boolean> refreshObserver = new Observer<Boolean>() {
         @Override
         public void onChanged(@Nullable Boolean isShow) {
@@ -54,6 +60,7 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initData();
         binding = DataBindingUtil.setContentView(this, getReourceId());
 
         ivBack = binding.getRoot().findViewById(R.id.base_back);
@@ -76,15 +83,10 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
                 modelClass = BaseViewModle.class;
             }
             viewModel = (M) createViewModel(this, modelClass);
+
+            viewModel.setCont(getApplicationContext());
         }
 
-        if (viewModel instanceof MainViewModle) {
-
-            Log.i("aaaa", "true");
-        }
-
-
-        Log.i("aaa", "vieModle " + viewModel.toString());
 
         getLifecycle().addObserver(viewModel);
 
@@ -93,11 +95,12 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
         initView();
     }
 
+    protected abstract void initData();
 
     protected abstract void initView();
 
     private void setStatusBar() {
-        StatusBarUtil.setColor(this, getResources().getColor(com.bondex.ysl.styleibrary.R.color.rect_red));
+        StatusBarUtil.setColor(this, getResources().getColor(com.bondex.ysl.styleibrary.R.color.colorPrimary));
 
     }
 
@@ -118,7 +121,7 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
         super.onStart();
 
         viewModel.getRefresh().observe(this, refreshObserver);
-
+        viewModel.getMsgLiveDatas().observe(this, msgObserver);
 
     }
 
@@ -150,6 +153,8 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
         }
     }
 
+    protected abstract void handleMessage(Integer msg);
+
     protected abstract void onMyClick(View view);
 
     protected void startLoading() {
@@ -169,8 +174,14 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
     protected void onDestroy() {
         super.onDestroy();
 
-        if (viewModel != null) getLifecycle().removeObserver(viewModel);
-        viewModel.getRefresh().removeObserver(refreshObserver);
+        if (viewModel != null) {
+
+
+            viewModel.getRefresh().removeObserver(refreshObserver);
+            viewModel.getMsgLiveDatas().removeObserver(msgObserver);
+            getLifecycle().removeObserver(viewModel);
+
+        }
     }
 
     protected class MyclickListener extends NoDoubleClickListener {

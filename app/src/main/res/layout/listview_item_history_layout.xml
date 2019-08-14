@@ -2,58 +2,58 @@
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/listview_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/activity_horizontal_margin"
-        android:paddingVertical="@dimen/padding_small"
+        android:background="@color/background_gray"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
 
-        android:id="@+id/item_list_content"
 >
 
-
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              app:layout_constraintTop_toTopOf="parent"
-              style="@style/normal_tv_red"
+    <CheckBox android:layout_width="33dp"
+              android:layout_height="27dp"
+              android:id="@+id/item_list_ck"
+              android:theme="@style/primary_checkbox"
               app:layout_constraintLeft_toLeftOf="parent"
-              android:text="2019-5-21"
-              android:id="@+id/item_list_date"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintBottom_toBottomOf="parent"
+    />
+    <TextView
+            android:id="@+id/item_list_board_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/normal_tv_primary"
+            android:text="提交成功"
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
     />
 
 
     <TextView
             android:id="@+id/item_list_board"
-            app:layout_constraintTop_toBottomOf="@id/item_list_date"
+
+            app:layout_constraintTop_toTopOf="@id/item_list_board_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/main_small"
             style="@style/normal_tv_black"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:text="板号"
-            app:layout_constraintLeft_toLeftOf="parent"
-    />
+            app:layout_constraintLeft_toRightOf="@id/item_list_ck"/>
 
     <TextView
             android:id="@+id/item_list_count"
-            app:layout_constraintTop_toBottomOf="@id/item_list_date"
+            app:layout_constraintTop_toBottomOf="@id/item_list_board_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/main_small"
-            style="@style/normal_tv_black"
-            android:text="3M   4H "
-            app:layout_constraintLeft_toRightOf="@id/item_list_board"
-
-            app:layout_constraintRight_toLeftOf="@id/item_list_qty"
-    />
-    <TextView
-            android:id="@+id/item_list_qty"
-            app:layout_constraintTop_toBottomOf="@id/item_list_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/main_small"
-            style="@style/normal_tv_black"
-            android:text="打板件数: 3"
-            app:layout_constraintLeft_toRightOf="@id/item_list_count"
-            app:layout_constraintRight_toRightOf="parent"
+            style="@style/normal_tv_primary"
+            android:text="3M4H "
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/item_list_board"
     />
 
 
@@ -62,10 +62,11 @@
             app:layout_constraintTop_toBottomOf="@id/item_list_board"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/normal_tv_black"
+            style="@style/small_tv_black"
             android:text="目的港:  CD"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/item_list_count"
             android:layout_marginTop="@dimen/main_small"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
     />
 
     <TextView
@@ -73,10 +74,23 @@
             app:layout_constraintTop_toBottomOf="@id/item_list_board"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/normal_tv_black"
+            style="@style/small_tv_black"
             android:text="航班号"
-            app:layout_constraintLeft_toLeftOf="@id/item_list_qty"
+            app:layout_constraintLeft_toRightOf="@id/item_list_purpose"
             android:layout_marginTop="@dimen/main_small"
+            app:layout_constraintRight_toRightOf="parent"
+    />
+    <TextView
+            android:id="@+id/item_list_qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/main_small"
+            style="@style/small_tv_gray"
+            android:text="件数: 3"
+
+            app:layout_constraintBottom_toBottomOf="@id/item_list_board_date"
+            app:layout_constraintTop_toTopOf="@id/item_list_board_date"
+            app:layout_constraintLeft_toRightOf="@id/item_list_flight"
     />
 
 
@@ -84,20 +98,11 @@
             android:id="@+id/item_list_board_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/normal_tv_black"
+            style="@style/small_tv_gray"
             android:text="打板日期:2019-06-06 15:54"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/item_list_board"
             app:layout_constraintTop_toBottomOf="@id/item_list_purpose"
     />
 
-    <TextView
-            android:id="@+id/item_list_board_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/normal_tv_red"
-            android:text="提交成功"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_list_purpose"
-    />
 
 </android.support.constraint.ConstraintLayout>

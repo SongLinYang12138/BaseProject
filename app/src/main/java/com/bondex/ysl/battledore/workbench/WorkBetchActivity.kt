@@ -3,25 +3,54 @@ package com.bondex.ysl.battledore.workbench
 import android.app.Activity
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseActivity
 import com.bondex.ysl.battledore.databinding.ActivityWorkBetchBinding
 import com.bondex.ysl.battledore.util.Constant
+import com.bondex.ysl.camera.ISCameraConfig
+import com.bondex.ysl.camera.ISNav
+import com.bondex.ysl.camera.MainHawbBean
 import com.bondex.ysl.liblibrary.utils.*
 import com.google.zxing.client.android.Intents
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_work_betch.*
+import java.util.*
 
 class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBinding>() {
+    override fun handleMessage(msg: Int?) {
+
+    }
+
+    override fun initData() {
+
+    }
 
     val list = mutableListOf<String>()
     val adapter = WorkBetchAdapter(list)
 
+    val protectTypeList: MutableList<WorkBentchChoiceBean> = mutableListOf(
+        WorkBentchChoiceBean("单件保护", 1, 0),
+        WorkBentchChoiceBean("整体保护", 2, 0)
+    )
+
+    val subPlateList: MutableList<WorkBentchChoiceBean> = mutableListOf(
+        WorkBentchChoiceBean("老件", 1, 0),
+        WorkBentchChoiceBean("新件", 2, 0)
+    )
+
+    val protectTypeAdapter: WorkBentchChoiceAdapter = WorkBentchChoiceAdapter(protectTypeList)
+    val subPlateAdapter: WorkBentchChoiceAdapter = WorkBentchChoiceAdapter(subPlateList)
+
+
     val scanIntent = IntentIntegrator(WorkBetchActivity@ this)
     var mainCode: String? = null
+    val IMAGE_REQUEST: Int = 111
+
+    override fun getReourceId(): Int {
+
+        return R.layout.activity_work_betch
+    }
 
     override fun initView() {
 
@@ -29,37 +58,36 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
             override fun click(v: View?) {
                 finish()
             }
-
         })
         showTitle("打板工作台")
 
-        FormatTextUtils.formatText(work_main_code, FormatTextUtils.AIR_PRIMARY_NUM)
+        val mainHawbs: ArrayList<MainHawbBean> = arrayListOf(
+            MainHawbBean("756-454512445", "HWS789656"),
+            MainHawbBean("756-454512445", "HWS789656"),
+            MainHawbBean("756-454512445", "HWS789656"),
+            MainHawbBean("756-454512445", "HWS789656")
+        )
+        val config = ISCameraConfig.Builder().setHawbBeans(mainHawbs).build()
+        showRight(true, R.string.camera, {
 
-        work_main_code.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
+            ISNav.getInstance().toCamera(WorkBetchActivity@ this, config, IMAGE_REQUEST)
+        }
+        )
 
-                if (s?.length == 12) {
-
-                    val unit = Tools.getAirPrimaryCheckCode(s.toString())
-                    mainCode = s.toString() + unit
-
-                    work_main_verify.setText(unit)
-                    mainCode = mainCode?.replace(" ", "")
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
+        work_it_main.setOnClickListener(listener)
         work_battle_date.setOnClickListener(listener)
-        work_it_main_code.setOnClickListener(listener)
         work_it_hawb.setOnClickListener(listener)
+        work_battle_flight_date.setOnClickListener(listener)
 
 
+        val calendar: Calendar = Calendar.getInstance()
+
+        val currenDate: String = String.format("%04d", calendar.get(Calendar.YEAR)) + "-" + String.format(
+            "%02d",
+            (calendar.get(Calendar.MONTH) + 1)
+        ) + "-" + String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH))
+
+        work_battle_date.setText(currenDate)
         list.add("1")
         list.add("1")
         list.add("1")
@@ -71,19 +99,35 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
         val manager = LinearLayoutManager(this)
         work_recycleview.layoutManager = manager
         work_recycleview.adapter = adapter
+
+        work_recycleview.isNestedScrollingEnabled = false
+
+
+        val protectManager = LinearLayoutManager(this)
+        protectManager.orientation = LinearLayoutManager.HORIZONTAL
+
+        val subplateManager = LinearLayoutManager(this)
+        subplateManager.orientation = LinearLayoutManager.HORIZONTAL
+
+        work_protect_type_recyclerView.layoutManager = protectManager
+        work_subplate_recyclerView.layoutManager = subplateManager
+
+        work_protect_type_recyclerView.adapter = protectTypeAdapter
+        work_subplate_recyclerView.adapter = subPlateAdapter
+
     }
 
     override fun onMyClick(view: View?) {
 
         when (view?.id) {
 
-            R.id.work_it_main_code -> {
 
-                scanIntent.setRequestCode(Constant.SCAN_MAIN_REQUEST_CODE).initiateScan()
-            }
             R.id.work_it_hawb -> {
                 scanIntent.setRequestCode(Constant.SCAN_HAWB_REQUEST_CODE).initiateScan()
 
+            }
+            R.id.work_it_main -> {
+                scanIntent.setRequestCode(Constant.SCAN_MAIN_REQUEST_CODE).initiateScan()
             }
             R.id.work_battle_date -> {
 
@@ -91,7 +135,12 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
                     work_battle_date.setText(it)
 
                 })
+            }
+            R.id.work_battle_flight_date ->{
 
+                DateUtils.showDate(WorkBetchActivity@this,{it ->
+                    work_battle_flight_date.setText(it)
+                })
             }
 
 
@@ -99,10 +148,6 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
 
     }
 
-    override fun getReourceId(): Int {
-
-        return R.layout.activity_work_betch
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -114,13 +159,11 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
                 Constant.SCAN_MAIN_REQUEST_CODE -> {
 
                     val code = data?.getStringExtra(Intents.Scan.RESULT)
-                    work_main_code.setText(code)
 
                 }
                 Constant.SCAN_HAWB_REQUEST_CODE -> {
 
                     val code = data?.getStringExtra(Intents.Scan.RESULT)
-                    work_hawb.setText(code)
 
                 }
 

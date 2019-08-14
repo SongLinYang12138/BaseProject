@@ -32,13 +32,11 @@ def depend = config.appdependecies
 dependencies {
 
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+//       gosn
+//    implementation depend.gson
     implementation  depend.appcompat
     //    room
-    implementation depend.room
+    api depend.room
     annotationProcessor depend.room_compiler
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

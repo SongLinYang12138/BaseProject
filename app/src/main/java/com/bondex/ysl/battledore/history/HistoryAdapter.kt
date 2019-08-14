@@ -62,7 +62,7 @@ class HistoryAdapter(lis: MutableList<String>, activity: FragmentActivity) :
 
     protected inner class ViewHodler(view: View) : RecyclerView.ViewHolder(view) {
 
-        val clContent: ConstraintLayout = view.findViewById(R.id.item_list_content)
+        val clContent: ConstraintLayout = view.findViewById(R.id.listview_item)
 
 
 //        private val tvDate:TextView = view.findViewById(R.id.item_plan_date)

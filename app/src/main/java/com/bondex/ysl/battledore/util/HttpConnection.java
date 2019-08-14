@@ -22,29 +22,34 @@ import java.util.concurrent.TimeUnit;
  */
 public class HttpConnection {
 
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "http://cas.bondex.com.cn:8080/cslogin.jsp/";
 
     private static Retrofit getRetrofit() {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(BASE_URL)
                 .build();
 
 
         return retrofit;
     }
 
+    public static NetApi getNetApi() {
+
+        return getRetrofit().create(NetApi.class);
+
+    }
 
 
-    public static void connect(Observable<String> observable, final HttpResultBack  resultBack){
+    public static void connect(Observable<String> observable, final HttpResultBack resultBack) {
 
 
         Consumer<String> consumer = new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-
-
+                resultBack.onSuccess(s);
             }
         };
 
@@ -62,13 +67,10 @@ public class HttpConnection {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
 
-                        Logger.i("连接失败 "+throwable.getMessage());
-                    resultBack.onFaile(throwable.getMessage());
+                        Logger.i("连接失败 " + throwable.getMessage());
+                        resultBack.onFaile(throwable.getMessage());
                     }
                 });
-
-
-
 
 
     }

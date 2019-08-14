@@ -6,130 +6,87 @@
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/background_gray"
+    >
 
-        <TextView
-                android:id="@+id/mission_tv_rank"
-                app:layout_constraintTop_toTopOf="@id/mission_et_sort"
-                app:layout_constraintBottom_toBottomOf="@id/mission_et_sort"
-                android:text=""
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
+        <com.bondex.ysl.liblibrary.ui.IconText
+                android:id="@+id/mission_it_camera"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-
-                android:id="@+id/mission_et_sort"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_width="0dp"
-                android:hint="输入主单号"
-                style="@style/normal_tv_gray"
-                app:layout_constraintLeft_toRightOf="@id/mission_tv_rank"
                 android:layout_height="wrap_content"
-                app:met_underlineColor="@color/metal_gray"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                app:layout_constraintWidth_percent="0.6"
+                app:layout_constraintTop_toTopOf="@id/mission_workbetch"
+                app:layout_constraintBottom_toBottomOf="@id/mission_workbetch"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-        >
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                style="@style/icon_gray"
+                android:text="@string/camera"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimary"
+        />
 
-        </com.rengwuxian.materialedittext.MaterialEditText>
 
-
-        <com.gc.materialdesign.views.ButtonRectangle
+        <Button
                 android:id="@+id/mission_workbetch"
-                app:layout_constraintTop_toTopOf="@id/mission_et_sort"
-                app:layout_constraintBottom_toBottomOf="@id/mission_et_sort"
                 android:layout_width="wrap_content"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/item_mission_ck_all"
                 android:background="@color/colorPrimary"
-                android:layout_height="50dp">
-            <TextView
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="进入工作台"
-                    style="@style/small_tv_white"
-            />
-
-        </com.gc.materialdesign.views.ButtonRectangle>
-
+                app:layout_constraintRight_toLeftOf="@id/mission_it_camera"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="编辑"
+                style="@style/button_primary_theme"
+        >
+        </Button>
 
 
         <CheckBox
                 android:id="@+id/item_mission_ck_all"
                 android:layout_width="wrap_content"
                 android:theme="@style/primary_checkbox"
-                app:layout_constraintTop_toBottomOf="@id/mission_et_sort"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_height="wrap_content"/>
-
-
-
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  style="@style/normal_tv_gray"
-                  app:layout_constraintBottom_toBottomOf="@id/item_mission_ck_all"
-                  app:layout_constraintTop_toTopOf="@id/item_mission_ck_all"
-                  app:layout_constraintLeft_toRightOf="@id/item_mission_ck_all"
-                  android:text="分单号"
-                  android:id="@+id/item_mission_tv_hawb"
-                  app:layout_constraintRight_toLeftOf="@id/item_mission_tv_total_qty"
-        />
-
-
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  style="@style/normal_tv_gray"
-                  app:layout_constraintBottom_toBottomOf="@id/item_mission_ck_all"
-                  app:layout_constraintTop_toTopOf="@id/item_mission_ck_all"
-                  app:layout_constraintLeft_toRightOf="@id/item_mission_tv_hawb"
-                  android:text="总件数"
-                  android:id="@+id/item_mission_tv_total_qty"
-                  app:layout_constraintRight_toLeftOf="@id/item_mission_tv_total_flight"
+                app:layout_constraintTop_toTopOf="@id/mission_workbetch"
+                app:layout_constraintBottom_toBottomOf="@id/mission_workbetch"
+                android:layout_height="wrap_content"
 
         />
 
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  style="@style/normal_tv_gray"
-                  app:layout_constraintBottom_toBottomOf="@id/item_mission_ck_all"
-                  app:layout_constraintTop_toTopOf="@id/item_mission_ck_all"
-                  app:layout_constraintLeft_toRightOf="@id/item_mission_tv_total_qty"
-                  android:text="航班号"
-                  android:id="@+id/item_mission_tv_total_flight"
-                  app:layout_constraintRight_toRightOf="parent"
-        />
+        <com.bondex.ysl.battledore.ui.MenuList
+                android:id="@+id/mission_menulist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/activity_horizontal_margin"
+                android:background="@color/white_back"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                app:layout_constraintTop_toBottomOf="@id/mission_workbetch"
 
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  style="@style/normal_tv_gray"
-                  app:layout_constraintTop_toBottomOf="@id/item_mission_ck_all"
-                  app:layout_constraintLeft_toLeftOf="parent"
-                  android:text="航班日期"
-                  android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                  android:id="@+id/item_mission_date"
-        />
+        >
 
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  style="@style/normal_tv_red"
-                  android:text="2019-5-21  30M 795H"
-                  app:layout_constraintLeft_toRightOf="@id/item_mission_date"
-                  app:layout_constraintTop_toTopOf="@id/item_mission_date"
-                  android:id="@+id/item_mission_detail"
-                  android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        />
+        </com.bondex.ysl.battledore.ui.MenuList>
+
+        <com.bondex.ysl.liblibrary.ui.SearchView
+                android:id="@+id/mission_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paddingVertical"
+                app:layout_constraintTop_toBottomOf="@id/mission_menulist"
+        >
+
+
+        </com.bondex.ysl.liblibrary.ui.SearchView>
 
 
         <ListView
                 android:id="@+id/mission_expand_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:divider="@color/colorWhite"
+                android:dividerHeight="@dimen/activity_horizontal_margin"
+                android:background="@color/white_back"
                 app:layout_constraintVertical_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/item_mission_date"
+                app:layout_constraintTop_toBottomOf="@id/mission_search"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"></ListView>
 

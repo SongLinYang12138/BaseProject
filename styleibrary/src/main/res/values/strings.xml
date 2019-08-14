@@ -12,8 +12,19 @@
     <string name="arrow_right">&#xe8f1;</string>
     <string name="arrow_left">&#xe8ef;</string>
     <string name="main_menu">&#xe8bd;</string>
+    <string name="camera">&#xe661;</string>
     <string name="search">&#xe8bb;</string>
     <string name="scan">&#xe69a;</string>
+    <string name="delete">&#xe8e7;</string>
+    <string name="close">&#xe8e8;</string>
+    <string name="reduce">&#xe66a;</string>
+    <string name="add">&#xe626;</string>
+    <string name="full_left">&#xe60e;</string>
+    <string name="full_down">&#xe600;</string>
+    <string name="setting">&#xe8bc;</string>
+    <string name="setting_real">&#xe8bd;</string>
+    <string name="version">&#xe8b9;</string>
+
     <!--计划-->
     <string name="plan">&#xe643;</string>
     <!--任务-->

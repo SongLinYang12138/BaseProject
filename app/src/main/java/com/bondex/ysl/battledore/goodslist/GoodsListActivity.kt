@@ -11,6 +11,13 @@ import com.bondex.ysl.battledore.workbench.WorkBetchActivity
 import kotlinx.android.synthetic.main.activity_goods_list.*
 
 class GoodsListActivity : BaseActivity<GoodsListViewModel, ActivityGoodsListBinding>() {
+    override fun handleMessage(msg: Int?) {
+
+    }
+
+    override fun initData() {
+
+    }
 
     var list: MutableList<GoodsListBean> = mutableListOf(GoodsListBean(), GoodsListBean(), GoodsListBean(), GoodsListBean(), GoodsListBean())
 
@@ -20,7 +27,7 @@ class GoodsListActivity : BaseActivity<GoodsListViewModel, ActivityGoodsListBind
     override fun initView() {
 
 
-        showTitle("货物清单")
+        showTitle("新增计划")
         showLeft(true, object : NoDoubleClickListener() {
             override fun click(v: View?) {
 
@@ -51,7 +58,7 @@ class GoodsListActivity : BaseActivity<GoodsListViewModel, ActivityGoodsListBind
             }
             R.id.goodsl_bt_add -> {
 
-                val intent = Intent(GoodsListActivity@ this, WorkBetchActivity::class.java)
+                val intent = Intent(GoodsListActivity@this, WorkBetchActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.window_in,R.anim.window_out)
             }

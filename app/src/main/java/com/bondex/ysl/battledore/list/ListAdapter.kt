@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.TextView
 import com.bondex.ysl.battledore.R
 
 /**
@@ -62,6 +63,14 @@ class ListAdapter(lis: MutableList<ListBean>) : RecyclerView.Adapter<ListAdapter
         val flag = list?.get(p1)?.isSelect ?: false
         holder.checkBox.isChecked = flag
 
+        if(p1 == 0){
+            holder.tvStatus.setText("已完成")
+        }else if(p1 == 1){
+            holder.tvStatus.setText("提交失败")
+        }else{
+            holder.tvStatus.setText("未完成")
+
+        }
         Log.i("workBetch", "flag  " + flag + "  position  " + p1)
 
 
@@ -72,6 +81,7 @@ class ListAdapter(lis: MutableList<ListBean>) : RecyclerView.Adapter<ListAdapter
 
         val checkBox: CheckBox = view.findViewById(R.id.item_list_ck)
 
+       val tvStatus:TextView = view.findViewById(R.id.item_list_board_status)
 //        private val tvDate:TextView = view.findViewById(R.id.item_plan_date)
 //        private val tvRemain:TextView = view.findViewById(R.id.item_plan_remain)
 //        private  val tvTotal:TextView = view.findViewById(R.id.item_plan_total)

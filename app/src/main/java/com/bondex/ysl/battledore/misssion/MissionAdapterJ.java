@@ -24,8 +24,8 @@ public class MissionAdapterJ extends BaseAdapter {
 
 
     public MissionAdapterJ(List<MissionBean> list) {
-        this.list = list;
 
+        this.list = list;
 
     }
 

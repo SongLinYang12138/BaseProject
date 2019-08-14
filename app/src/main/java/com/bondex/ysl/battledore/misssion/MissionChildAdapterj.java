@@ -9,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import com.bondex.ysl.battledore.R;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -83,8 +82,10 @@ public class MissionChildAdapterj extends BaseAdapter {
 
             holder = new ViewHolder();
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mission_list_item_layout, parent, false);
+
             holder.ck = view.findViewById(R.id.item_mission_ck_hawb);
             holder.tvHawb = view.findViewById(R.id.item_mission_hawb);
+
 
             holder.ck.setChecked(selectMap.get(position) == null ? false : selectMap.get(position));
 
@@ -108,7 +109,7 @@ public class MissionChildAdapterj extends BaseAdapter {
 
         holder.ck.setChecked(selectMap.get(position) == null ? false : selectMap.get(position));
 
-        holder.tvHawb.setText(list.get(position));
+//        holder.tvHawb.setText(list.get(position));
 
         return view;
     }

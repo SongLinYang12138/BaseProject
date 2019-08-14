@@ -29,13 +29,25 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
 
     protected MyClickListener listener = new MyClickListener();
 
+    private Observer<Integer> msgObserver = new Observer<Integer>() {
+        @Override
+        public void onChanged(@Nullable Integer msg) {
+            handleMessage(msg);
+        }
+    };
     private Observer<Boolean> refershObserver = new Observer<Boolean>() {
         @Override
         public void onChanged(@Nullable Boolean isShow) {
 
+            if(isShow)showLoading();
+            else stopLoading();
 
         }
     };
+
+    public abstract void  showLoading();
+    public abstract void stopLoading();
+
 
     @Nullable
     @Override
@@ -55,6 +67,7 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
                 modelClass = BaseViewModle.class;
             }
             viewModel = (VM) createViewModel(this, modelClass);
+            viewModel.setCont(getContext());
         }
 
         getLifecycle().addObserver(viewModel);
@@ -70,6 +83,7 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
     }
 
     protected abstract void initView();
+    protected abstract void handleMessage(Integer msg);
 
 
     public <V extends ViewModel> V createViewModel(Fragment fragment, Class<V> cls) {
@@ -83,6 +97,7 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
         super.onStart();
 
         viewModel.getRefresh().observe(this, refershObserver);
+        viewModel.getMsgLiveDatas().observe(this,msgObserver);
 
 
     }
@@ -101,6 +116,7 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
 
         getLifecycle().removeObserver(viewModel);
         viewModel.getRefresh().removeObserver(refershObserver);
+        viewModel.getMsgLiveDatas().removeObserver(msgObserver);
     }
 
     protected abstract void myClick(View view);
