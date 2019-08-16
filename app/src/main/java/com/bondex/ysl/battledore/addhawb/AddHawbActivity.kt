@@ -110,7 +110,16 @@ class AddHawbActivity : BaseActivity<AddHawbViewModel, ActivityAddHawbBinding>()
                     return
                 }
                 val bundle = Bundle()
-                bundle.putParcelableArrayList(Constant.HAWB_BEAN_KEY, viewModel?.getPlanAdapter()?.mylist)
+
+                /*
+                * 确保workBetchActivity中的数据一致，和PlanFragment中一样传递Arrlist<PlanBean>
+                * */
+                val planBeans = arrayListOf<PlanBean>()
+                val planBean = PlanBean()
+                planBean.hawbs = viewModel?.getPlanAdapter()?.mylist
+                planBeans.add(planBean)
+
+                bundle.putParcelableArrayList(Constant.PLAN_BEAN_KEY, planBeans)
 
                 val intent = Intent(activity, WorkBetchActivity::class.java)
                 intent.putExtras(bundle)

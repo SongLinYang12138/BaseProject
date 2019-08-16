@@ -226,7 +226,6 @@ class PlanViewModel : BaseViewModle() {
             override fun accept(t: String?) {
                 setMsgLiveDataValue(1)
 
-                Log.i("aaa", " searc  " + searBeans.size)
 
             }
 

@@ -84,7 +84,6 @@ public class AddHawbAdapter extends RecyclerView.Adapter<AddHawbAdapter.ViewHold
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int postion = (int) buttonView.getTag();
                 selected.put(postion, isChecked);
-                Log.i(Constant.TAG,selected.toString());
             }
         });
 

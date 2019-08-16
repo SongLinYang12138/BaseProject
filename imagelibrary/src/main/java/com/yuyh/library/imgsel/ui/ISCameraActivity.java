@@ -178,7 +178,6 @@ public class ISCameraActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
 
             ArrayList<CharSequence> list = data.getCharSequenceArrayListExtra(CameraActivity.FINISH_KEY);
-            if (list != null) Log.i("aaa", ISCameraActivity.class.getSimpleName() + "   " + list.size());
             complete(list);
         }
 

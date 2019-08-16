@@ -104,7 +104,7 @@ class WorkBentchChoiceAdapter(list: MutableList<WorkBentchChoiceBean>) :
         p0.tv.setTag(p1)
 
         p0.tv.setText(bean.name)
-        p0.rde.editText.setText(bean.count.toString())
+        if (bean.count > 0) p0.rde.editText.setText(bean.count.toString())
 
 
     }

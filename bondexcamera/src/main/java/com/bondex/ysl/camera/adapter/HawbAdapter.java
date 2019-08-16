@@ -114,7 +114,6 @@ public class HawbAdapter extends BaseAdapter {
 
                     int position = (int) v.getTag();
 
-                    Log.i("aaa", "postion  " + position);
                     selectPosition = position;
                     notifyDataSetChanged();
                 }

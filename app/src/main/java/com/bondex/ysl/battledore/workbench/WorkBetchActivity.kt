@@ -4,24 +4,23 @@ import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.SpinnerAdapter
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseActivity
 import com.bondex.ysl.battledore.databinding.ActivityWorkBetchBinding
 import com.bondex.ysl.battledore.plan.PlanBean
 import com.bondex.ysl.battledore.util.Constant
+import com.bondex.ysl.battledore.util.ToastUtils
 import com.bondex.ysl.camera.ISCameraConfig
 import com.bondex.ysl.camera.ISNav
 import com.bondex.ysl.camera.MainHawbBean
-import com.bondex.ysl.databaselibrary.base.bean.PlateType
-import com.bondex.ysl.databaselibrary.hawb.HAWBBean
 import com.bondex.ysl.liblibrary.utils.*
 import com.google.zxing.client.android.Intents
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_work_betch.*
-import kotlinx.android.synthetic.main.main_title.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -31,9 +30,7 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
     val scanIntent = IntentIntegrator(WorkBetchActivity@ this)
     var mainCode: String? = null
     val IMAGE_REQUEST: Int = 111
-    var isMission: Boolean = false //判断是否从打板计划界面进入
     var planBeans = arrayListOf<PlanBean>() //打板计划界面传递的数据
-    var hawbBeans = arrayListOf<HAWBBean>()//打板任务界面传递的数据
 
     var plateTypePostion = 0
 
@@ -48,8 +45,10 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
             work_battle_flight_date.setText(t.flghtDate)
             work_plate_num.setText(t.boardNum)
             work_plate_lock.setText(t.lockNum)
-            work_plate_type.prompt = t.plateType.name
 
+            if (t.plateType == null || TextUtils.isEmpty(t.plateType.name))
+                work_plate_type.prompt = viewModel.plateTypeList.get(0).name
+            else work_plate_type.prompt = t.plateType.name
 
         }
     }
@@ -99,7 +98,7 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
 
         work_battle_date.setText(currenDate)
 
-        viewModel.setDatas(isMission, planBeans, hawbBeans)
+        viewModel.setDatas(planBeans)
 
         val manager = LinearLayoutManager(this)
         work_recycleview.layoutManager = manager
@@ -164,13 +163,8 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
 
         val bundle = intent.extras
 
-        if (bundle.containsKey(Constant.PLAN_BEAN_KEY)) {
-            planBeans = bundle.getParcelableArrayList(Constant.PLAN_BEAN_KEY)
-            isMission = false
-        } else {
-            hawbBeans = bundle.getParcelableArrayList(Constant.HAWB_BEAN_KEY)
-            isMission = true
-        }
+        planBeans = bundle.getParcelableArrayList(Constant.PLAN_BEAN_KEY)
+
     }
 
     override fun onMyClick(view: View?) {
@@ -206,6 +200,9 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
                 viewModel.next()
             }
             R.id.work_bt_save -> {
+
+                val planBean: PlanBean = PlanBean()
+                shouldSave(planBean)
 
             }
 
@@ -246,6 +243,36 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
 
         val planBean = PlanBean()
 
+        if (!shouldSave(planBean)) {
+            return
+        }
+
+        viewModel.planBeans.add(planBean)
+
+
+        work_battle_flight.text.clear()
+        work_battle_detination.text.clear()
+        work_plate_num.text.clear()
+        work_plate_lock.text.clear()
+        val calendar: Calendar = Calendar.getInstance()
+
+        val currenDate: String = String.format("%04d", calendar.get(Calendar.YEAR)) + "-" + String.format(
+            "%02d",
+            (calendar.get(Calendar.MONTH) + 1)
+        ) + "-" + String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH))
+
+        work_battle_date.setText(currenDate)
+        work_battle_flight_date.setText(currenDate)
+        viewModel.adapter.clear()
+        viewModel.protectTypeAdapter.clear()
+        viewModel.subPlateAdapter.clear()
+        viewModel.protectTypeAdapter.updateList(viewModel.protectTypeList)
+        viewModel.subPlateAdapter.updateList(viewModel.subPlateList)
+
+    }
+
+    private fun shouldSave(planBean: PlanBean): Boolean {
+
         val flgiht = work_battle_flight.text.toString()
         val destination = work_battle_detination.text.toString()
         val flight_date = work_battle_flight_date.text.toString()
@@ -253,10 +280,41 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
         val boardLock = work_plate_lock.text.toString()
         val battlerDate = work_battle_date.text.toString()
 
+
+        if (TextUtils.isEmpty(flgiht)) {
+            ToastUtils.showShort("请输入航班号")
+            return false
+        }
+
+        if (TextUtils.isEmpty(destination)) {
+            ToastUtils.showShort("请输入目的港")
+            return false
+        }
+        if (TextUtils.isEmpty(boardNum)) {
+            ToastUtils.showShort("请输入板号")
+            return false
+        }
+
+
         val plateType = viewModel.plateTypeList.get(plateTypePostion)
         val protectList = viewModel.protectTypeAdapter.selectList
         val subPlateList = viewModel.subPlateAdapter.selectList
+        Log.i(Constant.TAG, "protectSize " + protectList.size + "  subplate " + subPlateList.size)
+
+        if (protectList.size == 0) {
+            ToastUtils.showShort("请选择保护类型")
+            return false
+        }
+
+
+        if (subPlateList.size == 0) {
+            ToastUtils.showShort("请选择垫板类型")
+            return false
+        }
+
+
         val hawbs = viewModel.adapter.list
+
 
         planBean.flight = flgiht
         planBean.destination = destination
@@ -269,30 +327,7 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
         planBean.subPlateTypel = subPlateList
         planBean.hawbs = hawbs
 
-        viewModel.saveList.add(planBean)
-
-
-        work_battle_flight.text.clear()
-        work_battle_detination.text.clear()
-        work_battle_flight_date.text.clear()
-        work_plate_num.text.clear()
-        work_plate_lock.text.clear()
-        val calendar: Calendar = Calendar.getInstance()
-
-        val currenDate: String = String.format("%04d", calendar.get(Calendar.YEAR)) + "-" + String.format(
-            "%02d",
-            (calendar.get(Calendar.MONTH) + 1)
-        ) + "-" + String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH))
-
-        work_battle_date.setText(currenDate)
-
-        viewModel.hawbBeans.clear()
-        viewModel.adapter.clear()
-        viewModel.protectTypeAdapter.clear()
-        viewModel.subPlateAdapter.clear()
-        viewModel.protectTypeAdapter.updateList(viewModel.protectTypeList)
-        viewModel.subPlateAdapter.updateList(viewModel.subPlateList)
-
+        return true
     }
 }
 

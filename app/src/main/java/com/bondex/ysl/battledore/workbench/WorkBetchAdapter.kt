@@ -70,7 +70,7 @@ class WorkBetchAdapter(list: ArrayList<HAWBBean>) : RecyclerView.Adapter<WorkBet
         holder.tvMhawb.setText(hawbBean.getmBillCode())
         holder.tvhwab.setText(hawbBean.hawb)
         holder.tvQty.setText(hawbBean.qty.toString())
-        holder.etLoad.editText.setText(hawbBean.qty.toString())
+        if (hawbBean.qty > 0) holder.etLoad.editText.setText(hawbBean.qty.toString())
     }
 
 

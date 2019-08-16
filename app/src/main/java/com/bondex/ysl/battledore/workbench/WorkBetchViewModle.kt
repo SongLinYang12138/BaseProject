@@ -16,9 +16,8 @@ import com.bondex.ysl.databaselibrary.hawb.HAWBBean
 class WorkBetchViewModle : BaseViewModle() {
 
 
-    private var isMission: Boolean = false
-    private var planBeans = arrayListOf<PlanBean>()
-    var hawbBeans = arrayListOf<HAWBBean>()
+    var planBeans = arrayListOf<PlanBean>()
+
 
     val plateTypeList = mutableListOf<WorkBentchChoiceBean>(
         WorkBentchChoiceBean("大", 1, 0),
@@ -36,59 +35,49 @@ class WorkBetchViewModle : BaseViewModle() {
         WorkBentchChoiceBean("老件", 1, 0),
         WorkBentchChoiceBean("新件", 2, 0)
     )
+    val protectTypeAdapter: WorkBentchChoiceAdapter = WorkBentchChoiceAdapter(protectTypeList) //保护类型
+    val subPlateAdapter: WorkBentchChoiceAdapter = WorkBentchChoiceAdapter(subPlateList)//垫板类型
+    val adapter = WorkBetchAdapter(arrayListOf())//分单
 
 
-    val saveList = arrayListOf<PlanBean>() //用于保存在打板任务中本次工作缓存下来的数据
+    private var currentPosition: Int = 0 //代表当前页数
     /*
     * 用于viewmodel和activity中进行通讯*/
     private val planData = MutableLiveData<PlanBean>()
 
-    private var currentPosition: Int = 0 //代表当前页数
 
-    val adapter = WorkBetchAdapter(hawbBeans)
+    fun setDatas(planBeans: ArrayList<PlanBean>) {
 
-    val protectTypeAdapter: WorkBentchChoiceAdapter = WorkBentchChoiceAdapter(protectTypeList)
-    val subPlateAdapter: WorkBentchChoiceAdapter = WorkBentchChoiceAdapter(subPlateList)
-
-
-    fun setDatas(flag: Boolean, planBeans: ArrayList<PlanBean>, hawbBean: ArrayList<HAWBBean>) {
-
-        this.isMission = flag
         this.planBeans = planBeans
-        this.hawbBeans = hawbBean
 
-        if (isMission) adapter.updateList(hawbBeans)
-        else {
-
-            adapter.updateList(planBeans.get(0).hawbs)
-            setPlanLiveData(planBeans.get(0))
-        }
+        adapter.updateList(planBeans.get(0).hawbs)
+        setPlanLiveData(planBeans.get(0))
     }
 
 
     fun last() {
 
-        if (currentPosition == 0 || isMission) {
+        if (currentPosition == 0) {
             ToastUtils.showShort("当前已是第一页")
             return
         }
 
         --currentPosition
         setPlanLiveData(planBeans.get(currentPosition))
+        adapter.updateList(planBeans.get(currentPosition).hawbs)
     }
 
     fun next() {
 
         if (currentPosition == planBeans.size - 1) {
-            ToastUtils.showShort("当前已是最后一页")
-            return
-        }
-        ++currentPosition
 
-        if (isMission) { //当数据来源于打板任务，上一页就是新建页面
             setMsgLiveDataValue(1)
-        } else setPlanLiveData(planBeans.get(currentPosition))
+        } else {
 
+            ++currentPosition
+            setPlanLiveData(planBeans.get(currentPosition))
+            adapter.updateList(planBeans.get(currentPosition).hawbs)
+        }
 
     }
 
@@ -123,7 +112,6 @@ class WorkBetchViewModle : BaseViewModle() {
 
     override fun onStart() {
 
-        saveList.clear()
     }
 
     override fun onStop() {
@@ -131,7 +119,6 @@ class WorkBetchViewModle : BaseViewModle() {
 
     override fun onDestroy() {
 
-        saveList.clear()
     }
 
     override fun registerRxBus() {

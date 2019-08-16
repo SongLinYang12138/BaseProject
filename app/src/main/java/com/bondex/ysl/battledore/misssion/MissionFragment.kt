@@ -134,7 +134,6 @@ class MissionFragment : BaseFragment<MissionViewModel, FragmentMissionBinding>()
 
         val list: ArrayList<CharSequence>? = data?.getCharSequenceArrayListExtra("result")
         val list1: ArrayList<CharSequence>? = data?.getCharSequenceArrayListExtra("camera_key")
-        Log.i("aaa", "onActivity result" + "  " + list1?.get(0) + " 2 " + list1?.size)
     }
 
 

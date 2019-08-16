@@ -67,7 +67,6 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
 
         val str = json.toString()
 
-        Log.i("aaa","json参数"+str)
         HttpConnection.connect(HttpConnection.getNetApi().getAirPort(str), object : HttpResultBack {
             override fun onFaile(error: String) {
 

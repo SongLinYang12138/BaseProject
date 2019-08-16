@@ -40,6 +40,15 @@ public class ReduceAddEditText extends ConstraintLayout {
         tvReduce = findViewById(R.id.reduce);
         tvAdd = findViewById(R.id.add);
         editText = findViewById(R.id.edit);
+
+        editText.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if (hasFocus) editText.selectAll();
+
+            }
+        });
         initClick();
     }
 
@@ -81,7 +90,7 @@ public class ReduceAddEditText extends ConstraintLayout {
         return value;
     }
 
-    public EditText getEditText(){
+    public EditText getEditText() {
 
         return editText;
     }

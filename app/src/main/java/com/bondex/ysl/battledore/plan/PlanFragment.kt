@@ -155,7 +155,6 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
                 adapter?.updataList(viewModel.getSearch())
                 plan_search.edit.addTextChangedListener(searchWatcher)
 
-                Log.i("aaa", "count " + adapter?.itemCount)
             }
 
         }

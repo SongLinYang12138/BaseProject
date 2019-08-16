@@ -41,7 +41,6 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
     fun updataList(list: ArrayList<PlanBean>) {
 
         this.list = list
-        Log.i("aaa", "adapter szie " + this?.list?.size)
         notifyDataSetChanged()
     }
 
