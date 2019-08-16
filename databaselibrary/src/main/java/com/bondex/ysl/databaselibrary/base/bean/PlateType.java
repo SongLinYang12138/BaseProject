@@ -3,6 +3,8 @@ package com.bondex.ysl.databaselibrary.base.bean;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 /**
@@ -11,7 +13,10 @@ import android.support.annotation.NonNull;
  * description:板型
  */
 @Entity
-public class PlateType {
+public class PlateType implements Parcelable {
+    public PlateType() {
+
+    }
 
     @PrimaryKey
     @NonNull
@@ -22,6 +27,25 @@ public class PlateType {
     private String plateName;
     @ColumnInfo(name = "cityId")
     private int cityId;//这里的cityId等于每个机场的三字码
+
+    protected PlateType(Parcel in) {
+        id = in.readString();
+        plateId = in.readString();
+        plateName = in.readString();
+        cityId = in.readInt();
+    }
+
+    public static final Creator<PlateType> CREATOR = new Creator<PlateType>() {
+        @Override
+        public PlateType createFromParcel(Parcel in) {
+            return new PlateType(in);
+        }
+
+        @Override
+        public PlateType[] newArray(int size) {
+            return new PlateType[size];
+        }
+    };
 
     @NonNull
     public String getId() {
@@ -36,7 +60,7 @@ public class PlateType {
         return plateId == null ? "" : plateId;
     }
 
-    public void setPlateId( String plateId) {
+    public void setPlateId(String plateId) {
         this.plateId = plateId == null ? "" : plateId;
     }
 
@@ -54,5 +78,18 @@ public class PlateType {
 
     public void setCityId(int cityId) {
         this.cityId = cityId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(plateId);
+        dest.writeString(plateName);
+        dest.writeInt(cityId);
     }
 }

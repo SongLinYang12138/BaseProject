@@ -3,6 +3,8 @@ package com.bondex.ysl.databaselibrary.base.bean;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 /**
@@ -11,7 +13,7 @@ import android.support.annotation.NonNull;
  * description:垫板类型
  */
 @Entity
-public class SubPlateType {
+public class SubPlateType implements Parcelable {
 
     @PrimaryKey
     @NonNull
@@ -23,6 +25,26 @@ public class SubPlateType {
     @ColumnInfo(name = "cityId")
     private int cityId;
 
+
+
+    protected SubPlateType(Parcel in) {
+        id = in.readString();
+        subplateName = in.readString();
+        subplateId = in.readString();
+        cityId = in.readInt();
+    }
+
+    public static final Creator<SubPlateType> CREATOR = new Creator<SubPlateType>() {
+        @Override
+        public SubPlateType createFromParcel(Parcel in) {
+            return new SubPlateType(in);
+        }
+
+        @Override
+        public SubPlateType[] newArray(int size) {
+            return new SubPlateType[size];
+        }
+    };
 
     public int getCityId() {
         return cityId;
@@ -55,5 +77,21 @@ public class SubPlateType {
 
     public void setSubplateId(String subplateId) {
         this.subplateId = subplateId == null ? "" : subplateId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public SubPlateType() {
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(subplateName);
+        dest.writeString(subplateId);
+        dest.writeInt(cityId);
     }
 }

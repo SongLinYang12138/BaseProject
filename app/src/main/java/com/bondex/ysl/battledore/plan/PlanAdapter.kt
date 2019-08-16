@@ -2,20 +2,20 @@ package com.bondex.ysl.battledore.plan
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
+import android.util.ArrayMap
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.addhawb.AddHawbActivity
 import com.bondex.ysl.battledore.goodslist.GoodsListActivity
+import com.bondex.ysl.battledore.util.Constant
 import com.bondex.ysl.battledore.util.ToastUtils
 import com.bondex.ysl.battledore.workbench.WorkBetchActivity
 import com.bondex.ysl.liblibrary.ui.IconText
@@ -33,15 +33,29 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
 
 
     protected var context: Context? = null
-
     protected var list: ArrayList<PlanBean>? = lis
     private val activity = activity
+    private val selectedMap = ArrayMap<Int, Boolean>()
+    private var selectAll = false
 
 
     fun updataList(list: ArrayList<PlanBean>) {
 
         this.list = list
+        Log.i("aaa", "adapter szie " + this?.list?.size)
+        notifyDataSetChanged()
+    }
 
+    fun isAll(select: Boolean) {
+
+        this.selectAll = select
+        if (!select) {
+
+            for (it in selectedMap) {
+                selectedMap.set(it.key, false)
+            }
+
+        }
         notifyDataSetChanged()
     }
 
@@ -53,11 +67,25 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
         val holder = ViewHodler(view)
 
 
+        holder.ck.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+
+                val position = buttonView?.getTag() as Int
+                selectedMap.put(position, isChecked)
+
+            }
+        })
+
         holder.itAdd.setOnClickListener(object : NoDoubleClickListener() {
             override fun click(v: View?) {
 
+                val position = v?.getTag() as Int
                 val intent = Intent(context, AddHawbActivity::class.java)
                 intent.putExtra("title", "货物清单")
+
+                val bundle = Bundle()
+                bundle.putParcelable(Constant.PLAN_BEAN_KEY, list?.get(position))
+                intent.putExtras(bundle)
                 context?.startActivity(intent)
 
             }
@@ -66,7 +94,13 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
         holder.itContent.setOnClickListener(object : NoDoubleClickListener() {
             override fun click(v: View?) {
 
+
+                val position = v?.getTag() as Int
                 val intent = Intent(context, WorkBetchActivity::class.java)
+
+                val bundle = Bundle()
+                bundle.putParcelable(Constant.PLAN_BEAN_KEY, list?.get(position))
+                intent.putExtras(bundle)
                 context?.startActivity(intent)
             }
 
@@ -82,6 +116,9 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
     override fun onBindViewHolder(hodler: ViewHodler, p1: Int) {
 
         hodler.itAdd.setTag(p1)
+        hodler.itContent.setTag(p1)
+        hodler.ck.setTag(p1)
+
         val planBean = list?.get(p1)
         if (planBean != null) {
 
@@ -91,6 +128,12 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
             hodler.tvFlight.setText(planBean.flight)
             hodler.tvDestination.setText(planBean.destination)
             hodler.tvDate.setText("航班日期" + planBean.flghtDate)
+
+            if (selectAll) {
+                hodler.ck.isChecked = true
+            } else if (selectedMap.contains(p1)) {
+                hodler.ck.isChecked = selectedMap.get(p1)!!
+            } else hodler.ck.isChecked = false
         }
     }
 
@@ -105,6 +148,7 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
         val tvFlight: TextView = view.findViewById(R.id.item_plan_flight)
         val tvDestination: TextView = view.findViewById(R.id.item_plan_destination)
         val tvDate: TextView = view.findViewById(R.id.item_plan_date)
+        val ck: CheckBox = view.findViewById(R.id.item_plan_ck)
 
     }
 

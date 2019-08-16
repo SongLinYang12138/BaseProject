@@ -39,13 +39,14 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
         @Override
         public void onChanged(@Nullable Boolean isShow) {
 
-            if(isShow)showLoading();
+            if (isShow) showLoading();
             else stopLoading();
 
         }
     };
 
-    public abstract void  showLoading();
+    public abstract void showLoading();
+
     public abstract void stopLoading();
 
 
@@ -83,6 +84,7 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
     }
 
     protected abstract void initView();
+
     protected abstract void handleMessage(Integer msg);
 
 
@@ -97,7 +99,7 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
         super.onStart();
 
         viewModel.getRefresh().observe(this, refershObserver);
-        viewModel.getMsgLiveDatas().observe(this,msgObserver);
+        viewModel.getMsgLiveDatas().observe(this, msgObserver);
 
 
     }
@@ -121,7 +123,7 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
 
     protected abstract void myClick(View view);
 
-    protected class MyClickListener extends NoDoubleClickListener{
+    protected class MyClickListener extends NoDoubleClickListener {
         @Override
         public void click(View v) {
 

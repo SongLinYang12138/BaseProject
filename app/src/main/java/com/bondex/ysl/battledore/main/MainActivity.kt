@@ -8,6 +8,7 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -20,6 +21,8 @@ import com.bondex.ysl.battledore.login.LoginActivity
 import com.bondex.ysl.battledore.misssion.MissionFragment
 import com.bondex.ysl.battledore.plan.PlanFragment
 import com.bondex.ysl.battledore.util.Constant
+import com.bondex.ysl.battledore.util.HttpConnection
+import com.bondex.ysl.battledore.util.interf.HttpResultBack
 import com.bondex.ysl.battledore.util.interf.ModelCallback
 import com.bondex.ysl.databaselibrary.contact.ContactBean
 import com.bondex.ysl.databaselibrary.login.LoginBean
@@ -27,6 +30,7 @@ import com.bondex.ysl.liblibrary.utils.CommonUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_title.*
 import kotlinx.android.synthetic.main.toolbar_title.*
+import org.json.JSONObject
 
 
 class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
@@ -50,8 +54,34 @@ class MainActivity : BaseActivity<MainViewModle, ActivityMainBinding>() {
 
     override fun initData() {
 
-
         checkpermission()
+    }
+
+    private fun getAirPort() {
+
+        val json = JSONObject()
+
+        json.put("sLike","iv")
+        json.put("maxTotal","10")
+        json.put("fields","country,code")
+
+        val str = json.toString()
+
+        Log.i("aaa","json参数"+str)
+        HttpConnection.connect(HttpConnection.getNetApi().getAirPort(str), object : HttpResultBack {
+            override fun onFaile(error: String) {
+
+                Log.i("aaa", "error  " + error)
+            }
+
+            override fun onSuccess(data: String) {
+
+                Log.i("aaa", "success  " + data)
+
+            }
+        })
+
+
     }
 
 

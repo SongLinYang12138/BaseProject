@@ -31,4 +31,8 @@ public interface NetApi {
     @POST("http://cas.bondex.com.cn:8080/castokenValidate.jsp")
     Observable<String> isTokenValid(@Field("token") String token);
 
+    @FormUrlEncoded
+    @POST("http://baseinfo.bondex.com.cn:8080/apis/airport")
+    Observable<String> getAirPort(@Field("param")String slike);
+
 }

@@ -1,12 +1,15 @@
 package com.bondex.ysl.databaselibrary.hawb;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * date: 2019/8/12
  * Author: ysl
  * description:分单数据
  */
 //@Entity
-public class HAWBBean {
+public class HAWBBean implements Parcelable {
 //    mBillCode:主单号，String
 //    hawbCode:分单号，String
 //    allQty:分单总件数,String
@@ -36,7 +39,6 @@ public class HAWBBean {
 //    private String date;//航班日期
 
 
-
     private String id;
     private String mBillCode;
     private String hawb;
@@ -47,11 +49,35 @@ public class HAWBBean {
     private String detination;
     private String date;//航班日期
 
+    protected HAWBBean(Parcel in) {
+        id = in.readString();
+        mBillCode = in.readString();
+        hawb = in.readString();
+        Qty = in.readInt();
+        Weight = in.readString();
+        Volume = in.readString();
+        flight = in.readString();
+        detination = in.readString();
+        date = in.readString();
+    }
+
+    public static final Creator<HAWBBean> CREATOR = new Creator<HAWBBean>() {
+        @Override
+        public HAWBBean createFromParcel(Parcel in) {
+            return new HAWBBean(in);
+        }
+
+        @Override
+        public HAWBBean[] newArray(int size) {
+            return new HAWBBean[size];
+        }
+    };
+
     public String getId() {
         return id == null ? "" : id;
     }
 
-    public void setId( String id) {
+    public void setId(String id) {
         this.id = id == null ? "" : id;
     }
 
@@ -117,6 +143,42 @@ public class HAWBBean {
 
     public void setDate(String date) {
         this.date = date == null ? "" : date;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        HAWBBean bean = (HAWBBean) obj;
+
+        if (bean == null) return false;
+
+        return this.getmBillCode().equals(bean.getmBillCode()) && this.hawb.equals(bean.getHawb());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getmBillCode().hashCode() * this.getHawb().hashCode();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public HAWBBean() {
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(mBillCode);
+        dest.writeString(hawb);
+        dest.writeInt(Qty);
+        dest.writeString(Weight);
+        dest.writeString(Volume);
+        dest.writeString(flight);
+        dest.writeString(detination);
+        dest.writeString(date);
     }
 }
 

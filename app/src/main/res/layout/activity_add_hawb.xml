@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/add_hawb_edit"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/margin_small"
         />
 
 
@@ -63,7 +63,7 @@
                 android:id="@+id/add_hawb_tv_plan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/margin_small"
+                android:paddingVertical="@dimen/padding_large"
                 app:layout_constraintTop_toBottomOf="@id/lin1"
                 android:text="计划清单"
                 style="@style/normal_tv_gray"
@@ -96,8 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/add_hawb_tv_list"
-                android:layout_marginTop="@dimen/margin_small"
-                android:paddingVertical="@dimen/paddingVertical"
+                android:paddingVertical="@dimen/margin_small"
                 android:background="@color/white_back"
         >
 
@@ -110,7 +109,7 @@
 
         </com.bondex.ysl.liblibrary.ui.SearchView>
         <View android:layout_width="match_parent"
-              android:layout_height="8dp"
+              android:layout_height="1dp"
         android:background="@color/white_back"
               android:id="@+id/line3"
               app:layout_constraintTop_toBottomOf="@id/add_hawb_search"

@@ -71,7 +71,6 @@ class ListAdapter(lis: MutableList<ListBean>) : RecyclerView.Adapter<ListAdapter
             holder.tvStatus.setText("未完成")
 
         }
-        Log.i("workBetch", "flag  " + flag + "  position  " + p1)
 
 
     }

@@ -29,11 +29,11 @@
                 android:layout_width="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:background="@color/colorPrimary"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/margin_small"
                 android:layout_height="50dp"
                 app:layout_constraintLeft_toRightOf="@id/list_chck_all"
                 app:layout_constraintRight_toLeftOf="@id/list_cancel"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/margin_small"
         >
             <TextView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -87,8 +87,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white_back"
                 app:layout_constraintTop_toBottomOf="@id/list_commit"
-                android:paddingVertical="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:paddingVertical="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
         >
         </com.bondex.ysl.battledore.ui.MenuList>
         <com.bondex.ysl.liblibrary.ui.SearchView

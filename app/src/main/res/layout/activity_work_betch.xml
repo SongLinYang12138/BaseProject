@@ -27,7 +27,7 @@
                 android:layout_height="30dp"
                 android:background="@color/colorPrimary"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                app:layout_constraintRight_toLeftOf="@id/work_bt_save"
                 android:src="@mipmap/last"
                 android:scaleType="fitXY"
         >
@@ -54,12 +54,11 @@
                 app:layout_constraintTop_toTopOf="@id/work_bt_save"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-
+                app:layout_constraintLeft_toRightOf="@id/work_bt_save"
                 android:background="@color/colorPrimary"
                 android:src="@mipmap/next"
                 app:layout_constraintRight_toRightOf="parent"
                 android:scaleType="fitXY"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
         >
 
         </ImageButton>

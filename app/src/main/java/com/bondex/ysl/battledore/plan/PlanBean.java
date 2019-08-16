@@ -1,11 +1,15 @@
 package com.bondex.ysl.battledore.plan;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import com.bondex.ysl.databaselibrary.base.bean.PlateType;
 import com.bondex.ysl.databaselibrary.base.bean.ProtectType;
 import com.bondex.ysl.databaselibrary.base.bean.SubPlateType;
 import com.bondex.ysl.databaselibrary.hawb.HAWBBean;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,8 +59,10 @@ import java.util.List;
         }
         ]}}
         ]*/
-public class PlanBean{
+public class PlanBean implements Parcelable {
 
+
+    private String id;
     private String mBillTotal;
     private String hawbTotal;
     private int QtyTotal;
@@ -65,12 +71,81 @@ public class PlanBean{
     private String Flight;
     private String flghtDate;
     private String Destination;
-    private List<PlateType> plateType;
+    private String boardNum;//板号
+    private String lockNum;//板锁号
+    private ArrayList<PlateType> plateType;
 
-    private List<ProtectType> protectType;
-    private List<SubPlateType> subPlateTypel;
-    private List<HAWBBean> Hawbs;
+    private ArrayList<ProtectType> protectType;
+    private ArrayList<SubPlateType> subPlateTypel;
+    private ArrayList<HAWBBean> hawbs;
+    private String search;//用于在binearySearch中进行搜索的字段
 
+    public PlanBean() {
+    }
+
+    protected PlanBean(Parcel in) {
+        id = in.readString();
+        mBillTotal = in.readString();
+        hawbTotal = in.readString();
+        QtyTotal = in.readInt();
+        WeightTotal = in.readString();
+        VolumeTotal = in.readString();
+        Flight = in.readString();
+        flghtDate = in.readString();
+        Destination = in.readString();
+        boardNum = in.readString();
+        lockNum = in.readString();
+        plateType = in.createTypedArrayList(PlateType.CREATOR);
+        protectType = in.createTypedArrayList(ProtectType.CREATOR);
+        subPlateTypel = in.createTypedArrayList(SubPlateType.CREATOR);
+        hawbs = in.createTypedArrayList(HAWBBean.CREATOR);
+        search = in.readString();
+    }
+
+    public static final Creator<PlanBean> CREATOR = new Creator<PlanBean>() {
+        @Override
+        public PlanBean createFromParcel(Parcel in) {
+            return new PlanBean(in);
+        }
+
+        @Override
+        public PlanBean[] newArray(int size) {
+            return new PlanBean[size];
+        }
+    };
+
+    public String getBoardNum() {
+        return boardNum == null ? "" : boardNum;
+    }
+
+    public void setBoardNum(String boardNum) {
+        this.boardNum = boardNum == null ? "" : boardNum;
+    }
+
+    public String getLockNum() {
+        return lockNum == null ? "" : lockNum;
+    }
+
+    public void setLockNum(String lockNum) {
+        this.lockNum = lockNum == null ? "" : lockNum;
+    }
+
+
+    public String getId() {
+        return id == null ? "" : id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? "" : id;
+    }
+
+    public String getSearch() {
+        return search == null ? "" : search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search == null ? "" : search;
+    }
 
     public String getmBillTotal() {
         return mBillTotal == null ? "" : mBillTotal;
@@ -136,37 +211,61 @@ public class PlanBean{
         Destination = destination == null ? "" : destination;
     }
 
-    public List<PlateType> getPlateType() {
+    public ArrayList<PlateType> getPlateType() {
         return plateType;
     }
 
-    public void setPlateType(List<PlateType> plateType) {
+    public void setPlateType(ArrayList<PlateType> plateType) {
         this.plateType = plateType;
     }
 
-    public List<ProtectType> getProtectType() {
+    public ArrayList<ProtectType> getProtectType() {
         return protectType;
     }
 
-    public void setProtectType(List<ProtectType> protectType) {
+    public void setProtectType(ArrayList<ProtectType> protectType) {
         this.protectType = protectType;
     }
 
-    public List<SubPlateType> getSubPlateTypel() {
+    public ArrayList<SubPlateType> getSubPlateTypel() {
         return subPlateTypel;
     }
 
-    public void setSubPlateTypel(List<SubPlateType> subPlateTypel) {
+    public void setSubPlateTypel(ArrayList<SubPlateType> subPlateTypel) {
         this.subPlateTypel = subPlateTypel;
     }
 
-    public List<HAWBBean> getHawbs() {
-        return Hawbs;
+    public ArrayList<HAWBBean> getHawbs() {
+        return hawbs;
     }
 
-    public void setHawbs(List<HAWBBean> hawbs) {
-        Hawbs = hawbs;
+    public void setHawbs(ArrayList<HAWBBean> hawbs) {
+        this.hawbs = hawbs;
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(mBillTotal);
+        dest.writeString(hawbTotal);
+        dest.writeInt(QtyTotal);
+        dest.writeString(WeightTotal);
+        dest.writeString(VolumeTotal);
+        dest.writeString(Flight);
+        dest.writeString(flghtDate);
+        dest.writeString(Destination);
+        dest.writeString(boardNum);
+        dest.writeString(lockNum);
+        dest.writeTypedList(plateType);
+        dest.writeTypedList(protectType);
+        dest.writeTypedList(subPlateTypel);
+        dest.writeTypedList(hawbs);
+        dest.writeString(search);
+    }
 }

@@ -2,14 +2,16 @@ package com.bondex.ysl.battledore.plan
 
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.CompoundButton
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.addhawb.AddHawbActivity
 import com.bondex.ysl.battledore.base.BaseFragment
 import com.bondex.ysl.battledore.databinding.FragmentPlanBinding
-import com.bondex.ysl.battledore.goodslist.GoodsListActivity
 import com.bondex.ysl.battledore.ui.MenuList
 import com.bondex.ysl.battledore.ui.TextItemDecoration
 import com.bondex.ysl.battledore.util.Constant
@@ -40,12 +42,33 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
     )
     private val cameraConfig: ISCameraConfig = ISCameraConfig.Builder().setHawbBeans(mainHawbs).build()
 
+    val searchWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+
+            if (s?.length!! >= 2) {
+
+                search(s.toString())
+            } else if (s?.length == 0) {
+
+                adapter?.updataList(viewModel.getList())
+            }
+
+        }
+    }
 
     override fun getResourceId(): Int {
 
         return R.layout.fragment_plan
     }
-
 
 
     override fun initView() {
@@ -74,12 +97,15 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
         plan_search.edit.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         plan_search.edit.setHint("主单号\\分单号\\航班号\\目的港")
 
-        list.add("1")
-        list.add("1")
-        list.add("1")
-        list.add("1")
-        list.add("1")
 
+
+        plan_search.edit.addTextChangedListener(searchWatcher)
+
+        list.add("1")
+        list.add("1")
+        list.add("1")
+        list.add("1")
+        list.add("1")
 
 
         plan_menu.addData(menuList)
@@ -91,7 +117,21 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
             }
         })
 
-        initList()
+        plan_ck_all.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+
+
+                    adapter?.isAll(isChecked)
+            }
+        })
+
+
+    }
+
+    private fun search(str: String) {
+
+        plan_search.edit.removeTextChangedListener(searchWatcher)
+        viewModel.filterList(str)
     }
 
     override fun stopLoading() {
@@ -106,6 +146,18 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
     }
 
     override fun handleMessage(msg: Int?) {
+
+        when (msg) {
+            1 -> {
+
+                adapter?.updataList(viewModel.getSearch())
+                plan_search.edit.addTextChangedListener(searchWatcher)
+
+                Log.i("aaa", "count " + adapter?.itemCount)
+            }
+
+        }
+
 
     }
 
@@ -133,11 +185,6 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
             }
 
         }
-
-    }
-
-    private fun initList() {
-
 
     }
 
