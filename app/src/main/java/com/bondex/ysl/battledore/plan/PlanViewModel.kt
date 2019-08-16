@@ -5,10 +5,8 @@ import android.util.Log
 import android.view.View
 import com.bondex.ysl.battledore.base.BaseViewModle
 import com.bondex.ysl.battledore.util.ToastUtils
+import com.bondex.ysl.battledore.workbench.WorkBentchChoiceBean
 import com.bondex.ysl.camera.ui.utils.SHA
-import com.bondex.ysl.databaselibrary.base.bean.PlateType
-import com.bondex.ysl.databaselibrary.base.bean.ProtectType
-import com.bondex.ysl.databaselibrary.base.bean.SubPlateType
 import com.bondex.ysl.databaselibrary.hawb.HAWBBean
 import com.bondex.ysl.liblibrary.utils.Tools
 import com.google.gson.Gson
@@ -51,31 +49,25 @@ class PlanViewModel : BaseViewModle() {
             hawbBean.id = SHA.Bit16(hawbBean.getmBillCode() + hawbBean.hawb)
             hawbs.add(hawbBean)
 
-            val subplate = SubPlateType()
+            val subplate = WorkBentchChoiceBean()
 
-            subplate.cityId = 101
-            subplate.subplateId = "0" + i
-            subplate.subplateName = "老大垫" + toAZ(i)
-            subplate.id = SHA.Bit16(subplate.cityId.toString() + subplate.subplateId)
+            subplate.id =  i
+            subplate.name = "老大垫" + toAZ(i)
 
 
-            val protectType = ProtectType()
+            val protectType = WorkBentchChoiceBean()
 
-            protectType.cityId = 101
-            protectType.protectId = "01" + i
-            protectType.protectName = "新品保护" + toAZ(i)
-            protectType.id = SHA.Bit16(protectType.cityId.toString() + protectType.protectId)
+            protectType.id =  i
+            protectType.name = "新品保护" + toAZ(i)
 
-            val plateType = PlateType()
+            val plateType = WorkBentchChoiceBean()
 
-            plateType.cityId = 101
-            plateType.plateId = "01" + i
-            plateType.plateName = "大" + toAZ(i)
-            plateType.id = SHA.Bit16(plateType.cityId.toString() + plateType.plateId)
+            plateType.id = i
+            plateType.name = "大" + toAZ(i)
 
 
-            val subplates = arrayListOf<SubPlateType>(subplate)
-            val protectTypes = arrayListOf<ProtectType>(protectType)
+            val subplates = arrayListOf<WorkBentchChoiceBean>(subplate)
+            val protectTypes = arrayListOf<WorkBentchChoiceBean>(protectType)
 
 
             val planBean = PlanBean()
