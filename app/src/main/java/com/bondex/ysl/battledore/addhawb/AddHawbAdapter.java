@@ -7,20 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import com.bondex.ysl.battledore.R;
-import com.bondex.ysl.battledore.plan.PlanAdapter;
 import com.bondex.ysl.battledore.util.Constant;
 import com.bondex.ysl.databaselibrary.hawb.HAWBBean;
 import com.bondex.ysl.liblibrary.ui.IconText;
 import com.bondex.ysl.liblibrary.utils.NoDoubleClickListener;
-
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,7 +29,6 @@ public class AddHawbAdapter extends RecyclerView.Adapter<AddHawbAdapter.ViewHold
     private boolean selectAll;
     private int groupPosition;
     private AddHawbItemListener listener;
-
     private ArrayMap<Integer, Boolean> selected = new ArrayMap<>();
 
     public AddHawbAdapter(ArrayList<HAWBBean> list, AddHawbItemListener listener) {

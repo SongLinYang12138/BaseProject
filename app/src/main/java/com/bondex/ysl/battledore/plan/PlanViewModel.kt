@@ -76,14 +76,13 @@ class PlanViewModel : BaseViewModle() {
 
             val subplates = arrayListOf<SubPlateType>(subplate)
             val protectTypes = arrayListOf<ProtectType>(protectType)
-            val plateTypes = arrayListOf<PlateType>(plateType)
 
 
             val planBean = PlanBean()
             planBean.hawbs = hawbs
             planBean.subPlateTypel = subplates
             planBean.protectType = protectTypes
-            planBean.plateType = plateTypes
+            planBean.plateType = plateType
             planBean.destination = toAZ(i) + toAZ(13 - i)
             planBean.flghtDate = "2019-08-" + i + "" + (i - 1)
             planBean.flight = "SC456" + i
@@ -95,7 +94,7 @@ class PlanViewModel : BaseViewModle() {
 
             planBean.lockNum = i.toString() + "" + toAZ(18 - i) + i + "2" + toAZ(i)
             planBean.setmBillTotal(i.toString() + "M")
-            planBean.id = "0"
+            planBean.id = ""+i
             planBeans.add(planBean)
         }
 

@@ -31,13 +31,12 @@ import org.w3c.dom.Text
 class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
     RecyclerView.Adapter<PlanAdapter.ViewHodler>() {
 
-
     protected var context: Context? = null
     protected var list: ArrayList<PlanBean>? = lis
     private val activity = activity
     private val selectedMap = ArrayMap<Int, Boolean>()
     private var selectAll = false
-
+    private val selectList = arrayListOf<PlanBean>()
 
     fun updataList(list: ArrayList<PlanBean>) {
 
@@ -59,6 +58,8 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
         notifyDataSetChanged()
     }
 
+    fun getSelected(): ArrayList<PlanBean> = selectList
+
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHodler {
 
         context = p0.context
@@ -72,6 +73,14 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
 
                 val position = buttonView?.getTag() as Int
                 selectedMap.put(position, isChecked)
+
+                if (isChecked) {
+
+                    list?.get(position)?.let { selectList.add(it) }
+                } else {
+
+                    list?.get(position)?.let { selectList.remove(it) }
+                }
 
             }
         })
@@ -99,7 +108,8 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
                 val intent = Intent(context, WorkBetchActivity::class.java)
 
                 val bundle = Bundle()
-                bundle.putParcelable(Constant.PLAN_BEAN_KEY, list?.get(position))
+                val selectedList = list?.get(position)?.let { arrayListOf<PlanBean>(it) }
+                bundle.putParcelableArrayList(Constant.PLAN_BEAN_KEY, selectedList)
                 intent.putExtras(bundle)
                 context?.startActivity(intent)
             }

@@ -81,5 +81,10 @@ public class ReduceAddEditText extends ConstraintLayout {
         return value;
     }
 
+    public EditText getEditText(){
+
+        return editText;
+    }
+
 
 }

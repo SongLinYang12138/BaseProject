@@ -1,5 +1,9 @@
 package com.bondex.ysl.battledore.workbench;
 
+import com.bondex.ysl.battledore.util.Constant;
+import com.bondex.ysl.camera.ui.utils.SHA;
+import com.bondex.ysl.databaselibrary.base.bean.PlateType;
+
 /**
  * date: 2019/7/10
  * Author: ysl
@@ -12,13 +16,19 @@ public class WorkBentchChoiceBean {
     private int count;
 
     public WorkBentchChoiceBean() {
+
+
     }
+
+
+
 
     public WorkBentchChoiceBean(String name, int id, int count) {
         this.name = name;
         this.id = id;
         this.count = count;
     }
+
 
     public String getName() {
         return name == null ? "" : name;
@@ -42,5 +52,10 @@ public class WorkBentchChoiceBean {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

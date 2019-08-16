@@ -108,6 +108,7 @@ class AddHawbViewModel : BaseViewModle(), AddHawbItemListener {
 
     }
 
+    override fun onListItemClick(position: Int) {
 
         addPlanSingle(position)
     }

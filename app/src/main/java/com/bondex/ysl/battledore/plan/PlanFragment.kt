@@ -1,6 +1,7 @@
 package com.bondex.ysl.battledore.plan
 
 import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.InputType
@@ -15,6 +16,7 @@ import com.bondex.ysl.battledore.databinding.FragmentPlanBinding
 import com.bondex.ysl.battledore.ui.MenuList
 import com.bondex.ysl.battledore.ui.TextItemDecoration
 import com.bondex.ysl.battledore.util.Constant
+import com.bondex.ysl.battledore.util.ToastUtils
 import com.bondex.ysl.battledore.workbench.WorkBetchActivity
 import com.bondex.ysl.camera.ISCameraConfig
 import com.bondex.ysl.camera.ISNav
@@ -121,7 +123,7 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
 
 
-                    adapter?.isAll(isChecked)
+                adapter?.isAll(isChecked)
             }
         })
 
@@ -167,9 +169,25 @@ class PlanFragment : BaseFragment<PlanViewModel, FragmentPlanBinding>() {
 
             R.id.plan_bt -> {
 
-                val intent = Intent(context, WorkBetchActivity::class.java)
-                context?.startActivity(intent)
-                activity?.overridePendingTransition(R.anim.window_in, R.anim.window_out)
+                adapter?.let {
+                    val selectList = adapter!!.getSelected()
+
+                    if (selectList.size == 0) {
+                        ToastUtils.showShort("请选择打板计划")
+                        return
+                    }
+
+                    val bundle = Bundle()
+                    bundle.putParcelableArrayList(Constant.PLAN_BEAN_KEY, selectList)
+                    val intent = Intent(context, WorkBetchActivity::class.java)
+                    intent.putExtras(bundle)
+                    context?.startActivity(intent)
+                    activity?.overridePendingTransition(R.anim.window_in, R.anim.window_out)
+
+                    adapter?.isAll(false)
+
+                }
+
             }
 
             R.id.plan_bt_create -> {

@@ -48,6 +48,8 @@ public class HAWBBean implements Parcelable {
     private String flight;
     private String detination;
     private String date;//航班日期
+    private int loadQty;
+
 
     protected HAWBBean(Parcel in) {
         id = in.readString();
@@ -59,6 +61,7 @@ public class HAWBBean implements Parcelable {
         flight = in.readString();
         detination = in.readString();
         date = in.readString();
+        loadQty = in.readInt();
     }
 
     public static final Creator<HAWBBean> CREATOR = new Creator<HAWBBean>() {
@@ -160,12 +163,12 @@ public class HAWBBean implements Parcelable {
         return this.getmBillCode().hashCode() * this.getHawb().hashCode();
     }
 
+    public HAWBBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    public HAWBBean() {
     }
 
     @Override
@@ -179,6 +182,7 @@ public class HAWBBean implements Parcelable {
         dest.writeString(flight);
         dest.writeString(detination);
         dest.writeString(date);
+        dest.writeInt(loadQty);
     }
 }
 

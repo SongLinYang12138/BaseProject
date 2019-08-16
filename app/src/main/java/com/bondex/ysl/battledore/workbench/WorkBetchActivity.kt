@@ -1,51 +1,59 @@
 package com.bondex.ysl.battledore.workbench
 
 import android.app.Activity
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.AdapterView
+import android.widget.SpinnerAdapter
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseActivity
 import com.bondex.ysl.battledore.databinding.ActivityWorkBetchBinding
+import com.bondex.ysl.battledore.plan.PlanBean
 import com.bondex.ysl.battledore.util.Constant
 import com.bondex.ysl.camera.ISCameraConfig
 import com.bondex.ysl.camera.ISNav
 import com.bondex.ysl.camera.MainHawbBean
+import com.bondex.ysl.databaselibrary.base.bean.PlateType
+import com.bondex.ysl.databaselibrary.hawb.HAWBBean
 import com.bondex.ysl.liblibrary.utils.*
 import com.google.zxing.client.android.Intents
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_work_betch.*
+import kotlinx.android.synthetic.main.main_title.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBinding>() {
-    override fun handleMessage(msg: Int?) {
-
-    }
-
-    override fun initData() {
-
-    }
-
-    val list = mutableListOf<String>()
-    val adapter = WorkBetchAdapter(list)
-
-    val protectTypeList: MutableList<WorkBentchChoiceBean> = mutableListOf(
-        WorkBentchChoiceBean("单件保护", 1, 0),
-        WorkBentchChoiceBean("整体保护", 2, 0)
-    )
-
-    val subPlateList: MutableList<WorkBentchChoiceBean> = mutableListOf(
-        WorkBentchChoiceBean("老件", 1, 0),
-        WorkBentchChoiceBean("新件", 2, 0)
-    )
-
-    val protectTypeAdapter: WorkBentchChoiceAdapter = WorkBentchChoiceAdapter(protectTypeList)
-    val subPlateAdapter: WorkBentchChoiceAdapter = WorkBentchChoiceAdapter(subPlateList)
 
 
     val scanIntent = IntentIntegrator(WorkBetchActivity@ this)
     var mainCode: String? = null
     val IMAGE_REQUEST: Int = 111
+    var isMission: Boolean = false //判断是否从打板计划界面进入
+    var planBeans = arrayListOf<PlanBean>() //打板计划界面传递的数据
+    var hawbBeans = arrayListOf<HAWBBean>()//打板任务界面传递的数据
+
+    var plateTypePostion = 0
+
+    //    监听从viewModel传递过来的数据，并在页面展示
+    val planObserver: Observer<PlanBean> = object : Observer<PlanBean> {
+        override fun onChanged(t: PlanBean?) {
+
+            if (t == null) return
+
+            work_battle_flight.setText(t.flight)
+            work_battle_detination.setText(t.destination)
+            work_battle_flight_date.setText(t.flghtDate)
+            work_plate_num.setText(t.boardNum)
+            work_plate_lock.setText(t.lockNum)
+            work_plate_type.prompt = t.plateType.name
+
+
+        }
+    }
+
 
     override fun getReourceId(): Int {
 
@@ -75,10 +83,12 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
         )
 
         work_it_main.setOnClickListener(listener)
-        work_battle_date.setOnClickListener(listener)
+//        work_battle_date.setOnClickListener(listener)
         work_it_hawb.setOnClickListener(listener)
         work_battle_flight_date.setOnClickListener(listener)
-
+        work_bt_last.setOnClickListener(listener)
+        work_bt_next.setOnClickListener(listener)
+        work_bt_save.setOnClickListener(listener)
 
         val calendar: Calendar = Calendar.getInstance()
 
@@ -88,17 +98,12 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
         ) + "-" + String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH))
 
         work_battle_date.setText(currenDate)
-        list.add("1")
-        list.add("1")
-        list.add("1")
-        list.add("1")
-        list.add("1")
 
-        adapter.updateList(list)
+        viewModel.setDatas(isMission, planBeans, hawbBeans)
 
         val manager = LinearLayoutManager(this)
         work_recycleview.layoutManager = manager
-        work_recycleview.adapter = adapter
+        work_recycleview.adapter = viewModel.adapter
 
         work_recycleview.isNestedScrollingEnabled = false
 
@@ -112,9 +117,60 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
         work_protect_type_recyclerView.layoutManager = protectManager
         work_subplate_recyclerView.layoutManager = subplateManager
 
-        work_protect_type_recyclerView.adapter = protectTypeAdapter
-        work_subplate_recyclerView.adapter = subPlateAdapter
+        work_protect_type_recyclerView.adapter = viewModel.protectTypeAdapter
+        work_subplate_recyclerView.adapter = viewModel.subPlateAdapter
 
+        work_plate_type.adapter = viewModel.getPlateTypeAdapter()
+
+        work_plate_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                plateTypePostion = 0
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                plateTypePostion = id.toInt()
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        viewModel?.getPlanLiveData()?.observe(this@WorkBetchActivity, planObserver)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        viewModel?.getPlanLiveData()?.removeObserver(planObserver)
+    }
+
+
+    override fun handleMessage(msg: Int?) {
+
+        when (msg) {
+
+            1 -> { //新建页面
+
+                newPage()
+            }
+
+        }
+
+    }
+
+    override fun initData() {
+
+        val bundle = intent.extras
+
+        if (bundle.containsKey(Constant.PLAN_BEAN_KEY)) {
+            planBeans = bundle.getParcelableArrayList(Constant.PLAN_BEAN_KEY)
+            isMission = false
+        } else {
+            hawbBeans = bundle.getParcelableArrayList(Constant.HAWB_BEAN_KEY)
+            isMission = true
+        }
     }
 
     override fun onMyClick(view: View?) {
@@ -130,17 +186,27 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
                 scanIntent.setRequestCode(Constant.SCAN_MAIN_REQUEST_CODE).initiateScan()
             }
             R.id.work_battle_date -> {
+//打板时间直接调用当前时间，不用选择
+//                DateUtils.showDate(WorkBetchActivity@ this, { it ->
+//                    work_battle_date.setText(it)
+//
+//                })
+            }
+            R.id.work_battle_flight_date -> {
 
                 DateUtils.showDate(WorkBetchActivity@ this, { it ->
-                    work_battle_date.setText(it)
-
-                })
-            }
-            R.id.work_battle_flight_date ->{
-
-                DateUtils.showDate(WorkBetchActivity@this,{it ->
                     work_battle_flight_date.setText(it)
                 })
+            }
+
+            R.id.work_bt_last -> {
+                viewModel.last()
+            }
+            R.id.work_bt_next -> {
+                viewModel.next()
+            }
+            R.id.work_bt_save -> {
+
             }
 
 
@@ -173,6 +239,59 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
 
         }
 
+
+    }
+
+    fun newPage() {
+
+        val planBean = PlanBean()
+
+        val flgiht = work_battle_flight.text.toString()
+        val destination = work_battle_detination.text.toString()
+        val flight_date = work_battle_flight_date.text.toString()
+        val boardNum = work_plate_num.text.toString()
+        val boardLock = work_plate_lock.text.toString()
+        val battlerDate = work_battle_date.text.toString()
+
+        val plateType = viewModel.plateTypeList.get(plateTypePostion)
+        val protectList = viewModel.protectTypeAdapter.selectList
+        val subPlateList = viewModel.subPlateAdapter.selectList
+        val hawbs = viewModel.adapter.list
+
+        planBean.flight = flgiht
+        planBean.destination = destination
+        planBean.flghtDate = flight_date
+        planBean.boardNum = boardNum
+        planBean.lockNum = boardLock
+        planBean.battleDate = battlerDate
+        planBean.plateType = plateType
+        planBean.protectType = protectList
+        planBean.subPlateTypel = subPlateList
+        planBean.hawbs = hawbs
+
+        viewModel.saveList.add(planBean)
+
+
+        work_battle_flight.text.clear()
+        work_battle_detination.text.clear()
+        work_battle_flight_date.text.clear()
+        work_plate_num.text.clear()
+        work_plate_lock.text.clear()
+        val calendar: Calendar = Calendar.getInstance()
+
+        val currenDate: String = String.format("%04d", calendar.get(Calendar.YEAR)) + "-" + String.format(
+            "%02d",
+            (calendar.get(Calendar.MONTH) + 1)
+        ) + "-" + String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH))
+
+        work_battle_date.setText(currenDate)
+
+        viewModel.hawbBeans.clear()
+        viewModel.adapter.clear()
+        viewModel.protectTypeAdapter.clear()
+        viewModel.subPlateAdapter.clear()
+        viewModel.protectTypeAdapter.updateList(viewModel.protectTypeList)
+        viewModel.subPlateAdapter.updateList(viewModel.subPlateList)
 
     }
 }

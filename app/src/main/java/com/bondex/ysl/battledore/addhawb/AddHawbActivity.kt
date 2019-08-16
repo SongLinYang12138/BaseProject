@@ -1,6 +1,7 @@
 package com.bondex.ysl.battledore.addhawb
 
 import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.CompoundButton
@@ -11,6 +12,7 @@ import com.bondex.ysl.battledore.plan.PlanBean
 import com.bondex.ysl.battledore.ui.MenuList
 import com.bondex.ysl.battledore.ui.TextItemDecoration
 import com.bondex.ysl.battledore.util.Constant
+import com.bondex.ysl.battledore.util.ToastUtils
 import com.bondex.ysl.battledore.workbench.WorkBetchActivity
 import com.bondex.ysl.camera.ISCameraConfig
 import com.bondex.ysl.camera.ISNav
@@ -27,6 +29,7 @@ class AddHawbActivity : BaseActivity<AddHawbViewModel, ActivityAddHawbBinding>()
     val activity = AddHawbActivity@ this
 
     var deliverPlanBean: PlanBean? = null
+
 
     override fun getReourceId(): Int {
 
@@ -102,7 +105,16 @@ class AddHawbActivity : BaseActivity<AddHawbViewModel, ActivityAddHawbBinding>()
         add_hawb_edit.setOnClickListener(object : NoDoubleClickListener() {
             override fun click(v: View?) {
 
+                if (viewModel?.getPlanAdapter()?.mylist?.size == 0) {
+                    ToastUtils.showShort("请选择分单号")
+                    return
+                }
+                val bundle = Bundle()
+                bundle.putParcelableArrayList(Constant.HAWB_BEAN_KEY, viewModel?.getPlanAdapter()?.mylist)
+
                 val intent = Intent(activity, WorkBetchActivity::class.java)
+                intent.putExtras(bundle)
+
                 startActivity(intent)
             }
         })

@@ -121,7 +121,6 @@
                     style="@style/normal_tv_black"
                     android:textStyle="bold"
                     android:inputType="textEmailAddress"
-                    android:text="MU9929"
                     android:background="@color/transparent"
                     android:layout_marginTop="@dimen/main_small"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -140,7 +139,6 @@
                     android:inputType="textEmailAddress"
 
                     android:textStyle="bold"
-                    android:text="LUX"
                     android:background="@color/transparent"
                     android:textAlignment="center"
                     app:layout_constraintRight_toLeftOf="@id/work_battle_flight_date"
@@ -160,7 +158,6 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:focusable="false"
-                    android:text="2019-07-09"
                     android:background="@color/transparent"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
 
@@ -189,7 +186,6 @@
                     app:layout_constraintLeft_toLeftOf="@id/work_battle_flight"
                     style="@style/normal_tv_black"
                     android:textStyle="bold"
-                    android:text="LSJL5"
                     android:background="@color/transparent"
             />
 
@@ -207,7 +203,6 @@
             <Spinner android:layout_width="70dp"
                      android:layout_height="wrap_content"
                      android:id="@+id/work_plate_type"
-                     android:entries="@array/plate_type"
                      app:layout_constraintTop_toTopOf="@id/work_plate_num"
                      app:layout_constraintLeft_toLeftOf="@id/work_unit_destination"
                      android:layout_marginBottom="@dimen/activity_horizontal_margin"
@@ -267,7 +262,6 @@
                     app:layout_constraintLeft_toRightOf="@id/work_plate_num"
                     app:layout_constraintRight_toLeftOf="@id/work_plate_type"
                     android:textStyle="bold"
-                    android:text="4545"
                     android:background="@color/transparent"
             />
 

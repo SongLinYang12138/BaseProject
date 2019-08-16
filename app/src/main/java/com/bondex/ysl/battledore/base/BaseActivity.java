@@ -153,8 +153,10 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
         }
     }
 
+//    处理从viewmodel中传递过来的信息
     protected abstract void handleMessage(Integer msg);
 
+//    listner有关的点击事件
     protected abstract void onMyClick(View view);
 
     protected void startLoading() {

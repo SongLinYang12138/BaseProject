@@ -3,6 +3,7 @@ package com.bondex.ysl.battledore.plan;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import com.bondex.ysl.battledore.workbench.WorkBentchChoiceBean;
 import com.bondex.ysl.databaselibrary.base.bean.PlateType;
 import com.bondex.ysl.databaselibrary.base.bean.ProtectType;
 import com.bondex.ysl.databaselibrary.base.bean.SubPlateType;
@@ -59,7 +60,7 @@ import java.util.List;
         }
         ]}}
         ]*/
-public class PlanBean implements Parcelable {
+public class PlanBean implements Parcelable{
 
 
     private String id;
@@ -70,13 +71,14 @@ public class PlanBean implements Parcelable {
     private String VolumeTotal;
     private String Flight;
     private String flghtDate;
+    private String battleDate;//打板时间
     private String Destination;
     private String boardNum;//板号
     private String lockNum;//板锁号
-    private ArrayList<PlateType> plateType;
+    private WorkBentchChoiceBean plateType;
 
-    private ArrayList<ProtectType> protectType;
-    private ArrayList<SubPlateType> subPlateTypel;
+    private ArrayList<WorkBentchChoiceBean> protectType;
+    private ArrayList<WorkBentchChoiceBean> subPlateTypel;
     private ArrayList<HAWBBean> hawbs;
     private String search;//用于在binearySearch中进行搜索的字段
 
@@ -92,12 +94,10 @@ public class PlanBean implements Parcelable {
         VolumeTotal = in.readString();
         Flight = in.readString();
         flghtDate = in.readString();
+        battleDate = in.readString();
         Destination = in.readString();
         boardNum = in.readString();
         lockNum = in.readString();
-        plateType = in.createTypedArrayList(PlateType.CREATOR);
-        protectType = in.createTypedArrayList(ProtectType.CREATOR);
-        subPlateTypel = in.createTypedArrayList(SubPlateType.CREATOR);
         hawbs = in.createTypedArrayList(HAWBBean.CREATOR);
         search = in.readString();
     }
@@ -113,6 +113,43 @@ public class PlanBean implements Parcelable {
             return new PlanBean[size];
         }
     };
+
+    public WorkBentchChoiceBean getPlateType() {
+        return plateType;
+    }
+
+    public void setPlateType(WorkBentchChoiceBean plateType) {
+        this.plateType = plateType;
+    }
+
+    public ArrayList<WorkBentchChoiceBean> getProtectType() {
+        return protectType;
+    }
+
+    public void setProtectType(ArrayList<WorkBentchChoiceBean> protectType) {
+        this.protectType = protectType;
+    }
+
+    public ArrayList<WorkBentchChoiceBean> getSubPlateTypel() {
+        return subPlateTypel;
+    }
+
+    public void setSubPlateTypel(ArrayList<WorkBentchChoiceBean> subPlateTypel) {
+        this.subPlateTypel = subPlateTypel;
+    }
+
+    public ArrayList<HAWBBean> getHawbs() {
+        return hawbs;
+    }
+
+    public String getBattleDate() {
+        return battleDate == null ? "" : battleDate;
+    }
+
+    public void setBattleDate(String battleDate) {
+        this.battleDate = battleDate == null ? "" : battleDate;
+    }
+
 
     public String getBoardNum() {
         return boardNum == null ? "" : boardNum;
@@ -211,38 +248,25 @@ public class PlanBean implements Parcelable {
         Destination = destination == null ? "" : destination;
     }
 
-    public ArrayList<PlateType> getPlateType() {
-        return plateType;
-    }
-
-    public void setPlateType(ArrayList<PlateType> plateType) {
-        this.plateType = plateType;
-    }
-
-    public ArrayList<ProtectType> getProtectType() {
-        return protectType;
-    }
-
-    public void setProtectType(ArrayList<ProtectType> protectType) {
-        this.protectType = protectType;
-    }
-
-    public ArrayList<SubPlateType> getSubPlateTypel() {
-        return subPlateTypel;
-    }
-
-    public void setSubPlateTypel(ArrayList<SubPlateType> subPlateTypel) {
-        this.subPlateTypel = subPlateTypel;
-    }
-
-    public ArrayList<HAWBBean> getHawbs() {
-        return hawbs;
-    }
 
     public void setHawbs(ArrayList<HAWBBean> hawbs) {
         this.hawbs = hawbs;
     }
 
+
+    @Override
+    public boolean equals(Object obj) {
+
+        PlanBean bean = (PlanBean) obj;
+
+        if (bean != null && bean.id != null) return this.id.equals(bean.getId());
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
 
     @Override
     public int describeContents() {
@@ -259,12 +283,10 @@ public class PlanBean implements Parcelable {
         dest.writeString(VolumeTotal);
         dest.writeString(Flight);
         dest.writeString(flghtDate);
+        dest.writeString(battleDate);
         dest.writeString(Destination);
         dest.writeString(boardNum);
         dest.writeString(lockNum);
-        dest.writeTypedList(plateType);
-        dest.writeTypedList(protectType);
-        dest.writeTypedList(subPlateTypel);
         dest.writeTypedList(hawbs);
         dest.writeString(search);
     }

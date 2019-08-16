@@ -47,6 +47,12 @@ public class AddHawbPlanAdapter extends RecyclerView.Adapter<AddHawbPlanAdapter.
     }
 
 
+
+    public  ArrayList<HAWBBean> getMylist(){
+
+        return mylist;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, final int position) {
