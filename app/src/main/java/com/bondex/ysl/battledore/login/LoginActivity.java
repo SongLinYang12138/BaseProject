@@ -1,25 +1,42 @@
 package com.bondex.ysl.battledore.login;
 
 
+import android.Manifest;
+import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.CompoundButton;
+import android.util.Log;
+import android.view.*;
+import android.widget.*;
 import com.bondex.ysl.battledore.R;
 import com.bondex.ysl.battledore.base.BaseActivity;
 import com.bondex.ysl.battledore.databinding.ActivityLoginBinding;
 import com.bondex.ysl.battledore.main.MainActivity;
+import com.bondex.ysl.battledore.util.AirPortDialogUtil;
 import com.bondex.ysl.battledore.util.Constant;
+import com.bondex.ysl.battledore.util.SharedPreferecneUtils;
 import com.bondex.ysl.battledore.util.ToastUtils;
+import com.bondex.ysl.battledore.util.interf.AirPortDialogCallback;
+import com.bondex.ysl.databaselibrary.airport.AirPort;
 import com.bondex.ysl.databaselibrary.login.LoginBean;
+import com.bondex.ysl.liblibrary.ui.IconText;
+import com.bondex.ysl.liblibrary.utils.CommonUtils;
 import com.bondex.ysl.liblibrary.utils.NoDoubleClickListener;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.orhanobut.logger.Logger;
+import org.w3c.dom.Text;
+
+import java.util.List;
 
 public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBinding> {
 
@@ -28,6 +45,24 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
 
     private Observer<Boolean> refreObserver;
     private Observer<LoginBean> loginObserver;
+    private AirPortDialogUtil airPortDialogUtil = new AirPortDialogUtil(this);
+    private Observer<List<AirPort>> airPortObserver = new Observer<List<AirPort>>() {
+        @Override
+        public void onChanged(@Nullable List<AirPort> airPorts) {
+
+            if (airPorts == null || airPorts.size() == 0) {
+                toMain();
+                return;
+            }
+
+            airPortDialogUtil.showAirPort(airPorts, new AirPortDialogCallback() {
+                @Override
+                public void confirm(AirPort airPort) {
+                    toMain();
+                }
+            });
+        }
+    };
 
 
     @Override
@@ -40,18 +75,37 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-//                    checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-//                    checkSelfPermission(Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED
-//            ) {
-//                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-//                requestPermissions(new String[]{Manifest.permission.ACCESS_WIFI_STATE}, 1);
-//            }
-//
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_WIFI_STATE
+                        , Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            } else {
+                viewModel.getLocation();
+            }
 
+        } else {
+            viewModel.getLocation();
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                viewModel.getLocation();
+            } else {
+                ToastUtils.showShort("请开启定位权限");
+            }
+
+        }
 
     }
 
@@ -118,8 +172,14 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
                 Constant.LOGIN_BEAN = bean;
 
                 if (bean.isLogin()) {
+                    if (TextUtils.isEmpty(Constant.AIR_CODE)) {
 
-                    toMain();
+                        viewModel.getAirPortOld(Constant.CITY);
+                    } else {
+
+                        toMain();
+                    }
+
                 }
             }
         };
@@ -127,6 +187,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
         viewModel.getRefresh().observe(this, refreObserver);
 
         viewModel.getLoginLiveData().observe(this, loginObserver);
+        viewModel.getAirportLiveData().observe(this, airPortObserver);
 
         binding.loginBtLogin.setOnClickListener(listener);
         binding.loginIvAccount.setOnClickListener(listener);
@@ -134,6 +195,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
 
 
     }
+
 
     @Override
     protected void handleMessage(Integer msg) {
@@ -147,6 +209,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
 
         viewModel.getRefresh().removeObserver(refreObserver);
         viewModel.getLoginLiveData().removeObserver(loginObserver);
+
+        viewModel.getAirportLiveData().removeObserver(airPortObserver);
     }
 
     private void toMain() {
@@ -167,6 +231,11 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
             case R.id.login_bt_login:
 
                 login();
+                break;
+
+            case R.id.login_iv_account:
+
+                binding.loginEtAccount.getText().clear();
                 break;
         }
 
@@ -189,7 +258,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
         }
 
 
-        if (!name.contains("@bondex.com.cn")) {
+        if (!name.contains("@")) {
             name = name + "@bondex.com.cn";
         }
 

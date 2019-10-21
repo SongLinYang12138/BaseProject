@@ -28,6 +28,7 @@ public class SHA {
 
     public static String Bit16(String sourceString) {
         try {
+            sourceString = sourceString.trim();
 
             sourceString = Bit32(sourceString).substring(8, 24);
         } catch (Exception e) {

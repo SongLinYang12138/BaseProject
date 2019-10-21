@@ -15,7 +15,7 @@ public class HAWBImgBean {
 
     @NonNull
     @PrimaryKey()
-    private String ID;//主单号+分单号生成
+    private String ID;//由路径生成
     @ColumnInfo(name = "main_code")
     private String mainCode;
     @ColumnInfo(name = "hawb")
@@ -31,6 +31,7 @@ public class HAWBImgBean {
     public String getID() {
         return ID == null ? "" : ID;
     }
+
 
     public void setID(@NonNull String ID) {
         this.ID = ID == null ? "" : ID;
@@ -74,5 +75,20 @@ public class HAWBImgBean {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        HAWBImgBean bean = (HAWBImgBean) obj;
+
+        if (bean == null) return false;
+        if (bean.getID().equals(getID())) return true;
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getID().hashCode();
     }
 }

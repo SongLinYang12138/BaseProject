@@ -651,9 +651,6 @@ public class Tools {
     }
 
 
-    public static void main(String args[]) {
-
-    }
 
     public static List<String> checkPort(String s) {
         if (isEmpty(s)) {

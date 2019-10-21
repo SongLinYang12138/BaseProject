@@ -7,20 +7,17 @@ import android.support.constraint.ConstraintLayout
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.util.ArrayMap
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.addhawb.AddHawbActivity
-import com.bondex.ysl.battledore.goodslist.GoodsListActivity
 import com.bondex.ysl.battledore.util.Constant
-import com.bondex.ysl.battledore.util.ToastUtils
 import com.bondex.ysl.battledore.workbench.WorkBetchActivity
+import com.bondex.ysl.databaselibrary.plan.PlanBean
 import com.bondex.ysl.liblibrary.ui.IconText
 import com.bondex.ysl.liblibrary.utils.NoDoubleClickListener
-import org.w3c.dom.Text
 
 /**
  * date: 2019/6/4
@@ -28,12 +25,11 @@ import org.w3c.dom.Text
  * description:
  */
 
-class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
+class PlanAdapter(lis: ArrayList<PlanBean>) :
     RecyclerView.Adapter<PlanAdapter.ViewHodler>() {
 
     protected var context: Context? = null
     protected var list: ArrayList<PlanBean>? = lis
-    private val activity = activity
     private val selectedMap = ArrayMap<Int, Boolean>()
     private var selectAll = false
     private val selectList = arrayListOf<PlanBean>()
@@ -49,6 +45,7 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
         this.selectAll = select
         if (!select) {
 
+            selectList.clear()
             for (it in selectedMap) {
                 selectedMap.set(it.key, false)
             }
@@ -131,7 +128,7 @@ class PlanAdapter(lis: ArrayList<PlanBean>, activity: FragmentActivity) :
         val planBean = list?.get(p1)
         if (planBean != null) {
 
-            hodler.tvAll.setText(planBean.getmBillTotal() + planBean.hawbTotal)
+            hodler.tvAll.setText(planBean.getmBillTotal()+"M" + planBean.hawbTotal+"H")
             hodler.tvQty.setText(planBean.qtyTotal.toString() + "件")
             hodler.tvWeight.setText(planBean.weightTotal + "kg" + planBean.volumeTotal + "m³")
             hodler.tvFlight.setText(planBean.flight)

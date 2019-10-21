@@ -1,12 +1,17 @@
 package com.bondex.ysl.battledore.addhawb
 
-import android.util.ArrayMap
+import android.util.Log
 import com.bondex.ysl.battledore.base.BaseViewModle
-import com.bondex.ysl.battledore.plan.PlanBean
 import com.bondex.ysl.battledore.util.ToastUtils
-import com.bondex.ysl.camera.adapter.HawbAdapter
-import com.bondex.ysl.camera.ui.utils.SHA
 import com.bondex.ysl.databaselibrary.hawb.HAWBBean
+import com.bondex.ysl.databaselibrary.hawb.HAWBDao
+import com.bondex.ysl.databaselibrary.plan.PlanBean
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
 
 /**
  * date: 2019/7/25
@@ -16,8 +21,8 @@ import com.bondex.ysl.databaselibrary.hawb.HAWBBean
 class AddHawbViewModel : BaseViewModle(), AddHawbItemListener {
 
 
-    private var hawbBeans = arrayListOf<HAWBBean>()
-    private var planHawbBeans = arrayListOf<HAWBBean>()
+    var hawbBeans = arrayListOf<HAWBBean>()
+    var planHawbBeans = arrayListOf<HAWBBean>()
 
     private val plan_Adapter: AddHawbPlanAdapter = AddHawbPlanAdapter(planHawbBeans, this@AddHawbViewModel)
     private var list_adapter: AddHawbAdapter = AddHawbAdapter(hawbBeans, this@AddHawbViewModel)
@@ -32,22 +37,36 @@ class AddHawbViewModel : BaseViewModle(), AddHawbItemListener {
 
     fun initData() {
 
-        for (i in 0..6) {
 
-            val bean = HAWBBean()
-            bean.date = "2019-08-0" + i
-            bean.detination = "LUX"
-            bean.flight = "SC4545$i"
-            bean.hawb = "FTC7879" + i + "78"
-            bean.qty = 12 + i
-            bean.volume = "14.0"
-            bean.weight = "87.6"
-            bean.setmBillCode("784-" + i + "86544877$i")
-            bean.id = SHA.Bit16(bean.getmBillCode() + bean.hawb)
-            hawbBeans.add(bean)
+        val observable = Observable.create(object : ObservableOnSubscribe<List<HAWBBean>> {
+            override fun subscribe(emitter: ObservableEmitter<List<HAWBBean>>) {
+
+                val dao = HAWBDao.getInstance(context)
+
+                val list = dao.all
+                Log.i("aaa", " hawb size " + list.size)
+
+                hawbBeans.addAll(list)
+                emitter.onNext(list)
+            }
+        })
+
+        val consumer = object : Consumer<List<HAWBBean>> {
+            override fun accept(t: List<HAWBBean>?) {
+
+                if (t?.size!! > 0) {
+
+                    getHawbAdapter().updateList(hawbBeans)
+                }
+            }
+
         }
 
-        getHawbAdapter().updateList(hawbBeans)
+        observable.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(consumer)
+
+
     }
 
     fun getHawbAdapter(): AddHawbAdapter {

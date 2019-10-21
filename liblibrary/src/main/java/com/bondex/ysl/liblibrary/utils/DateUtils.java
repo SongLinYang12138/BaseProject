@@ -18,7 +18,7 @@ public class DateUtils {
 
     private static Dialog dialog = null;
     private static String date = "";
-    private static  DateCallBack mycallMack  = null;
+    private static DateCallBack mycallMack = null;
 
     @SuppressLint("NewApi")
     public static void showDate(Context context, DateCallBack callBack) {
@@ -33,7 +33,7 @@ public class DateUtils {
             View view = LayoutInflater.from(context).inflate(R.layout.dailog_date_layout, null);
             dialog.setContentView(view);
 
-          final   DatePicker datePicker = view.findViewById(R.id.dailog_date);
+            final DatePicker datePicker = view.findViewById(R.id.dailog_date);
             Button btConfirm = view.findViewById(R.id.date_confirm);
             Button btCancel = view.findViewById(R.id.date_cancel);
 
@@ -43,7 +43,7 @@ public class DateUtils {
                 @Override
                 public void onClick(View v) {
 
-                  if(mycallMack != null)  mycallMack.dataCallBack(date);
+                    if (mycallMack != null) mycallMack.dataCallBack(date);
                     dialog.hide();
                 }
             });
@@ -57,7 +57,7 @@ public class DateUtils {
                     date = year + "-" + mon + "-" + day;
 
 
-                  if(mycallMack != null)  mycallMack.dataCallBack(date);
+                    if (mycallMack != null) mycallMack.dataCallBack(date);
                     dialog.hide();
                 }
             });
@@ -70,10 +70,10 @@ public class DateUtils {
             lp.gravity = Gravity.CENTER;
             dialog.getWindow().setAttributes(lp);
 
-            dialog.show();
+            if (!dialog.isShowing()) dialog.show();
         } else {
 
-            dialog.show();
+            if (!dialog.isShowing()) dialog.show();
         }
 
 

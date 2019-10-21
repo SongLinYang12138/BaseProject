@@ -16,37 +16,16 @@
 
         <include layout="@layout/base_title" android:id="@+id/title"></include>
 
-        <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/add_hawb_ck"
-                app:layout_constraintTop_toTopOf="@id/add_hawb_tv_list"
-                app:layout_constraintBottom_toBottomOf="@id/add_hawb_tv_list"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                app:layout_constraintLeft_toLeftOf="parent"
-                style="@style/primary_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        <Button
-                android:id="@+id/add_hawb_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="添加"
-                style="@style/button_gray_theme"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/add_hawb_edit"
-                android:layout_marginTop="@dimen/margin_small"
-        />
-
 
         <Button
                 android:id="@+id/add_hawb_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="编辑"
-                style="@style/button_primary_theme"
-                app:layout_constraintTop_toTopOf="@id/add_hawb_add"
-                app:layout_constraintLeft_toRightOf="@id/add_hawb_add"
+                style="@style/button_gray_theme"
+                android:layout_marginTop="@dimen/margin_small"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
         />
 
@@ -55,7 +34,7 @@
                 app:layout_constraintTop_toBottomOf="@id/add_hawb_edit"
                 android:layout_width="match_parent"
                 android:background="@color/white_back"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/margin_small"
                 android:layout_height="5dp"/>
 
 
@@ -75,26 +54,57 @@
                 app:layout_constraintTop_toBottomOf="@id/add_hawb_tv_plan"
                 android:layout_height="0dp"
                 android:background="@color/background_gray"
-                app:layout_constraintHeight_percent="0.22"
+                app:layout_constraintHeight_percent="0.27"
                 app:layout_constraintBottom_toTopOf="@id/add_hawb_tv_list"
                 android:layout_marginBottom="@dimen/margin_small"
         ></android.support.v7.widget.RecyclerView>
+        <View android:layout_width="match_parent"
+              android:layout_height="5dp"
+              android:background="@color/white_back"
+              app:layout_constraintTop_toBottomOf="@id/add_hawb_plan"
+              android:id="@+id/line4"
+        />
+
         <TextView
                 android:id="@+id/add_hawb_tv_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/margin_small"
-                app:layout_constraintTop_toBottomOf="@id/add_hawb_plan"
-                android:text="新增清单"
-                style="@style/normal_tv_gray"
-                android:textAlignment="center"
+                app:layout_constraintTop_toTopOf="@id/add_hawb_add"
+                app:layout_constraintBottom_toBottomOf="@id/add_hawb_add"
+                android:paddingVertical="10dp"
+                android:textAlignment="textEnd"
                 tools:layout_editor_absoluteX="0dp"/>
+        <TextView
+                android:id="@+id/add_hawb_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加"
+                style="@style/button_primary_theme"
+                android:paddingHorizontal="@dimen/paddingVertical"
+                android:paddingVertical="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
+                app:layout_constraintTop_toBottomOf="@id/line4"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+        />
+        <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/add_hawb_ck"
+                app:layout_constraintTop_toTopOf="@id/add_hawb_tv_list"
+                app:layout_constraintBottom_toBottomOf="@id/add_hawb_tv_list"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                app:layout_constraintLeft_toLeftOf="parent"
+                style="@style/primary_checkbox"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+        />
 
 
         <com.bondex.ysl.battledore.ui.MenuList
                 android:id="@+id/add_hawb_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintTop_toBottomOf="@id/add_hawb_tv_list"
                 android:paddingVertical="@dimen/margin_small"
                 android:background="@color/white_back"
@@ -110,7 +120,7 @@
         </com.bondex.ysl.liblibrary.ui.SearchView>
         <View android:layout_width="match_parent"
               android:layout_height="1dp"
-        android:background="@color/white_back"
+              android:background="@color/white_back"
               android:id="@+id/line3"
               app:layout_constraintTop_toBottomOf="@id/add_hawb_search"
         />

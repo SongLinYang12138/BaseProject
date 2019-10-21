@@ -3,13 +3,16 @@ package com.bondex.ysl.databaselibrary.hawb;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * date: 2019/8/12
  * Author: ysl
  * description:分单数据
  */
 //@Entity
-public class HAWBBean implements Parcelable {
+public class HAWBBean implements Parcelable{
 //    mBillCode:主单号，String
 //    hawbCode:分单号，String
 //    allQty:分单总件数,String
@@ -39,6 +42,7 @@ public class HAWBBean implements Parcelable {
 //    private String date;//航班日期
 
 
+    private String boardId;//该分单所属板id
     private String id;
     private String mBillCode;
     private String hawb;
@@ -48,10 +52,12 @@ public class HAWBBean implements Parcelable {
     private String flight;
     private String detination;
     private String date;//航班日期
-    private int loadQty;
+    private int loadQty;//打板时的装板件数
+    private List<String> files = new ArrayList<>();//保存在七牛云中的图片名字
 
 
     protected HAWBBean(Parcel in) {
+        boardId = in.readString();
         id = in.readString();
         mBillCode = in.readString();
         hawb = in.readString();
@@ -62,6 +68,7 @@ public class HAWBBean implements Parcelable {
         detination = in.readString();
         date = in.readString();
         loadQty = in.readInt();
+        files = in.createStringArrayList();
     }
 
     public static final Creator<HAWBBean> CREATOR = new Creator<HAWBBean>() {
@@ -75,6 +82,31 @@ public class HAWBBean implements Parcelable {
             return new HAWBBean[size];
         }
     };
+
+    public List<String> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<String> files) {
+        this.files = files;
+    }
+
+    public String getBoardId() {
+        return boardId == null ? "" : boardId;
+    }
+
+    public void setBoardId(String boardId) {
+        this.boardId = boardId == null ? "" : boardId;
+    }
+
+    public int getLoadQty() {
+        return loadQty;
+    }
+
+    public void setLoadQty(int loadQty) {
+        this.loadQty = loadQty;
+    }
+
 
     public String getId() {
         return id == null ? "" : id;
@@ -166,6 +198,7 @@ public class HAWBBean implements Parcelable {
     public HAWBBean() {
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -173,6 +206,7 @@ public class HAWBBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(boardId);
         dest.writeString(id);
         dest.writeString(mBillCode);
         dest.writeString(hawb);
@@ -183,6 +217,7 @@ public class HAWBBean implements Parcelable {
         dest.writeString(detination);
         dest.writeString(date);
         dest.writeInt(loadQty);
+        dest.writeStringList(files);
     }
 }
 

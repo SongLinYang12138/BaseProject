@@ -29,9 +29,11 @@ public interface HAWBImgDao {
 
 
     @Query("SELECT * FROM HAWBImgBean WHERE main_code IN (:mainCode) and hawb IN (:hawb) ")
-    HAWBImgBean getHAWBImage(String mainCode, String hawb);
+    List<HAWBImgBean> getHAWBImage(String mainCode, String hawb);
 
     @Query("SELECT * FROM HAWBImgBean WHERE ID IN (:id)")
     HAWBImgBean check(String id);
 
+    @Query("SELECT * FROM HAWBImgBean WHERE  main_code IN (:mHwab) and hawb IN (:hawb)")
+    HAWBImgBean selectByHawb(String mHwab,String hawb);
 }

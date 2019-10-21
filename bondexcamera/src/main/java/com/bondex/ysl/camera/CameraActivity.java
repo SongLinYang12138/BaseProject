@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,17 +19,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.bondex.ysl.camera.adapter.HawbAdapter;
+import com.bondex.ysl.camera.compross.Luban;
 import com.bondex.ysl.camera.ui.CameraSingleton;
 import com.bondex.ysl.camera.ui.CameraView;
 import com.bondex.ysl.camera.ui.utils.SHA;
+import com.bondex.ysl.databaselibrary.hawb.HAWBBean;
 import com.bondex.ysl.databaselibrary.hawb.img.HAWBImgBean;
 import com.bondex.ysl.databaselibrary.hawb.img.HAWBImgDao;
 import com.bondex.ysl.databaselibrary.hawb.img.HAWBImgDataBase;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -64,11 +64,11 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     private boolean granted = false;
 
     private ImageView iv_picture;
-    private ImageView ivImg;
+    private ImageView ivImg, iv_photos;
     private TextView tvAuto, tvTitle;
     private ListView listView;
     private ArrayList<CharSequence> takeImgs = new ArrayList<>();//拍照的图片的数量
-    private ArrayList<MainHawbBean> hawbsList;//获取传递过来的分单号
+    private ArrayList<HAWBBean> hawbsList;//获取传递过来的分单号
 
     private final String FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "bondex";
     private ExecutorService saveExecutors;
@@ -99,6 +99,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         ivTakePituer = findViewById(R.id.takepicture);
         ivImg = (ImageView) findViewById(R.id.iv_confirm);
         ivCancel = findViewById(R.id.iv_cancel);
+        iv_photos = findViewById(R.id.iv_photos);
         listView = findViewById(R.id.listview);
 
         tvCancel = findViewById(R.id.tv_cancel_take_pic);
@@ -122,6 +123,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         ivBack.setOnClickListener(this);
         ivImg.setOnClickListener(this);
         tvAuto.setOnClickListener(this);
+        iv_photos.setOnClickListener(this);
 
         showHawbs();
     }
@@ -166,6 +168,27 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         super.onDestroy();
         CameraSingleton.getInstance().doDestroyCamera();
         Log.i("JCameraView", "onDestroy");
+
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                for (HAWBImgBean imgBean : savedList) {
+//
+//
+//                    try {
+//                        File file = new File(imgBean.getPath());
+//                        Thread.sleep(1000);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//
+//        thread.start();
+
+
     }
 
     /**
@@ -292,6 +315,12 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
                 }
             });
+        } else if (i == R.id.iv_photos) {//跳转到当前
+
+            Intent intent = new Intent();
+            intent.setClassName("com.bondex.ysl.battledore", "com.bondex.ysl.battledore.photo.PhotoActivity");
+            intent.putParcelableArrayListExtra("hwabs", hawbsList);
+            startActivity(intent);
         }
     }
 
@@ -385,19 +414,22 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         cancel();
     }
 
-    public void saveBitmap(Bitmap bitmap) {
+    public void saveBitmap(final Bitmap bitmap) {
 
         int selectPosition = adapter.getSelectPosition();
 
-        if (selectPosition == adapter.getList().size())
+        if (selectPosition == adapter.getList().size()) {
+
+            Toast.makeText(this, "请选择单号", Toast.LENGTH_SHORT).show();
             return;
+        }
 
         final Bitmap mBitmap = bitmap;
 
         selectedMap = adapter.getSelected();
         selectedMap.put(selectPosition, true);
         adapter.setSelected(selectedMap);
-        final MainHawbBean hawbBean = adapter.getList().get(selectPosition);
+        final HAWBBean hawbBean = adapter.getList().get(selectPosition);
         adapter.setSelectPosition(++selectPosition);
 
         saveExecutors.execute(new Runnable() {
@@ -405,53 +437,58 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             public void run() {
 
 
-                String fileName = System.currentTimeMillis() + "";
+                String fileName = System.currentTimeMillis() + ".png";
+//                String comprossNam = System.currentTimeMillis() + "_" + hawbBean.getHawb() + ".png";
+//                comprossNam = comprossNam.replaceAll(" ", comprossNam);
+                String path = FILE_PATH + File.separator;
 
                 File file = new File(FILE_PATH);
 
                 if (!file.exists()) file.mkdirs();
 
-                File f = new File(FILE_PATH + File.separator + fileName + ".png");
+
+                File f = new File(path + fileName);
                 try {
                     f.createNewFile();
-                Log.e(TAG,"创建照片" +f.getAbsolutePath());
+                    Log.e(TAG, "创建照片" + f.getAbsolutePath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 FileOutputStream fOut = null;
                 try {
                     fOut = new FileOutputStream(f);
+                    mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-                try {
 
+                if (fOut == null) return;
+
+
+                try {
                     takeImgs.add(f.getAbsolutePath());
                     fOut.flush();
                     fOut.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+//                调用鲁班压缩，
+                Luban.with(CameraActivity.this).ignoreBy(100).setTargetDir(f.getAbsolutePath()).load(f).get();
+
 
                 HAWBImgBean bean = new HAWBImgBean();
                 bean.setHawb(hawbBean.getHawb());
-                bean.setMainCode(hawbBean.getMianCode());
+                bean.setMainCode(hawbBean.getmBillCode());
                 bean.setImgName(f.getName());
                 bean.setPath(f.getAbsolutePath());
-                bean.setID(SHA.Bit16(bean.getHawb() + bean.getMainCode()));
+                String id = SHA.Bit16(f.getAbsolutePath());
+                bean.setID(id);
                 savedList.add(bean);//将保存的分单照片缓存到list中
                 HAWBImgDao dao = HAWBImgDataBase.getInstance(CameraActivity.this).getDao();
 
+                dao.insert(bean);
 
-                HAWBImgBean checkBean = dao.check(bean.getID());
-                if (checkBean == null)
-                    dao.insert(bean);
-                else {
-                    bean.setPath(checkBean.getPath() + "," + bean.getPath());
-                    bean.setImgName(checkBean.getImgName() + "," + bean.getImgName());
-                    dao.update(bean);
-                }
 
             }
         });
@@ -462,7 +499,43 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
         DeleteTask deleteTask = new DeleteTask();
         deleteTask.execute();
+    }
 
+    //压缩宽高
+    private int computeSize(int srcWidth, int srcHeight) {
+        srcWidth = srcWidth % 2 == 1 ? srcWidth + 1 : srcWidth;
+        srcHeight = srcHeight % 2 == 1 ? srcHeight + 1 : srcHeight;
+
+        int longSide = Math.max(srcWidth, srcHeight);
+        int shortSide = Math.min(srcWidth, srcHeight);
+
+        float scale = ((float) shortSide / longSide);
+        if (scale <= 1 && scale > 0.5625) {
+            if (longSide < 1664) {
+                return 1;
+            } else if (longSide < 4990) {
+                return 2;
+            } else if (longSide > 4990 && longSide < 10240) {
+                return 4;
+            } else {
+                return longSide / 1280 == 0 ? 1 : longSide / 1280;
+            }
+        } else if (scale <= 0.5625 && scale > 0.5) {
+            return longSide / 1280 == 0 ? 1 : longSide / 1280;
+        } else {
+            return (int) Math.ceil(longSide / (1280.0 / scale));
+        }
+    }
+
+    /*
+     *旋转图片角度
+     * */
+    private Bitmap rotatingImage(Bitmap bitmap, int angle) {
+        Matrix matrix = new Matrix();
+
+        matrix.postRotate(angle);
+
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     /*

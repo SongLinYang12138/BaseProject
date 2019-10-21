@@ -1,12 +1,16 @@
 package com.bondex.ysl.battledore.main
 
 import android.arch.lifecycle.MutableLiveData
+import android.text.TextUtils
 import android.util.Log
 import com.bondex.ysl.battledore.base.BaseViewModle
 import com.bondex.ysl.battledore.util.Constant
 import com.bondex.ysl.battledore.util.HttpConnection
+import com.bondex.ysl.battledore.util.SharedPreferecneUtils
 import com.bondex.ysl.battledore.util.interf.HttpResultBack
 import com.bondex.ysl.battledore.util.interf.ModelCallback
+import com.bondex.ysl.databaselibrary.airport.AirPort
+import com.bondex.ysl.databaselibrary.airport.AirPortDatabase
 import com.bondex.ysl.databaselibrary.contact.ContactBean
 import com.bondex.ysl.databaselibrary.contact.ContactDao
 import com.bondex.ysl.databaselibrary.contact.ContactDataBase
@@ -18,6 +22,7 @@ import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import org.json.JSONException
@@ -33,7 +38,8 @@ class MainViewModle : BaseViewModle() {
 
 
     private val contactLiveData: MutableLiveData<ContactBean> = MutableLiveData()
-
+    internal val airPortLiveData = MutableLiveData<List<AirPort>>()
+    internal val mDisposable = CompositeDisposable()
 
 
     fun setContectLiveData(bean: ContactBean) {
@@ -49,16 +55,42 @@ class MainViewModle : BaseViewModle() {
 
     override fun onCreate() {
 
-        val modle = MainCallBack()
 
-        if (Constant.LOGIN_BEAN == null) {
-
+        if (Constant.LOGIN_BEAN == null)
             readLogin()
-        }
+        if (TextUtils.isEmpty(Constant.AIR_CODE))
+            Constant.AIR_CODE = SharedPreferecneUtils.getValue(context, Constant.AIR_CODE_KEY)
+
+
+        if (TextUtils.isEmpty(Constant.CITY))
+            Constant.CITY = SharedPreferecneUtils.getValue(context, Constant.CITY_KEY)
 
         getPersonal()
         checkToken()
 
+    }
+
+    fun getAirport() {
+
+
+        val observable = Observable.create(ObservableOnSubscribe<List<AirPort>> {
+            val dao = AirPortDatabase.getInstance(context).dao
+
+            val list = dao.selectByCity(Constant.CITY)
+
+            it.onNext(list)
+        })
+        val observer = Consumer<List<AirPort>> {
+
+            airPortLiveData.value = it
+
+        }
+
+
+        mDisposable.add(
+            observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(observer)
+        )
     }
 
     fun getPersonal() {
@@ -68,7 +100,7 @@ class MainViewModle : BaseViewModle() {
         map["search"] = ""
         map["searchType"] = "E"
         map["category"] = "person"
-        map["id"] = if (Constant.LOGIN_BEAN == null) "" else Constant.LOGIN_BEAN.getPsncode()
+        map["id"] = Constant.LOGIN_BEAN.getPsncode()
         HttpConnection.connect(HttpConnection.getNetApi().getPhone(map), object : HttpResultBack {
             override fun onFaile(error: String) {
 
@@ -118,6 +150,7 @@ class MainViewModle : BaseViewModle() {
             }
         })
     }
+
 
     fun inserPersonal(bean: ContactBean) {
 
@@ -169,10 +202,11 @@ class MainViewModle : BaseViewModle() {
             }
         }
 
-        observable.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(consumer)
-
+        mDisposable.add(
+            observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(consumer)
+        )
 
     }
 
@@ -201,9 +235,12 @@ class MainViewModle : BaseViewModle() {
             }
         }
 
-        observer.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(consumer)
+
+        mDisposable.add(
+            observer.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(consumer)
+        )
     }
 
     fun loginOut(callBack: ModelCallback<LoginBean>) {
@@ -228,49 +265,54 @@ class MainViewModle : BaseViewModle() {
             }
         }
 
-        observer.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(consumer)
+        mDisposable.add(
+            observer.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(consumer)
+        )
     }
-    private fun checkToken(){
+
+    private fun checkToken() {
 
         val observable = Observable.create(object : ObservableOnSubscribe<Boolean> {
             override fun subscribe(emitter: ObservableEmitter<Boolean>) {
 
-                HttpConnection.connect(HttpConnection.getNetApi().isTokenValid(Constant.LOGIN_BEAN.token),object :HttpResultBack{
-                    override fun onSuccess(data: String) {
+                HttpConnection.connect(HttpConnection.getNetApi().isTokenValid(Constant.LOGIN_BEAN.token),
+                    object : HttpResultBack {
+                        override fun onSuccess(data: String) {
 
-                        val jsonObject = JSONObject(data)
+                            val jsonObject = JSONObject(data)
 
-                       if(jsonObject.has("success")){
+                            if (jsonObject.has("success")) {
 
-                           val success = jsonObject.getBoolean("success")
+                                val success = jsonObject.getBoolean("success")
 
-                           emitter.onNext(success)
-                       }
-                    }
+                                emitter.onNext(success)
+                            }
+                        }
 
-                    override fun onFaile(error: String) {
+                        override fun onFaile(error: String) {
 
-                    }
-                })
+                        }
+                    })
 
 
             }
         })
-        val observer = object :Consumer<Boolean>{
+        val observer = object : Consumer<Boolean> {
             override fun accept(t: Boolean?) {
 
-                if(t != null && !t){
+                if (t != null && !t) {
 
                     setMsgLiveDataValue(1)
                 }
             }
         }
-        observable.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(observer)
-
+        mDisposable.add(
+            observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer)
+        )
     }
 
     override fun onResume() {
@@ -290,7 +332,7 @@ class MainViewModle : BaseViewModle() {
 
     override fun onDestroy() {
 
-
+        mDisposable.clear()
     }
 
     override fun registerRxBus() {

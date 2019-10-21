@@ -3,6 +3,7 @@ package com.bondex.ysl.liblibrary.ui;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -69,7 +70,7 @@ public class ReduceAddEditText extends ConstraintLayout {
             public void click(View v) {
 
                 int value = getEdit() + 1;
-                editText.setText(value + " ");
+                editText.setText(value + "");
 
             }
         });
@@ -81,6 +82,7 @@ public class ReduceAddEditText extends ConstraintLayout {
 
         try {
             String str = editText.getText().toString();
+            if (TextUtils.isEmpty(str)) str = "0";
             value = Integer.valueOf(str.trim());
 
         } catch (Exception e) {

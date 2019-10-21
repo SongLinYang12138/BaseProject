@@ -2,10 +2,9 @@
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:paddingHorizontal="@dimen/activity_horizontal_margin"
         android:paddingBottom="@dimen/margin_small"
         android:background="@color/white_back"
 >
@@ -25,8 +24,8 @@
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="785-5454"
-              android:maxWidth="@dimen/min_width"
+              android:text="785-545sdsdsdssssssssss4"
+              android:maxWidth="90dp"
               style="@style/small_tv_primary"
               android:id="@+id/item_add_hawb_mhawb"
               android:textStyle="bold"
@@ -36,7 +35,7 @@
     />
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:maxWidth="@dimen/min_width"
+              android:maxWidth="90dp"
               android:text="4545"
               android:layout_marginLeft="@dimen/activity_horizontal_margin" app:layout_constraintWidth_percent="0.2"
               style="@style/small_tv_primary"

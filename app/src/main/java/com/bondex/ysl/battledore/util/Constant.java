@@ -14,9 +14,14 @@ public class Constant {
     public static final int CAMERA_REQUEST = 101;
     //    带planbean跳转时的key
     public static final String PLAN_BEAN_KEY = "planBean";
-//    //带HAWBBean跳转时的key
+    //    //带HAWBBean跳转时的key
     public static final String HAWB_BEAN_KEY = "hwabs";
+    //当前所在城市
+    public static final String CITY_KEY = "city";
+    //    机场三字码
+    public static final String AIR_CODE_KEY = "air_code";
+    public static String AIR_CODE;
+    public static String CITY;
 
-    public static final int CITY_ID = 101;
 
 }

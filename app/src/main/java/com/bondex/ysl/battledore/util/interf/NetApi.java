@@ -1,6 +1,8 @@
 package com.bondex.ysl.battledore.util.interf;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.*;
 
 import java.util.Map;
@@ -21,18 +23,31 @@ public interface NetApi {
     @POST("http://cas.bondex.com.cn:8080/cslogin.jsp")
     Observable<String> login(@Field("userid") String userid, @Field("pwd") String pwd);
 
-//    通讯录
+    //    通讯录
     @FormUrlEncoded
     @POST("http://wapi.bondex.com.cn:7111/api/Employee/select/PersonList")
     Observable<String> getPhone(@FieldMap Map<String, String> map);
 
-//    检验token是否过时
+    //    检验token是否过时
     @FormUrlEncoded
     @POST("http://cas.bondex.com.cn:8080/castokenValidate.jsp")
     Observable<String> isTokenValid(@Field("token") String token);
 
     @FormUrlEncoded
-    @POST("http://baseinfo.bondex.com.cn:8080/apis/airport")
-    Observable<String> getAirPort(@Field("param")String slike);
+    @POST("http://dbi.bondex.com.cn:8085/baseData/apis/port")
+    Observable<String> getAirPort(@Field("Head") String head, @Field("Main") String main);
 
+    @FormUrlEncoded
+    @POST("http://baseinfo.bondex.com.cn:8080/apis/airport")
+    Observable<String> getAirPortOld(@Field("param") String sLike);
+
+
+    @Streaming
+    @GET("{user}")
+    Call<ResponseBody> downloadFile(@Path("user") String user);
+
+
+    @Streaming
+    @GET()
+    Call<ResponseBody> downloadWelcome();
 }

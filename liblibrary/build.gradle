@@ -77,4 +77,7 @@ dependencies {
 //照相机
     api project(":bondexcamera")
 
+//    七牛云
+    api depend.qiniu
+
 }

@@ -30,8 +30,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/search"
-                    android:padding="5dp"
-                    android:textSize="@dimen/icon_normal"
+                    android:textSize="20dp"
+                    android:padding="2dp"
                     android:textColor="@color/text_gray"
                     android:layout_centerInParent="true"
             />
@@ -42,12 +42,12 @@
         <EditText
                 android:id="@+id/search_editext"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="27dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:inputType="numberDecimal"
+                android:inputType="textEmailAddress"
                 android:paddingHorizontal="@dimen/activity_horizontal_margin"
-                style="@style/normal_tv_gray"
+                style="@style/small_tv_gray"
                 android:hint="请输入查询条件"
                 android:singleLine="true"
         />
@@ -55,7 +55,7 @@
         <ImageView
                 android:id="@+id/search_iv_clear"
                 android:layout_width="40dp"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:scaleType="centerInside"
                 android:padding="5dp"
                 android:src="@drawable/clean_edit"

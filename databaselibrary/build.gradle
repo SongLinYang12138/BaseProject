@@ -36,7 +36,10 @@ dependencies {
 //       gosn
 //    implementation depend.gson
     implementation  depend.appcompat
+    implementation depend.gson
     //    room
     api depend.room
     annotationProcessor depend.room_compiler
+
+
 }

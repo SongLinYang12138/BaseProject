@@ -1,9 +1,12 @@
 package com.bondex.ysl.battledore.base;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import com.bondex.ysl.battledore.application.BattleApplication;
 import com.bondex.ysl.battledore.util.interf.LifecycleaWacher;
 
 /**
@@ -15,13 +18,8 @@ public abstract class BaseViewModle extends ViewModel implements LifecycleaWache
 
     private MutableLiveData<Boolean> refres = new MutableLiveData<>();
     private MutableLiveData<Integer> msgLiveData = new MutableLiveData<>();
-    protected Context context;
+    protected Context context = BattleApplication.CONTEXT;
 
-
-
-    public void setCont(Context context) {
-        this.context = context;
-    }
 
     public LiveData<Boolean> getRefresh() {
         return refres;
@@ -31,12 +29,12 @@ public abstract class BaseViewModle extends ViewModel implements LifecycleaWache
         refres.postValue(isShow);
     }
 
-    protected LiveData<Integer> getMsgLiveDatas(){
+    protected LiveData<Integer> getMsgLiveDatas() {
 
         return msgLiveData;
     }
 
-    protected void setMsgLiveDataValue (Integer msg){
+    protected void setMsgLiveDataValue(Integer msg) {
 
         msgLiveData.setValue(msg);
     }

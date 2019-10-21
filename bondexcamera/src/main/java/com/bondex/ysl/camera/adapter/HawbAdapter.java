@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import com.bondex.ysl.camera.MainHawbBean;
 import com.bondex.ysl.camera.R;
+import com.bondex.ysl.databaselibrary.hawb.HAWBBean;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,7 @@ import java.util.ArrayList;
  */
 public class HawbAdapter extends BaseAdapter {
 
-    private ArrayList<MainHawbBean> list;
+    private ArrayList<HAWBBean> list;
     private Context context;
     private ArrayMap<Integer, Boolean> selected = new ArrayMap<>();
     private ColorStateList normal, select;
@@ -38,25 +37,21 @@ public class HawbAdapter extends BaseAdapter {
         return selectPosition;
     }
 
-    public ArrayList<MainHawbBean> getList() {
+    public ArrayList<HAWBBean> getList() {
         return list;
     }
 
     public ArrayMap<Integer, Boolean> getSelected() {
         return selected;
     }
-//    public void updateList(ArrayList<MainHawbBean> list) {
-//
-//        this.list = list;
-//        notifyDataSetChanged();
-//    }
+
 
     public void setSelected(ArrayMap<Integer, Boolean> selected) {
         this.selected = selected;
         notifyDataSetChanged();
     }
 
-    public HawbAdapter(ArrayList<MainHawbBean> list, Context context) {
+    public HawbAdapter(ArrayList<HAWBBean> list, Context context) {
         this.list = list;
         this.context = context;
         if (context == null) return;

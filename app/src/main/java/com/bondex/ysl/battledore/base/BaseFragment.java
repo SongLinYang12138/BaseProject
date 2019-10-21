@@ -68,7 +68,6 @@ public abstract class BaseFragment<VM extends BaseViewModle, V extends ViewDataB
                 modelClass = BaseViewModle.class;
             }
             viewModel = (VM) createViewModel(this, modelClass);
-            viewModel.setCont(getContext());
         }
 
         getLifecycle().addObserver(viewModel);

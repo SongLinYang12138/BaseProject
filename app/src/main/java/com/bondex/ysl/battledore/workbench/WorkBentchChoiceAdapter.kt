@@ -11,9 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.bondex.ysl.battledore.R
-import com.bondex.ysl.battledore.util.Constant
+import com.bondex.ysl.databaselibrary.plan.WorkBentchChoiceBean
 import com.bondex.ysl.liblibrary.ui.ReduceAddEditText
-import com.orhanobut.logger.Logger
 import java.lang.Exception
 
 /**
@@ -49,7 +48,16 @@ class WorkBentchChoiceAdapter(list: MutableList<WorkBentchChoiceBean>) :
 
                     try {
                         list.get(position).count = s.toString().toInt()
-                        selectList.add(list.get(position))
+
+
+                        val index = selectList.indexOf(list.get(position))
+                        if (index >= 0) {
+
+                            selectList.set(index, list.get(position))
+                        } else {
+
+                            selectList.add(list.get(position))
+                        }
 
                         if (s.toString().toInt() == 0) {
 
@@ -59,9 +67,10 @@ class WorkBentchChoiceAdapter(list: MutableList<WorkBentchChoiceBean>) :
                         e.printStackTrace()
                     }
                 } else {
-
+                    list.get(position).count = 0
                     selectList.remove(list.get(position))
                 }
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -105,6 +114,7 @@ class WorkBentchChoiceAdapter(list: MutableList<WorkBentchChoiceBean>) :
 
         p0.tv.setText(bean.name)
         if (bean.count > 0) p0.rde.editText.setText(bean.count.toString())
+        else if (bean.count == 0) p0.rde.editText.setText("")
 
 
     }

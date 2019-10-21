@@ -2,6 +2,9 @@ package com.bondex.ysl.battledore.workbench
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +14,7 @@ import com.bondex.ysl.databaselibrary.hawb.HAWBBean
 import com.bondex.ysl.liblibrary.ui.IconText
 import com.bondex.ysl.liblibrary.ui.ReduceAddEditText
 import com.bondex.ysl.liblibrary.utils.NoDoubleClickListener
+import java.lang.Exception
 
 /**
  * date: 2019/6/13
@@ -53,6 +57,41 @@ class WorkBetchAdapter(list: ArrayList<HAWBBean>) : RecyclerView.Adapter<WorkBet
 
             }
         })
+        val textWatcher = object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable?) {
+
+                val position = holder.tvMhawb.getTag() as Int
+
+                if (!TextUtils.isEmpty(s.toString())) {
+
+                    try {
+                        list.get(position).loadQty = s.toString().toInt()
+
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
+
+                    list.get(position).loadQty = 0
+                }
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        }
+
+        holder.etLoad.editText.addTextChangedListener(textWatcher)
+
+
+
         return holder
     }
 
@@ -67,10 +106,14 @@ class WorkBetchAdapter(list: ArrayList<HAWBBean>) : RecyclerView.Adapter<WorkBet
 
         val hawbBean = list.get(position)
 
+        holder.tvMhawb.setTag(position)
         holder.tvMhawb.setText(hawbBean.getmBillCode())
         holder.tvhwab.setText(hawbBean.hawb)
         holder.tvQty.setText(hawbBean.qty.toString())
-        if (hawbBean.qty > 0) holder.etLoad.editText.setText(hawbBean.qty.toString())
+
+        if (hawbBean.loadQty > 0) holder.etLoad.editText.setText(hawbBean.loadQty.toString())
+        else if (hawbBean.qty > 0) holder.etLoad.editText.setText(hawbBean.qty.toString())
+        else holder.etLoad.editText.setText("")
     }
 
 

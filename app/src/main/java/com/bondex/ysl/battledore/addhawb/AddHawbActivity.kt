@@ -8,7 +8,6 @@ import android.widget.CompoundButton
 import com.bondex.ysl.battledore.R
 import com.bondex.ysl.battledore.base.BaseActivity
 import com.bondex.ysl.battledore.databinding.ActivityAddHawbBinding
-import com.bondex.ysl.battledore.plan.PlanBean
 import com.bondex.ysl.battledore.ui.MenuList
 import com.bondex.ysl.battledore.ui.TextItemDecoration
 import com.bondex.ysl.battledore.util.Constant
@@ -16,8 +15,8 @@ import com.bondex.ysl.battledore.util.ToastUtils
 import com.bondex.ysl.battledore.workbench.WorkBetchActivity
 import com.bondex.ysl.camera.ISCameraConfig
 import com.bondex.ysl.camera.ISNav
-import com.bondex.ysl.camera.MainHawbBean
 import com.bondex.ysl.databaselibrary.hawb.HAWBBean
+import com.bondex.ysl.databaselibrary.plan.PlanBean
 import com.bondex.ysl.liblibrary.utils.NoDoubleClickListener
 import kotlinx.android.synthetic.main.activity_add_hawb.*
 
@@ -59,24 +58,28 @@ class AddHawbActivity : BaseActivity<AddHawbViewModel, ActivityAddHawbBinding>()
             }
         })
 
+        showRight(true, R.string.camera, object : View.OnClickListener {
+            override fun onClick(v: View?) {
+
+                val hawbs = viewModel.planHawbBeans
+
+                if (hawbs.size == 0) {
+                    ToastUtils.showShort("请先添加分单号")
+                    return
+                }
+
+
+                val config: ISCameraConfig = ISCameraConfig.Builder().setHawbBeans(hawbs).build()
+                ISNav.getInstance().toCamera(this@AddHawbActivity, config, Constant.CAMERA_REQUEST)
+            }
+        })
+
+
+
         add_hawb_add.setOnClickListener(listener)
         add_hawb_ck.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 viewModel?.selectAll(isChecked)
-            }
-        })
-
-        val list = arrayListOf<MainHawbBean>(
-            MainHawbBean("789-6487788", "HWR878454"),
-            MainHawbBean("789-648571w", "HRR878454"),
-            MainHawbBean("789-6489657", "HWG878454"),
-            MainHawbBean("789-6483432", "HWJ888454")
-        )
-        showRight(true, R.string.camera, object : View.OnClickListener {
-            override fun onClick(v: View?) {
-
-                val config: ISCameraConfig = ISCameraConfig.Builder().setHawbBeans(list).build()
-                ISNav.getInstance().toCamera(this@AddHawbActivity, config, Constant.CAMERA_REQUEST)
             }
         })
 
@@ -125,6 +128,11 @@ class AddHawbActivity : BaseActivity<AddHawbViewModel, ActivityAddHawbBinding>()
                 intent.putExtras(bundle)
 
                 startActivity(intent)
+
+                viewModel.planHawbBeans.clear()
+
+                viewModel.getPlanAdapter().updateList(viewModel.planHawbBeans)
+                viewModel.getHawbAdapter().updateList(viewModel.hawbBeans)
             }
         })
 

@@ -2,6 +2,7 @@ package com.bondex.ysl.camera;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.bondex.ysl.databaselibrary.hawb.HAWBBean;
 
 import java.util.ArrayList;
 
@@ -10,9 +11,9 @@ import java.util.ArrayList;
  * Author: ysl
  * description:
  */
-public class ISCameraConfig implements Parcelable {
+public class ISCameraConfig implements Parcelable{
 
-    private ArrayList<MainHawbBean> hawbs;
+    private ArrayList<HAWBBean> hawbs;
 
 
 
@@ -21,13 +22,8 @@ public class ISCameraConfig implements Parcelable {
         this.hawbs = builder.hawbBeans;
     }
 
-    public ArrayList<MainHawbBean> getHawbs() {
-        if (hawbs == null) return new ArrayList<>();
-        return hawbs;
-    }
-
     protected ISCameraConfig(Parcel in) {
-        hawbs = in.createTypedArrayList(MainHawbBean.CREATOR);
+        hawbs = in.createTypedArrayList(HAWBBean.CREATOR);
     }
 
     public static final Creator<ISCameraConfig> CREATOR = new Creator<ISCameraConfig>() {
@@ -42,6 +38,11 @@ public class ISCameraConfig implements Parcelable {
         }
     };
 
+    public ArrayList<HAWBBean> getHawbs() {
+        if (hawbs == null) return new ArrayList<>();
+        return hawbs;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -52,23 +53,14 @@ public class ISCameraConfig implements Parcelable {
         dest.writeTypedList(hawbs);
     }
 
+
     public static class Builder implements Parcelable {
 
-        private ArrayList<MainHawbBean> hawbBeans;
+        private ArrayList<HAWBBean> hawbBeans;
 
 
         public Builder() {
 
-        }
-
-        public Builder setHawbBeans(ArrayList<MainHawbBean> hawbBeans) {
-            this.hawbBeans = hawbBeans;
-
-            return this;
-        }
-
-        protected Builder(Parcel in) {
-            hawbBeans = in.createTypedArrayList(MainHawbBean.CREATOR);
         }
 
         public static final Creator<Builder> CREATOR = new Creator<Builder>() {
@@ -83,6 +75,22 @@ public class ISCameraConfig implements Parcelable {
             }
         };
 
+        public Builder setHawbBeans(ArrayList<HAWBBean> hawbBeans) {
+            this.hawbBeans = hawbBeans;
+
+            return this;
+        }
+
+        protected Builder(Parcel in) {
+            hawbBeans = in.createTypedArrayList(HAWBBean.CREATOR);
+        }
+
+
+
+        public ISCameraConfig build() {
+
+            return new ISCameraConfig(this);
+        }
 
         @Override
         public int describeContents() {
@@ -93,11 +101,5 @@ public class ISCameraConfig implements Parcelable {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeTypedList(hawbBeans);
         }
-
-        public ISCameraConfig build() {
-
-            return new ISCameraConfig(this);
-        }
-
     }
 }

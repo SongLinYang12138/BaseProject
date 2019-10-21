@@ -26,7 +26,7 @@
                 android:id="@+id/top"
                 android:layout_height="wrap_content"
                 android:background="@color/white_back"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 android:paddingVertical="@dimen/activity_horizontal_margin"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
@@ -34,13 +34,13 @@
 
 
             <TextView
-                    android:id="@+id/work_battle_unit_flight"
+                    android:id="@+id/dore_detail_unit_flight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintLeft_toLeftOf="@id/work_battle_flight"
-                    style="@style/normal_tv_gray"
+                    android:layout_marginTop="@dimen/margin_small"
+                    app:layout_constraintLeft_toLeftOf="@id/dore_detail_flight"
+                    style="@style/small_tv_gray"
                     android:text="航班号"
 
             />
@@ -50,70 +50,71 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:met_floatingLabel="normal"
-                    app:layout_constraintTop_toTopOf="@id/work_battle_unit_flight"
-                    style="@style/normal_tv_gray"
+                    app:layout_constraintTop_toTopOf="@id/dore_detail_unit_flight"
+                    style="@style/small_tv_gray"
                     android:text="目的港"
 
-                    app:layout_constraintLeft_toLeftOf="@id/work_battle_detination"
-                    app:layout_constraintRight_toRightOf="@id/work_battle_detination"
+                    app:layout_constraintLeft_toLeftOf="@id/dore_detail_detination"
+                    app:layout_constraintRight_toRightOf="@id/dore_detail_detination"
             />
 
             <TextView
                     android:id="@+id/work_unit_flight_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/work_battle_unit_flight"
-                    style="@style/normal_tv_gray"
+                    app:layout_constraintTop_toTopOf="@id/dore_detail_unit_flight"
+                    style="@style/small_tv_gray"
                     android:text="航班日期"
-                    app:layout_constraintRight_toRightOf="@id/work_battle_flight_date"
+                    app:layout_constraintRight_toRightOf="@id/dore_detail_flight_date"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
             />
 
             <TextView
-                    android:id="@+id/work_battle_flight"
+                    android:id="@+id/dore_detail_flight"
                     android:layout_width="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/work_battle_unit_flight"
-                    android:layout_height="40dp"
+                    app:layout_constraintTop_toBottomOf="@id/dore_detail_unit_flight"
+                    android:layout_height="25dp"
                     android:minWidth="@dimen/min_width"
                     style="@style/normal_tv_black"
                     android:textStyle="bold"
-                    android:text="MU9929"
+                    android:inputType="textEmailAddress"
                     android:background="@color/transparent"
                     android:layout_marginTop="@dimen/main_small"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    app:layout_constraintRight_toLeftOf="@id/work_battle_detination"
+                    app:layout_constraintRight_toLeftOf="@id/dore_detail_detination"
             />
 
             <TextView
-                    android:id="@+id/work_battle_detination"
+                    android:id="@+id/dore_detail_detination"
                     android:layout_width="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/work_battle_flight"
-                    app:layout_constraintLeft_toRightOf="@id/work_battle_flight"
-                    android:layout_height="40dp"
+                    app:layout_constraintTop_toTopOf="@id/dore_detail_flight"
+                    app:layout_constraintLeft_toRightOf="@id/dore_detail_flight"
+                    android:layout_height="25dp"
                     android:minWidth="@dimen/min_width"
                     style="@style/normal_tv_black"
+                    android:inputType="textEmailAddress"
+
                     android:textStyle="bold"
-                    android:text="LUX"
                     android:background="@color/transparent"
                     android:textAlignment="center"
-                    app:layout_constraintRight_toLeftOf="@id/work_battle_flight_date"
+                    app:layout_constraintRight_toLeftOf="@id/dore_detail_flight_date"
             />
 
 
             <TextView
-                    android:id="@+id/work_battle_flight_date"
+                    android:id="@+id/dore_detail_flight_date"
                     android:layout_width="wrap_content"
 
-                    app:layout_constraintTop_toTopOf="@id/work_battle_flight"
-                    app:layout_constraintLeft_toRightOf="@id/work_battle_detination"
+                    app:layout_constraintTop_toTopOf="@id/dore_detail_flight"
+                    app:layout_constraintLeft_toRightOf="@id/dore_detail_detination"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_height="40dp"
+                    android:layout_height="25dp"
                     android:minWidth="@dimen/min_width"
                     style="@style/normal_tv_black"
                     android:textStyle="bold"
                     android:textAlignment="center"
-                    android:text="2019-07-09"
+                    android:focusable="false"
                     android:background="@color/transparent"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
 
@@ -124,23 +125,24 @@
 
                     android:id="@+id/work_unit_plate_num"
                     android:layout_width="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/work_battle_flight"
-                    app:layout_constraintLeft_toLeftOf="@id/work_battle_unit_flight"
+                    app:layout_constraintTop_toBottomOf="@id/dore_detail_flight"
+                    app:layout_constraintLeft_toLeftOf="@id/dore_detail_unit_flight"
                     android:layout_height="wrap_content"
-                    style="@style/normal_tv_gray"
+                    style="@style/small_tv_gray"
                     android:text="板号"
             />
 
             <TextView
                     android:id="@+id/work_plate_num"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:minWidth="@dimen/min_width"
+                    android:layout_height="25dp"
+                    android:minWidth="60dp"
+                    android:inputType="textEmailAddress"
+
                     app:layout_constraintTop_toBottomOf="@id/work_unit_plate_num"
-                    app:layout_constraintLeft_toLeftOf="@id/work_battle_flight"
+                    app:layout_constraintLeft_toLeftOf="@id/dore_detail_flight"
                     style="@style/normal_tv_black"
                     android:textStyle="bold"
-                    android:text="LSJL5"
                     android:background="@color/transparent"
             />
 
@@ -150,21 +152,19 @@
                     android:layout_width="wrap_content"
                     app:layout_constraintTop_toTopOf="@id/work_unit_plate_num"
                     android:layout_height="wrap_content"
-                    style="@style/normal_tv_gray"
+                    style="@style/small_tv_gray"
                     android:text="板型"
                     app:layout_constraintLeft_toLeftOf="@id/work_unit_destination"
             />
 
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/work_plate_type"
-                      android:text="大"
-                      style="@style/normal_tv_black"
-                      android:textStyle="bold"
-                      app:layout_constraintTop_toTopOf="@id/work_plate_num"
-                      app:layout_constraintLeft_toLeftOf="@id/work_unit_destination"
-                      android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            ></TextView>
+            <Spinner android:layout_width="70dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/work_plate_type"
+                     app:layout_constraintTop_toTopOf="@id/work_plate_num"
+                     app:layout_constraintLeft_toLeftOf="@id/work_unit_destination"
+                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                     android:entries="@array/plate_type"
+            ></Spinner>
 
 
             <TextView
@@ -172,7 +172,7 @@
                     android:layout_width="wrap_content"
                     app:layout_constraintTop_toTopOf="@id/work_unit_plate_num"
                     android:layout_height="wrap_content"
-                    style="@style/normal_tv_gray"
+                    style="@style/small_tv_gray"
                     android:text="打板日期"
                     app:layout_constraintLeft_toLeftOf="@id/work_unit_flight_date"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -180,20 +180,45 @@
             />
 
             <TextView
-                    android:id="@+id/work_battle_date"
+                    android:id="@+id/dore_detail_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="25dp"
                     android:minWidth="@dimen/min_width"
                     app:layout_constraintTop_toTopOf="@id/work_plate_num"
-                    app:layout_constraintLeft_toLeftOf="@id/work_battle_flight_date"
+                    app:layout_constraintLeft_toLeftOf="@id/dore_detail_flight_date"
                     style="@style/normal_tv_black"
                     android:textAlignment="center"
-                    android:text="2017-07-09"
                     android:textStyle="bold"
-                    android:hint="打板日期"
+                    android:focusable="false"
                     android:background="@color/transparent"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
 
+            />
+
+            <TextView
+
+                    android:id="@+id/work_unit_plate_lock"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/work_unit_plate_num"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@id/work_unit_plate_num"
+                    app:layout_constraintRight_toLeftOf="@id/work_unit_destination"
+                    style="@style/small_tv_gray"
+                    android:text="板锁号"
+                    tools:layout_editor_absoluteX="13dp"/>
+
+            <TextView
+                    android:id="@+id/work_plate_lock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:minWidth="60dp"
+                    app:layout_constraintTop_toBottomOf="@id/work_unit_plate_lock"
+                    style="@style/normal_tv_black"
+                    android:inputType="textEmailAddress"
+                    app:layout_constraintLeft_toRightOf="@id/work_plate_num"
+                    app:layout_constraintRight_toLeftOf="@id/work_plate_type"
+                    android:textStyle="bold"
+                    android:background="@color/transparent"
             />
 
 
@@ -213,6 +238,18 @@
                 android:text="主单号"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
         />
+        <ImageView
+
+                android:id="@+id/work_it_main"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="@id/work_unit_main"
+                app:layout_constraintBottom_toBottomOf="@id/work_unit_main"
+                app:layout_constraintLeft_toRightOf="@id/work_unit_main"
+                android:src="@mipmap/scan"
+
+        />
 
 
         <TextView
@@ -225,9 +262,19 @@
                 app:layout_constraintWidth_percent="0.17"
                 android:textAlignment="center"
                 app:layout_constraintTop_toTopOf="@id/work_unit_main"
-                app:layout_constraintLeft_toRightOf="@id/work_unit_main"
+                app:layout_constraintLeft_toRightOf="@id/work_it_main"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"
+        />
+        <ImageView
+
+                android:id="@+id/work_it_hawb"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toTopOf="@id/work_unit_main"
+                app:layout_constraintBottom_toBottomOf="@id/work_unit_main"
+                app:layout_constraintLeft_toRightOf="@id/work_unit_hawb"
+                android:src="@mipmap/scan"
         />
 
 
@@ -240,7 +287,7 @@
                 android:text="件数"
                 android:textAlignment="center"
                 app:layout_constraintTop_toTopOf="@id/work_unit_main"
-                app:layout_constraintLeft_toRightOf="@id/work_unit_hawb"
+                app:layout_constraintLeft_toRightOf="@id/work_it_hawb"
         />
 
 
@@ -275,37 +322,38 @@
                 android:orientation="horizontal"
                 android:background="@color/white_back"
                 app:layout_constraintBottom_toTopOf="@id/bottom"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/margin_small"
         >
 
-            <TextView
-                    android:id="@+id/work_unit_protect_type"
-                    style="@style/normal_tv_primary"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="18dp"
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/work_protect_type_recyclerView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                    android:text="保护类型"
-                    app:layout_constraintTop_toTopOf="parent"
-            />
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    app:layout_constraintBottom_toTopOf="@id/work_subplate_recyclerView"
+                    android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                    android:clickable="false"
+            >
 
 
-            <TextView
+            </android.support.v7.widget.RecyclerView>
 
-                    android:id="@+id/work_unit_subplate"
-                    style="@style/normal_tv_primary"
-                    android:layout_width="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="18dp"
 
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/work_subplate_recyclerView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="垫板类型"
-                    app:layout_constraintTop_toBottomOf="@id/work_unit_protect_type"
-            />
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingHorizontal="@dimen/activity_horizontal_margin"
 
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:clickable="false"
+            >
+
+
+            </android.support.v7.widget.RecyclerView>
 
         </android.support.constraint.ConstraintLayout>
 

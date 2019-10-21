@@ -1,5 +1,12 @@
 <resources>
 
+    <declare-styleable name="ProgressView">
+        <attr name="smallCircleColor" format="color"></attr>
+        <attr name="bigCircleColor" format="color" />
+        <attr name="textColor" format="color"/>
+        <attr name="circleWidth" format="float"/>
+        <attr name="textSize" format="float"/>
+    </declare-styleable>
 
 
 </resources>

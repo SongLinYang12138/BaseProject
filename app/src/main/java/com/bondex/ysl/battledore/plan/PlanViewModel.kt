@@ -1,21 +1,27 @@
 package com.bondex.ysl.battledore.plan
 
-import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import com.bondex.ysl.battledore.base.BaseViewModle
-import com.bondex.ysl.battledore.util.ToastUtils
-import com.bondex.ysl.battledore.workbench.WorkBentchChoiceBean
+import com.bondex.ysl.databaselibrary.plan.WorkBentchChoiceBean
 import com.bondex.ysl.camera.ui.utils.SHA
 import com.bondex.ysl.databaselibrary.hawb.HAWBBean
+import com.bondex.ysl.databaselibrary.plan.BattleBoardBean
+import com.bondex.ysl.databaselibrary.plan.PlanBean
+import com.bondex.ysl.databaselibrary.plan.PlanBeanDao
 import com.bondex.ysl.liblibrary.utils.Tools
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -28,75 +34,109 @@ import kotlin.collections.ArrayList
 class PlanViewModel : BaseViewModle() {
 
     val planBeans = arrayListOf<PlanBean>()
-    var searBeans = arrayListOf<PlanBean>()
+    val adapter: PlanAdapter = PlanAdapter(planBeans)
 
     override fun onCreate() {
 
 
-        for (i in 0..10) {
+        getData(1)
+
+        insertTestData()
+    }
+
+    fun refresh() {
+
+        getData(1)
+    }
+
+    fun getData(page: Int) {
 
 
-            val hawbs = arrayListOf<HAWBBean>()
-            val hawbBean = HAWBBean()
-            hawbBean.date = "2019-08-0$i"
-            hawbBean.detination = toAZ(i) + toAZ(10 - i)
-            hawbBean.flight = toAZ(i) + "C4545" + i
-            hawbBean.hawb = toAZ(10 - i) + "TC7894" + (10 - i)
-            hawbBean.qty = i
-            hawbBean.volume = "14." + i
-            hawbBean.weight = (10 - i).toString() + "7." + i
-            hawbBean.setmBillCode("784-965448778")
-            hawbBean.id = SHA.Bit16(hawbBean.getmBillCode() + hawbBean.hawb)
-            hawbs.add(hawbBean)
+        val observable = Observable.create(object : ObservableOnSubscribe<List<PlanBean>> {
+            override fun subscribe(emitter: ObservableEmitter<List<PlanBean>>) {
 
-            val subplate = WorkBentchChoiceBean()
+                val dao = PlanBeanDao(context)
 
-            subplate.id =  i
-            subplate.name = "老大垫" + toAZ(i)
+                val offset = page * 20
+                val list: List<PlanBean> = dao.getPlans(20, offset)
 
+                Log.i("aaa", "page " + page + "  size " + list.size)
+                emitter.onNext(list)
 
-            val protectType = WorkBentchChoiceBean()
+            }
+        })
+        val consumer = Consumer<List<PlanBean>> {
 
-            protectType.id =  i
-            protectType.name = "新品保护" + toAZ(i)
+            if (it.size > 0) {
 
-            val plateType = WorkBentchChoiceBean()
-
-            plateType.id = i
-            plateType.name = "大" + toAZ(i)
-
-
-            val subplates = arrayListOf<WorkBentchChoiceBean>(subplate)
-            val protectTypes = arrayListOf<WorkBentchChoiceBean>(protectType)
-
-
-            val planBean = PlanBean()
-            planBean.hawbs = hawbs
-            planBean.subPlateTypel = subplates
-            planBean.protectType = protectTypes
-            planBean.plateType = plateType
-            planBean.destination = toAZ(i) + toAZ(13 - i)
-            planBean.flghtDate = "2019-08-" + i + "" + (i - 1)
-            planBean.flight = "SC456" + i
-            planBean.hawbTotal = "" + (10 - i) + "H"
-            planBean.qtyTotal = i
-            planBean.volumeTotal = "18"
-            planBean.weightTotal = "14"
-            planBean.boardNum = toAZ(26 - i) + "1" + toAZ(20 - i) + "72"
-
-            planBean.lockNum = i.toString() + "" + toAZ(18 - i) + i + "2" + toAZ(i)
-            planBean.setmBillTotal(i.toString() + "M")
-            planBean.id = ""+i
-            planBeans.add(planBean)
+                planBeans.addAll(it)
+                adapter.updataList(planBeans)
+                setRefresh(true)
+            }
         }
 
-        val gson = Gson()
 
-        val jsonStr = gson.toJson(planBeans)
+        observable.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(consumer)
+    }
 
 
-//        Log.i("aaa", jsonStr)
-        setRefresh(true)
+    private fun insertTestData() {
+
+
+        val assetManager = context.resources.assets
+
+
+        val thread = Thread(object : Runnable {
+            override fun run() {
+                val inp = assetManager.open("battledore_data.json")
+
+                val bos = ByteArrayOutputStream()
+
+                var len: Int = 0
+
+                while (len != -1) {
+                    len = inp.read()
+                    bos.write(len)
+                }
+
+                val dao = PlanBeanDao.getInstance(context)
+                val json = String(bos.toByteArray())
+
+                val gson = Gson()
+                val jsonArray = JSONArray(json)
+
+                val list: List<PlanBean> = dao.getPlans(20, 0)
+
+                Log.i("aaa", "lismitsize " + list.size)
+                if (list.size > 0) return
+
+                for (i in 0..jsonArray.length() - 1) {
+
+                    val planBean = PlanBean()
+                    planBean.id = i.toString()
+
+                    val jsonObject = jsonArray.getJSONObject(i)
+                    val boardBean = gson.fromJson(jsonObject.toString(), BattleBoardBean::class.java)
+                    planBean.toPlanBean(boardBean)
+
+                    dao.intsert(planBean)
+                }
+
+                Log.i("aaa", " listsize " + planBeans.size)
+
+
+                bos.flush()
+                inp.close()
+                bos.close()
+
+
+            }
+        })
+
+        thread.start()
+
     }
 
     fun toAZ(num: Int): String {
@@ -121,125 +161,8 @@ class PlanViewModel : BaseViewModle() {
         } while (num > 0)
 
         return letter
-    }
-
-    fun getList() = planBeans
-
-    fun planClick(view: View) {
-
-        ToastUtils.showShort("点击")
-    }
-
-    fun sortPlanBeans(type: Int) {
-
-        when (type) {
-
-            0 -> {
-
-                Collections.sort(planBeans, object : Comparator<PlanBean> {
-                    override fun compare(o1: PlanBean?, o2: PlanBean?): Int {
-
-                        if (o1 != null && o2 != null) {
-
-                            return (Tools.getTimeMilles(o1.flghtDate) - Tools.getTimeMilles(o2.flghtDate)).toInt()
-
-                        }
-                        return -1
-                    }
-                })
-
-
-            }
-
-            1 -> {
-
-                Collections.sort(planBeans, object : Comparator<PlanBean> {
-                    override fun compare(o1: PlanBean?, o2: PlanBean?): Int {
-
-                        if (o1 != null && o2 != null) {
-                            return o1.flight.compareTo(o2.flight)
-                        }
-                        return -1
-                    }
-                })
-            }
-
-            2 -> {
-
-                Collections.sort(planBeans, object : Comparator<PlanBean> {
-                    override fun compare(o1: PlanBean?, o2: PlanBean?): Int {
-
-                        if (o1 != null && o2 != null) {
-
-                            return o1.qtyTotal - o2.qtyTotal
-                        }
-                        return -1
-                    }
-                })
-
-
-            }
-
-        }
-        setRefresh(false)
-
 
     }
-
-    /*
-    * 筛选符合条件的对象出来
-    * */
-    fun filterList(str: String) {
-
-        searBeans.clear()
-        val observable = Observable.create(object : ObservableOnSubscribe<String> {
-            override fun subscribe(emitter: ObservableEmitter<String>) {
-
-                val str = str.toLowerCase()
-
-                for (item in planBeans) {
-
-
-                    if (!TextUtils.isEmpty(item.flight) && item.flight.toLowerCase().contains(str)) {
-
-                        searBeans.add(item)
-                    } else if (!TextUtils.isEmpty(item.destination) && item.destination.toLowerCase().contains(str)) {
-
-                        searBeans.add(item)
-                    } else if (item.hawbs != null) {
-
-                        for (it in item.hawbs) {
-
-                            if (it.hawb.toLowerCase().contains(str) || it.getmBillCode().toLowerCase().contains(str)) {
-                                searBeans.add(item)
-                                break
-                            }
-                        }
-                    }
-                }
-
-                emitter.onNext("Y")
-
-            }
-        })
-        val observer: Consumer<String> = object : Consumer<String> {
-            override fun accept(t: String?) {
-                setMsgLiveDataValue(1)
-
-
-            }
-
-
-        }
-
-        observable.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(observer)
-
-
-    }
-
-    fun getSearch(): ArrayList<PlanBean> = searBeans
 
 
     override fun onResume() {

@@ -60,7 +60,7 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initData();
+
         binding = DataBindingUtil.setContentView(this, getReourceId());
 
         ivBack = binding.getRoot().findViewById(R.id.base_back);
@@ -84,9 +84,8 @@ public abstract class BaseActivity<M extends BaseViewModle, B extends ViewDataBi
             }
             viewModel = (M) createViewModel(this, modelClass);
 
-            viewModel.setCont(getApplicationContext());
         }
-
+        initData();
 
         getLifecycle().addObserver(viewModel);
 
