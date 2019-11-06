@@ -112,9 +112,7 @@ class ListFragment : BaseFragment<ListViewModel, FragmentListBinding>() {
                 fragmentMsg?.let { fragmentMsg?.notifyHistory(1) }
             }
 
-
         }
-
     }
 
 

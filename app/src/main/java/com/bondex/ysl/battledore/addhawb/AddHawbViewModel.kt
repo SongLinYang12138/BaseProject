@@ -34,9 +34,10 @@ class AddHawbViewModel : BaseViewModle(), AddHawbItemListener {
         initData()
     }
 
-
+/*
+* 获取可打板的分单号
+* */
     fun initData() {
-
 
         val observable = Observable.create(object : ObservableOnSubscribe<List<HAWBBean>> {
             override fun subscribe(emitter: ObservableEmitter<List<HAWBBean>>) {
@@ -97,7 +98,9 @@ class AddHawbViewModel : BaseViewModle(), AddHawbItemListener {
         hawbBeans.removeAt(position)
         getHawbAdapter().updateList(hawbBeans)
     }
-
+/*
+* 获取添加的分单号
+* */
     fun addPlanList() {
 
         if (list_adapter.selectList.size == 0) {

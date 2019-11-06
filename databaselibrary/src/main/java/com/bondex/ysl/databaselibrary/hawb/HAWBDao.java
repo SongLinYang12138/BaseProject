@@ -124,11 +124,12 @@ public class HAWBDao {
 
         String sql = "select * from " + DB_NAME + " where hawb = '" + hawb + "' order by flight_date desc";
         Cursor cursor = db.rawQuery(sql, null);
-        HAWBBean bean = new HAWBBean();
+
         if (cursor == null || cursor.getCount() == 0) {
 
             return null;
         }
+        HAWBBean bean = new HAWBBean();
 
         while (cursor.moveToNext()) {
 
@@ -161,7 +162,7 @@ public class HAWBDao {
 
         String sql = "select * from " + DB_NAME + " where mBillCode = '" + mhawb + "' order by flight_date desc";
         Cursor cursor = db.rawQuery(sql, null);
-        HAWBBean bean = new HAWBBean();
+
         if (cursor == null || cursor.getCount() == 0) {
 
             return null;
@@ -169,7 +170,7 @@ public class HAWBDao {
 
         while (cursor.moveToNext()) {
 
-
+            HAWBBean bean = new HAWBBean();
             bean.setBoardId(cursor.getString(cursor.getColumnIndex("boardId")));
             bean.setId(cursor.getString(cursor.getColumnIndex("id")));
             bean.setmBillCode(cursor.getString(cursor.getColumnIndex("mBillCode")));
@@ -199,7 +200,7 @@ public class HAWBDao {
 
         String sql = "select * from " + DB_NAME + " order by flight_date desc";
         Cursor cursor = db.rawQuery(sql, null);
-        HAWBBean bean = new HAWBBean();
+
         if (cursor == null || cursor.getCount() == 0) {
 
             return null;
@@ -207,7 +208,7 @@ public class HAWBDao {
 
         while (cursor.moveToNext()) {
 
-
+            HAWBBean bean = new HAWBBean();
             bean.setBoardId(cursor.getString(cursor.getColumnIndex("boardId")));
             bean.setId(cursor.getString(cursor.getColumnIndex("id")));
             bean.setmBillCode(cursor.getString(cursor.getColumnIndex("mBillCode")));

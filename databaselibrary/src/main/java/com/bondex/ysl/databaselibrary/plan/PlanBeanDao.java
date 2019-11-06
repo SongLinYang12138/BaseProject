@@ -437,7 +437,7 @@ public class PlanBeanDao {
                 list.add(bean);
             }
 
-cursor.close();
+            cursor.close();
         }
         return list;
     }

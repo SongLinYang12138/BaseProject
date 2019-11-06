@@ -44,6 +44,12 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
 
     var plateTypePostion = 0
 
+
+    override fun getReourceId(): Int {
+
+        return R.layout.activity_work_betch
+    }
+
     //    监听从viewModel传递过来的数据，并在页面展示
     val planObserver: Observer<PlanBean> = object : Observer<PlanBean> {
         override fun onChanged(t: PlanBean?) {
@@ -111,10 +117,7 @@ class WorkBetchActivity : BaseActivity<WorkBetchViewModle, ActivityWorkBetchBind
     }
 
 
-    override fun getReourceId(): Int {
 
-        return R.layout.activity_work_betch
-    }
 
     override fun initView() {
 

@@ -134,6 +134,7 @@ class PlanAdapter(lis: ArrayList<PlanBean>) :
             hodler.tvFlight.setText(planBean.flight)
             hodler.tvDestination.setText(planBean.destination)
             hodler.tvDate.setText("航班日期" + planBean.flghtDate)
+            hodler.itId.setText("ID: "+planBean.id)
 
             if (selectAll) {
                 hodler.ck.isChecked = true
@@ -146,6 +147,7 @@ class PlanAdapter(lis: ArrayList<PlanBean>) :
     inner class ViewHodler(view: View) : RecyclerView.ViewHolder(view) {
 
 
+        val itId:TextView = view.findViewById(R.id.item_plan_id)
         val itAdd: IconText = view.findViewById(R.id.item_plan_add)
         val itContent: ConstraintLayout = view.findViewById(R.id.plan_cl_content)
         val tvAll: TextView = view.findViewById(R.id.item_plan_all)

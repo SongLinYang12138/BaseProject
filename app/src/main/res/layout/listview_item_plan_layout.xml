@@ -12,6 +12,7 @@
 >
 
 
+
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               app:layout_constraintTop_toTopOf="parent"
@@ -19,7 +20,21 @@
               android:textStyle="bold"
               android:text="3M4H"
               app:layout_constraintLeft_toRightOf="@id/item_plan_ck"
+              android:id="@+id/item_plan_id"
+              android:layout_marginTop="@dimen/activity_horizontal_margin"
+    />
+
+
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toTopOf="parent"
+              style="@style/normal_tv_black"
+              android:textStyle="bold"
+              android:text="3M4H"
+              app:layout_constraintLeft_toRightOf="@id/item_plan_id"
               android:id="@+id/item_plan_all"
+              app:layout_constraintRight_toLeftOf="@id/item_plan_qty"
               android:layout_marginTop="@dimen/activity_horizontal_margin"
     />
 
@@ -34,6 +49,7 @@
             app:layout_constraintTop_toTopOf="@id/item_plan_all"
             app:layout_constraintLeft_toRightOf="@id/item_plan_all"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            app:layout_constraintRight_toLeftOf="@id/item_plan_weight"
 
     />
 
@@ -47,7 +63,12 @@
             app:layout_constraintTop_toTopOf="@id/item_plan_all"
             app:layout_constraintLeft_toRightOf="@id/item_plan_qty"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
     />
+
+
+
 
     <TextView
             android:id="@+id/item_plan_date"
